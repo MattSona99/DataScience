@@ -1,0 +1,124 @@
+
+import pandas as pd
+
+file_path = '/home/gabri/Desktop/Data science/First project/CrimeData.csv'
+crime_data = pd.read_csv(file_path)
+
+import numpy as np
+
+# ==========================
+### Gestione dei valori mancanti
+# ==========================
+cols_to_fill = ['Location', 'Inside/Outside', 'Weapon', 'District', 'Neighborhood']
+for col in cols_to_fill:
+    crime_data[col] = crime_data[col].fillna('Unknown')
+
+print("\n--- Valori mancanti dopo il fill ---")
+print(crime_data[cols_to_fill].isnull().sum())
+
+# ==========================
+### Creazione della colonna DateTime
+# ==========================
+crime_data['DateTime'] = pd.to_datetime(
+    crime_data['CrimeDate'] + ' ' + crime_data['CrimeTime'], 
+    errors='coerce'
+)
+# Rimuovo righe con DateTime non valido
+crime_data = crime_data.dropna(subset=['DateTime'])
+
+# Ordino per data e reindicizzo
+crime_data = crime_data.sort_values('DateTime').reset_index(drop=True)
+
+# ==========================
+### Estrazione di feature temporali
+# ==========================
+crime_data['Year'] = crime_data['DateTime'].dt.year
+crime_data['Month'] = crime_data['DateTime'].dt.month
+crime_data['Day'] = crime_data['DateTime'].dt.day
+crime_data['Hour'] = crime_data['DateTime'].dt.hour
+crime_data['DayOfWeek'] = crime_data['DateTime'].dt.day_name()
+
+# ==========================
+### Pulizia della colonna 'Location 1' 
+### ed eliminazione 'Total Incidents'
+# ==========================
+def extract_lat_lon(location):
+    if pd.isna(location) or location == 'Unknown':
+        return np.nan, np.nan
+    try:
+        lat, lon = location.strip('()').split(',')
+        return float(lat), float(lon)
+    except:
+        return np.nan, np.nan
+
+crime_data[['Latitude', 'Longitude']] = crime_data['Location 1'].apply(
+    lambda loc: pd.Series(extract_lat_lon(loc))
+)
+
+crime_data = crime_data.drop(columns=['Location 1'])
+
+#controllo il range di valori della colonna Total Incidents
+print(crime_data['Total Incidents'].unique())
+
+#la colonna Total Incidents ha tutti valori identici pari a 1, quindi rindondante
+crime_data = crime_data.drop('Total Incidents', axis=1)
+
+
+# ==========================
+### Label Encoding delle variabili categoriche
+# ==========================
+
+from sklearn.preprocessing import LabelEncoder
+
+le_crimecod = LabelEncoder()
+crime_data['CrimeCode_encoded'] = le_crimecod.fit_transform(crime_data['CrimeCode'])
+
+le_loc = LabelEncoder()
+crime_data['Location_encoded'] = le_loc.fit_transform(crime_data['Location'])
+
+le_desc = LabelEncoder()
+crime_data['Description_encoded'] = le_desc.fit_transform(crime_data['Description'])
+
+le_weapon = LabelEncoder()
+crime_data['Weapon_encoded'] = le_weapon.fit_transform(crime_data['Weapon'])
+
+le_dist = LabelEncoder()
+crime_data['District_encoded'] = le_dist.fit_transform(crime_data['District'])
+
+le_neig = LabelEncoder()
+crime_data['Neighborhood_encoded'] = le_desc.fit_transform(crime_data['Neighborhood'])
+
+le_dow = LabelEncoder()
+crime_data['DayOfWeek_encoded'] = le_dow.fit_transform(crime_data['DayOfWeek'])
+
+#label di Inside/Outside
+crime_data['Inside/Outside'] = crime_data['Inside/Outside'].map({'I': 1, 'O': 0, 'Unknown': 3 })
+
+# ==========================
+### Salvataggio dataset con chiavi di encodings
+### e dataset finale
+# ==========================
+
+
+#Creo un dataset degli encoding per fare inverse in futuro
+encoding = pd.DataFrame(crime_data[['CrimeCode', 'CrimeCode_encoded', 
+                                   'Location', 'Location_encoded', 
+                                   'Description', 'Description_encoded',
+                                   'Weapon', 'Weapon_encoded', 
+                                   'District', 'District_encoded',
+                                   'Neighborhood', 'Neighborhood_encoded',
+                                   'DayOfWeek', 'DayOfWeek_encoded']])
+
+encoding.to_csv('/home/gabri/Desktop/Data science/First project/Encodings.csv', index=False)
+
+#salvo tutto il dataset senza colonne categoriche originali (elimino le colonne categoriche)
+#elimino anche il date-time, tranne quelli separati
+
+crime_data = crime_data.drop(['CrimeCode', 'Location', 'Description', 'Weapon', 'District', 'Neighborhood', 'DayOfWeek',
+                              'CrimeDate', 'CrimeTime', 'DateTime', 'Latitude', 'Longitude'], axis=1)
+
+crime_data.to_csv('/home/gabri/Desktop/Data science/First project/Crime_data_encoded.csv', index=False)
+
+
+
+
