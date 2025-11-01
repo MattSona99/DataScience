@@ -1,6 +1,8 @@
 networkx
 pandas
-seabord
+seaborn
 matplotlib
 numpy
 scipy
+nbformat
+plotly
