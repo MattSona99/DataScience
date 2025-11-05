@@ -6,3 +6,4 @@ numpy
 scipy
 nbformat
 plotly
+python-louvain
