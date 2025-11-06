@@ -5,3 +5,7 @@ pandas==2.2.2
 statsmodels==0.14.1
 pmdarima==2.0.4
 imblearn
+seaborn
+matplotlib
+geopandas
+folium
