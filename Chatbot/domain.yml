@@ -3,11 +3,22 @@ version: "3.1"
 intents:
   - greet
   - goodbye
-  - affirm
+  - submit
   - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
+  - request_form
+
+entities:
+  - console
+  - publisher
+  - genre
+  - release_year
+  - rating
+  - used_price
+  - review_score
+  - max_player
+  - platform
+  - online
+  - multiplatform
 
 responses:
   utter_greet:

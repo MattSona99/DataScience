@@ -3,89 +3,102 @@ version: "3.1"
 nlu:
 - intent: greet
   examples: |
-    - hey
-    - hello
-    - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
-
+    - ciao
+    - buongiorno
+    - salve
+    - ehi
+    - ciao a tutti
 - intent: goodbye
   examples: |
-    - cu
-    - good by
-    - cee you later
-    - good night
-    - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
+    - arrivederci
+    - a presto
+    - ciao ciao
+    - ci sentiamo
+    - grazie, ciao
+    - grazie, arrivederci
 
-- intent: affirm
+- intent: submit
   examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
+    - sì
+    - va bene
+    - mostrami i risultati
+    - perfetto
+    - conferma
+    - certo
+    - esatto
+    - giusto
+    - d'accordo
+    - va bene, mostrami i risultati
+    - va bene, fammi vedere i risultati
+    - mostrami i videogiochi
+    - fammi vedere i videogiochi
+    - va bene, mostrami i videogiochi
+    - va bene, fammi vedere i videogiochi
+    - mostrami il videogioco
+    - fammi vedere il videogioco
+    - va bene, mostrami il videogioco
+    - va bene, fammi vedere il videogioco
+    - confermo e mostra i risultati
+    - ok, procedi
+    - bene, ricerca i videogiochi
+    - cerca ora i risultati
+    - avvia la ricerca
+    - conferma ricerca
+    - ok, esegui
+    - perfetto, fammi vedere
 
 - intent: deny
   examples: |
     - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
+    - non ora
+    - magari un'altra volta
+    - forse più tardi
+    - adesso no
+    - non voglio
+    - non desidero
+    - non mi interessa
+    - assolutamente no
+    - mai
+    - non credo
+    - impossibile
+    - non proprio
 
-- intent: mood_great
+- intent: request_form
   examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
+    - vorrei comprare un videogioco
+    - sto cercando un videogioco
+    - mi interessa un videogioco
+    - puoi aiutarmi a trovare un videogioco?
+    - consigliami un videogioco
+    - mi piacerebbe un videogioco
+    - suggeriscimi un videogioco
+    - cerco un videogioco
+    - voglio un videogioco
+    - dammi un videogioco
+    - indicami un videogioco
+    - mostrami un videogioco
+    - fammi vedere un videogioco
+    - aiutami a scegliere un videogioco
+    - aiutami a trovare un videogioco
+    - consigliami un videogioco da comprare
+    - suggeriscimi un videogioco da comprare
+    - vorrei un videogioco da comprare
+    - sto cercando un videogioco da comprare
+    - mi interessa un videogioco da comprare
+    - puoi aiutarmi a trovare un videogioco da comprare?
+    - consigliami un videogioco da comprare
+    - mi piacerebbe un videogioco da comprare
+    - suggeriscimi un videogioco da comprare
 
-- intent: mood_unhappy
+- synonym: videogioco
   examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
-
-- intent: bot_challenge
-  examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+    - Videogioco
+    - videogame
+    - gioco
+    - video gioco
+    - video game
+    - game
+    - videogame
+    - titolo
+    - prodotto
+    - articolo
