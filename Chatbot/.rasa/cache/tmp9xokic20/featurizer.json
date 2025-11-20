@@ -1,0 +1,59 @@
+{
+  "type": "MaxHistoryTrackerFeaturizer",
+  "state_featurizer": {
+    "action_texts": [],
+    "entity_tag_specs": [],
+    "feature_states": {
+      "intent": {
+        "back": 0,
+        "deny": 1,
+        "goodbye": 2,
+        "greet": 3,
+        "nlu_fallback": 4,
+        "out_of_scope": 5,
+        "request_form": 6,
+        "restart": 7,
+        "session_start": 8,
+        "submit": 9
+      },
+      "action_name": {
+        "action_listen": 0,
+        "action_restart": 1,
+        "action_session_start": 2,
+        "action_default_fallback": 3,
+        "action_deactivate_loop": 4,
+        "action_revert_fallback_events": 5,
+        "action_default_ask_affirmation": 6,
+        "action_default_ask_rephrase": 7,
+        "action_two_stage_fallback": 8,
+        "action_unlikely_intent": 9,
+        "action_back": 10,
+        "...": 11,
+        "action_extract_slots": 12,
+        "utter_cheer_up": 13,
+        "utter_did_that_help": 14,
+        "utter_goodbye": 15,
+        "utter_greet": 16,
+        "utter_happy": 17,
+        "utter_iamabot": 18
+      },
+      "entities": {
+        "console": 0,
+        "genre": 1,
+        "max_player": 2,
+        "multiplatform": 3,
+        "online": 4,
+        "platform": 5,
+        "publisher": 6,
+        "rating": 7,
+        "release_year": 8,
+        "review_score": 9,
+        "used_price": 10
+      },
+      "slots": {},
+      "active_loop": {}
+    }
+  },
+  "remove_duplicates": true,
+  "max_history": 5
+}

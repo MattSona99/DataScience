@@ -2,12 +2,31 @@ version: "3.1"
 
 rules:
 
-- rule: Say goodbye anytime the user says goodbye
+- rule: Attiva la form di preferenze videogiochi
   steps:
-  - intent: goodbye
-  - action: utter_goodbye
+    - intent: request_form
+    - action: utter_start_recommendation
+    - action: game_preferences_form
+    - active_loop: game_preferences_form
 
-- rule: Say 'I am a bot' anytime the user challenges
+- rule: Continua a riempire la form
+  condition:
+    - active_loop: game_preferences_form
   steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+    - action: game_preferences_form
+    - active_loop: game_preferences_form
+
+- rule: Fine form e conferma preferenze
+  condition:
+    - active_loop: game_preferences_form
+  steps:
+    - action: game_preferences_form
+    - active_loop: null
+    - action: utter_confirm_preferences
+
+- rule: L'utente conferma e chiede i risultati
+  steps:
+    - intent: submit
+    - action: utter_submit
+    # qui poi aggiungerai:
+    # - action: action_recommend_games

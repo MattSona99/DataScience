@@ -90,6 +90,33 @@ nlu:
     - mi piacerebbe un videogioco da comprare
     - suggeriscimi un videogioco da comprare
 
+- intent: inform
+  examples: |
+    - cerco un gioco per [Nintendo DS](console)
+    - vorrei qualcosa su [Sony PSP](console)
+    - mi interessa un gioco per [PS2](console)
+    - preferisco giochi [Action](genre)
+    - mi piacciono i giochi di [Sports](genre)
+    - mi piacciono i giochi di [RPG](genre)
+    - voglio un gioco uscito dopo il [2004](release_year)
+    - cerca qualcosa uscito nel [2004](release_year)
+    - va bene qualsiasi gioco uscito prima del [2008](release_year)
+    - vorrei spendere al massimo [20](used_price) euro
+    - budget massimo [15](used_price) euro
+    - non voglio spendere più di [10](used_price) €
+    - scegli solo giochi con voto almeno [80](review_score)
+    - vorrei un gioco con voto almeno [85](review_score)
+    - mi bastano [1](max_player) giocatore
+    - mi serve un gioco per [2](max_player) giocatori
+    - voglio per forza il multiplayer fino a [4](max_player) giocatori
+    - mi interessa che sia [online](online)
+    - non mi interessa che sia [online](online)
+    - preferisco giochi [multiplatform](multiplatform)
+    - voglio un’esclusiva, quindi non [multiplatform](multiplatform)
+    - mi piace il publisher [Nintendo](publisher)
+    - cerco qualcosa di [Ubisoft](publisher)
+
+
 - synonym: videogioco
   examples: |
     - Videogioco
@@ -102,3 +129,101 @@ nlu:
     - titolo
     - prodotto
     - articolo
+
+- synonym: Nintendo DS
+  examples: |
+    - NDS
+    - nintendo ds
+    - ds
+
+- synonym: Sony PSP
+  examples: |
+    - psp
+    - sony psp
+
+- synonym: Action
+  examples: |
+    - azione
+    - action
+    - gioco d'azione
+
+- synonym: Sports
+  examples: |
+    - sport
+    - sportivo
+    - gioco sportivo
+
+- synonym: RPG
+  examples: |
+    - gioco di ruolo
+    - gioco ruolo
+    - rpg
+
+- synonym: online
+  examples: |
+    - con modalità online
+    - con multiplayer online
+    - con modalità online
+    - con modalità di gioco online
+
+- synonym: multiplatform
+  examples: |
+    - per più piattaforme
+    - per più piattaforme
+    - per più console
+
+- synonym: publisher
+  examples: |
+    - casa produttrice
+    - casa di produzione
+    - sviluppatore
+
+- synonym: console
+  examples: |
+    - piattaforma
+    - piattaforma di gioco
+    - sistema di gioco
+    - sistema
+    - device
+    - dispositivo
+
+- synonym: review_score
+  examples: |
+    - punteggio recensioni
+    - voto recensioni
+    - valutazione recensioni
+    - voto di recensioni
+
+- synonym: used_price
+  examples: |
+    - prezzo usato
+    - costo usato
+    - prezzo di un gioco usato
+    - costo di un gioco usato
+
+- synonym: max_player
+  examples: |
+    - numero massimo di giocatori
+    - massimo numero di giocatori
+    - numero di giocatori massimo
+    - massimo di giocatori
+
+- synonym: release_year
+  examples: |
+    - anno di uscita
+    - anno di rilascio
+    - anno di pubblicazione
+    - anno di lancio
+    - anno di uscita del gioco
+
+- synonym: genre
+  examples: |
+    - genere di gioco
+    - tipo di gioco
+    - categoria di gioco
+    - stile di gioco
+
+- synonym: rating
+  examples: |
+    - classificazione
+    - valutazione

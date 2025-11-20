@@ -3,9 +3,10 @@ version: "3.1"
 intents:
   - greet
   - goodbye
-  - submit
-  - deny
-  - request_form
+  - submit      # conferma: "sì, mostrami i risultati"
+  - deny        # "no, cambia qualcosa"
+  - request_form  # "voglio un videogioco"
+  - inform        # l'utente specifica preferenze (console, genere, budget, ...)
 
 entities:
   - console
@@ -20,25 +21,128 @@ entities:
   - online
   - multiplatform
 
+slots:
+  console:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: console
+    influence_conversation: true
+  genre:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: genre
+    influence_conversation: true
+  release_year:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: release_year
+    influence_conversation: false
+  used_price:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: used_price
+    influence_conversation: false
+  review_score:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: review_score
+    influence_conversation: false
+  max_player:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: max_player
+    influence_conversation: false
+  online:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: online
+    influence_conversation: false
+  multiplatform:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: multiplatform
+    influence_conversation: false
+  publisher:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: publisher
+    influence_conversation: false
+
+forms:
+  game_preferences_form:
+    required_slots:
+      - console
+      - genre
+      - used_price
+      - release_year
+      - review_score
+      - max_player
+      - online
+      - multiplatform
+
+
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
-
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
+    - text: "Ciao! 👋 Sono il tuo assistente di retrogaming. Vuoi che ti aiuti a trovare un videogioco vintage?"
 
   utter_goodbye:
-  - text: "Bye"
+    - text: "Perfetto, buon divertimento con il retrogaming! 🎮"
 
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+  utter_ask_console:
+    - text: "Su che console vuoi giocare? (es. Nintendo DS, PSP, PS2...)"
+
+  utter_ask_genre:
+    - text: "Che genere ti piace di più? Per esempio Action, RPG, Sports, Puzzle..."
+
+  utter_ask_used_price:
+    - text: "Hai un budget massimo per l’usato? Dimmi una cifra in euro (es. 20), oppure scrivi 'nessun limite'."
+
+  utter_ask_release_year:
+    - text: "Preferisci giochi di un certo periodo? Ad esempio: prima del 2005, dopo il 2004, oppure un anno specifico."
+
+  utter_ask_review_score:
+    - text: "Quanto devono essere buone le recensioni? (es. almeno 80 su 100)"
+
+  utter_ask_max_player:
+    - text: "Cerchi un gioco solo per un giocatore o anche multiplayer? Dimmi il numero massimo di giocatori."
+
+  utter_ask_online:
+    - text: "Ti interessa che il gioco abbia funzionalità online? (sì/no)"
+
+  utter_ask_multiplatform:
+    - text: "Vuoi solo esclusive di una piattaforma o vanno bene anche i giochi multiplatform? (scrivi 'esclusive' o 'multiplatform')"
+
+  utter_start_recommendation:
+    - text: "Ottimo! Ti faccio qualche domanda così ti consiglio qualcosa di adatto a te. 🙂"
+
+  utter_confirm_preferences:
+    - text: |
+        Perfetto, ecco un riepilogo delle tue preferenze:
+        • Console: {console}
+        • Genere: {genre}
+        • Budget usato: {used_price}
+        • Anno di uscita: {release_year}
+        • Voto minimo recensioni: {review_score}
+        • Max giocatori: {max_player}
+        • Online: {online}
+        • Multiplatform: {multiplatform}
+
+        Vuoi che cerchi i giochi migliori con questi filtri?
+
+  utter_submit:
+    - text: "Ok, cerco nel mio archivio di videogiochi vintage e ti mostro qualche titolo interessante... 🎮"
+
+  utter_no_results:
+    - text: "Non ho trovato giochi che rispettano tutti i filtri. Vuoi allargare un po’ i criteri (es. più budget o voto minimo più basso)?"
 
 session_config:
   session_expiration_time: 60
