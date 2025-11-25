@@ -2,6 +2,17 @@ version: "3.1"
 
 rules:
 
+- rule: Greet user
+  steps:
+    - intent: greet
+    - action: utter_greet
+
+- rule: Say goodbye
+  steps:
+    - intent: goodbye
+    - action: utter_goodbye
+    - active_loop: null
+
 - rule: Activate videogame preferences form
   steps:
     - intent: request_form
@@ -27,6 +38,6 @@ rules:
 - rule: User confirms and asks for results
   steps:
     - intent: submit
+    - action: action_deactivate_loop
     - action: utter_submit
-    # later you'll add:
-    # - action: action_recommend_games
+    - action: action_recommend_games
