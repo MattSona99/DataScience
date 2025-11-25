@@ -2,7 +2,7 @@ version: "3.1"
 
 stories:
 
-- story: flusso base raccomandazione videogiochi
+- story: basic videogame recommendation flow
   steps:
     - intent: greet
     - action: utter_greet
@@ -11,8 +11,7 @@ stories:
     - action: game_preferences_form
     - active_loop: game_preferences_form
 
-- story: utente saluta e chiude
+- story: user says goodbye and ends
   steps:
     - intent: goodbye
     - action: utter_goodbye
-

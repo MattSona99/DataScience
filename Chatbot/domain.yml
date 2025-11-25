@@ -3,10 +3,10 @@ version: "3.1"
 intents:
   - greet
   - goodbye
-  - submit      # conferma: "sì, mostrami i risultati"
-  - deny        # "no, cambia qualcosa"
-  - request_form  # "voglio un videogioco"
-  - inform        # l'utente specifica preferenze (console, genere, budget, ...)
+  - submit      # user confirms: "yes, show me the results"
+  - deny        # user says no / wants to change something
+  - request_form  # user asks for a video game recommendation
+  - inform        # user specifies preferences (console, genre, budget, ...)
 
 entities:
   - console
@@ -89,60 +89,59 @@ forms:
       - online
       - multiplatform
 
-
 responses:
   utter_greet:
-    - text: "Ciao! 👋 Sono il tuo assistente di retrogaming. Vuoi che ti aiuti a trovare un videogioco vintage?"
+    - text: "Hi! 👋 I'm your retro gaming assistant. Do you want me to help you find a vintage video game?"
 
   utter_goodbye:
-    - text: "Perfetto, buon divertimento con il retrogaming! 🎮"
+    - text: "Great, enjoy your retro gaming session! 🎮"
 
   utter_ask_console:
-    - text: "Su che console vuoi giocare? (es. Nintendo DS, PSP, PS2...)"
+    - text: "On which console or device do you want to play? (e.g. Nintendo DS, PSP, PS2...)"
 
   utter_ask_genre:
-    - text: "Che genere ti piace di più? Per esempio Action, RPG, Sports, Puzzle..."
+    - text: "Which genre do you like the most? For example Action, RPG, Sports, Puzzle..."
 
   utter_ask_used_price:
-    - text: "Hai un budget massimo per l’usato? Dimmi una cifra in euro (es. 20), oppure scrivi 'nessun limite'."
+    - text: "Do you have a maximum budget for a used game? Tell me an amount (e.g. 20), or type 'no limit'."
 
   utter_ask_release_year:
-    - text: "Preferisci giochi di un certo periodo? Ad esempio: prima del 2005, dopo il 2004, oppure un anno specifico."
+    - text: "Do you prefer games from a specific period? For example: before 2005, after 2004, or a specific year."
 
   utter_ask_review_score:
-    - text: "Quanto devono essere buone le recensioni? (es. almeno 80 su 100)"
+    - text: "How good should the reviews be? (e.g. at least 80 out of 100)"
 
   utter_ask_max_player:
-    - text: "Cerchi un gioco solo per un giocatore o anche multiplayer? Dimmi il numero massimo di giocatori."
+    - text: "Are you looking for a single-player game or multiplayer? Tell me the maximum number of players."
 
   utter_ask_online:
-    - text: "Ti interessa che il gioco abbia funzionalità online? (sì/no)"
+    - text: "Is it important that the game has online features? (yes/no)"
 
   utter_ask_multiplatform:
-    - text: "Vuoi solo esclusive di una piattaforma o vanno bene anche i giochi multiplatform? (scrivi 'esclusive' o 'multiplatform')"
+    - text: "Do you want only platform exclusives, or are multiplatform games also fine? (type 'exclusive' or 'multiplatform')"
 
   utter_start_recommendation:
-    - text: "Ottimo! Ti faccio qualche domanda così ti consiglio qualcosa di adatto a te. 🙂"
+    - text: "Great! I'll ask you a few questions so I can recommend something that fits you. 🙂"
 
   utter_confirm_preferences:
     - text: |
-        Perfetto, ecco un riepilogo delle tue preferenze:
+        Perfect, here is a summary of your preferences:
         • Console: {console}
-        • Genere: {genre}
-        • Budget usato: {used_price}
-        • Anno di uscita: {release_year}
-        • Voto minimo recensioni: {review_score}
-        • Max giocatori: {max_player}
+        • Genre: {genre}
+        • Used game budget: {used_price}
+        • Release year: {release_year}
+        • Minimum review score: {review_score}
+        • Max players: {max_player}
         • Online: {online}
         • Multiplatform: {multiplatform}
 
-        Vuoi che cerchi i giochi migliori con questi filtri?
+        Do you want me to search for the best games with these filters?
 
   utter_submit:
-    - text: "Ok, cerco nel mio archivio di videogiochi vintage e ti mostro qualche titolo interessante... 🎮"
+    - text: "Okay, I'll search my archive of vintage games and show you some interesting titles... 🎮"
 
   utter_no_results:
-    - text: "Non ho trovato giochi che rispettano tutti i filtri. Vuoi allargare un po’ i criteri (es. più budget o voto minimo più basso)?"
+    - text: "I couldn't find any games matching all your filters. Do you want to relax the criteria a bit (e.g. higher budget or lower minimum review score)?"
 
 session_config:
   session_expiration_time: 60

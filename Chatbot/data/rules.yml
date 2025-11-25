@@ -2,21 +2,21 @@ version: "3.1"
 
 rules:
 
-- rule: Attiva la form di preferenze videogiochi
+- rule: Activate videogame preferences form
   steps:
     - intent: request_form
     - action: utter_start_recommendation
     - action: game_preferences_form
     - active_loop: game_preferences_form
 
-- rule: Continua a riempire la form
+- rule: Continue filling the form
   condition:
     - active_loop: game_preferences_form
   steps:
     - action: game_preferences_form
     - active_loop: game_preferences_form
 
-- rule: Fine form e conferma preferenze
+- rule: Form finished and confirm preferences
   condition:
     - active_loop: game_preferences_form
   steps:
@@ -24,9 +24,9 @@ rules:
     - active_loop: null
     - action: utter_confirm_preferences
 
-- rule: L'utente conferma e chiede i risultati
+- rule: User confirms and asks for results
   steps:
     - intent: submit
     - action: utter_submit
-    # qui poi aggiungerai:
+    # later you'll add:
     # - action: action_recommend_games

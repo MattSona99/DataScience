@@ -3,132 +3,123 @@ version: "3.1"
 nlu:
 - intent: greet
   examples: |
-    - ciao
-    - buongiorno
-    - salve
-    - ehi
-    - ciao a tutti
+    - hi
+    - hello
+    - hey
+    - good morning
+    - good afternoon
+    - hi there
+    - hello everyone
+
 - intent: goodbye
   examples: |
-    - arrivederci
-    - a presto
-    - ciao ciao
-    - ci sentiamo
-    - grazie, ciao
-    - grazie, arrivederci
+    - bye
+    - goodbye
+    - see you
+    - talk to you later
+    - see you soon
+    - thanks, bye
+    - thanks, goodbye
 
 - intent: submit
   examples: |
-    - sì
-    - va bene
-    - mostrami i risultati
-    - perfetto
-    - conferma
-    - certo
-    - esatto
-    - giusto
-    - d'accordo
-    - va bene, mostrami i risultati
-    - va bene, fammi vedere i risultati
-    - mostrami i videogiochi
-    - fammi vedere i videogiochi
-    - va bene, mostrami i videogiochi
-    - va bene, fammi vedere i videogiochi
-    - mostrami il videogioco
-    - fammi vedere il videogioco
-    - va bene, mostrami il videogioco
-    - va bene, fammi vedere il videogioco
-    - confermo e mostra i risultati
-    - ok, procedi
-    - bene, ricerca i videogiochi
-    - cerca ora i risultati
-    - avvia la ricerca
-    - conferma ricerca
-    - ok, esegui
-    - perfetto, fammi vedere
+    - yes
+    - ok
+    - okay
+    - sure
+    - perfect
+    - confirm
+    - that's right
+    - exactly
+    - sounds good
+    - show me the results
+    - show me the games
+    - let me see the games
+    - show me the video game
+    - let me see the video game
+    - confirm and show the results
+    - ok, go ahead
+    - great, search the games
+    - search now
+    - start the search
+    - confirm search
+    - ok, run it
+    - perfect, let me see
 
 - intent: deny
   examples: |
     - no
-    - non ora
-    - magari un'altra volta
-    - forse più tardi
-    - adesso no
-    - non voglio
-    - non desidero
-    - non mi interessa
-    - assolutamente no
-    - mai
-    - non credo
-    - impossibile
-    - non proprio
+    - not now
+    - maybe another time
+    - maybe later
+    - not at the moment
+    - I don't want to
+    - I don't feel like it
+    - I'm not interested
+    - absolutely not
+    - never
+    - I don't think so
+    - that's impossible
+    - not really
 
 - intent: request_form
   examples: |
-    - vorrei comprare un videogioco
-    - sto cercando un videogioco
-    - mi interessa un videogioco
-    - puoi aiutarmi a trovare un videogioco?
-    - consigliami un videogioco
-    - mi piacerebbe un videogioco
-    - suggeriscimi un videogioco
-    - cerco un videogioco
-    - voglio un videogioco
-    - dammi un videogioco
-    - indicami un videogioco
-    - mostrami un videogioco
-    - fammi vedere un videogioco
-    - aiutami a scegliere un videogioco
-    - aiutami a trovare un videogioco
-    - consigliami un videogioco da comprare
-    - suggeriscimi un videogioco da comprare
-    - vorrei un videogioco da comprare
-    - sto cercando un videogioco da comprare
-    - mi interessa un videogioco da comprare
-    - puoi aiutarmi a trovare un videogioco da comprare?
-    - consigliami un videogioco da comprare
-    - mi piacerebbe un videogioco da comprare
-    - suggeriscimi un videogioco da comprare
+    - I would like to buy a video game
+    - I'm looking for a video game
+    - I'm interested in a video game
+    - can you help me find a video game?
+    - recommend me a video game
+    - I'd love a video game suggestion
+    - suggest a video game for me
+    - I'm searching for a game
+    - I want a video game
+    - give me a video game
+    - show me a video game
+    - help me choose a video game
+    - help me find a video game
+    - recommend a video game to buy
+    - suggest a video game to buy
+    - I'm looking for a video game to buy
+    - can you help me find a game to buy?
+    - I'd like a recommendation for a video game
 
 - intent: inform
   examples: |
-    - cerco un gioco per [Nintendo DS](console)
-    - vorrei qualcosa su [Sony PSP](console)
-    - mi interessa un gioco per [PS2](console)
-    - preferisco giochi [Action](genre)
-    - mi piacciono i giochi di [Sports](genre)
-    - mi piacciono i giochi di [RPG](genre)
-    - voglio un gioco uscito dopo il [2004](release_year)
-    - cerca qualcosa uscito nel [2004](release_year)
-    - va bene qualsiasi gioco uscito prima del [2008](release_year)
-    - vorrei spendere al massimo [20](used_price) euro
-    - budget massimo [15](used_price) euro
-    - non voglio spendere più di [10](used_price) €
-    - scegli solo giochi con voto almeno [80](review_score)
-    - vorrei un gioco con voto almeno [85](review_score)
-    - mi bastano [1](max_player) giocatore
-    - mi serve un gioco per [2](max_player) giocatori
-    - voglio per forza il multiplayer fino a [4](max_player) giocatori
-    - mi interessa che sia [online](online)
-    - non mi interessa che sia [online](online)
-    - preferisco giochi [multiplatform](multiplatform)
-    - voglio un’esclusiva, quindi non [multiplatform](multiplatform)
-    - mi piace il publisher [Nintendo](publisher)
-    - cerco qualcosa di [Ubisoft](publisher)
+    - I'm looking for a game for [Nintendo DS](console)
+    - I want something on [Sony PSP](console)
+    - I'm interested in a game for [PS2](console)
+    - I prefer [Action](genre) games
+    - I like [Sports](genre) games
+    - I like [RPG](genre) games
+    - I want a game released after [2004](release_year)
+    - find something released in [2004](release_year)
+    - any game released before [2008](release_year) is fine
+    - I want to spend at most [20](used_price)
+    - maximum budget [15](used_price)
+    - I don't want to spend more than [10](used_price)
+    - choose only games with a score of at least [80](review_score)
+    - I want a game with a score of at least [85](review_score)
+    - I only need [1](max_player) player
+    - I need a game for [2](max_player) players
+    - I want multiplayer for up to [4](max_player) players
+    - I want it to be [online](online)
+    - I don't care if it's [online](online)
+    - I prefer [multiplatform](multiplatform) games
+    - I want an exclusive, so not [multiplatform](multiplatform)
+    - I like the publisher [Nintendo](publisher)
+    - I'm looking for something from [Ubisoft](publisher)
 
 
-- synonym: videogioco
+# --- Synonyms for entity VALUES ---
+
+- synonym: videogame
   examples: |
-    - Videogioco
-    - videogame
-    - gioco
-    - video gioco
     - video game
     - game
-    - videogame
-    - titolo
-    - prodotto
-    - articolo
+    - video-game
+    - title
+    - product
+    - item
 
 - synonym: Nintendo DS
   examples: |
@@ -143,87 +134,31 @@ nlu:
 
 - synonym: Action
   examples: |
-    - azione
     - action
-    - gioco d'azione
+    - action game
 
 - synonym: Sports
   examples: |
-    - sport
-    - sportivo
-    - gioco sportivo
+    - sports
+    - sports game
+    - sport game
 
 - synonym: RPG
   examples: |
-    - gioco di ruolo
-    - gioco ruolo
     - rpg
+    - role playing game
+    - role-playing game
 
 - synonym: online
   examples: |
-    - con modalità online
-    - con multiplayer online
-    - con modalità online
-    - con modalità di gioco online
+    - with online mode
+    - with online multiplayer
+    - online features
+    - online play
 
 - synonym: multiplatform
   examples: |
-    - per più piattaforme
-    - per più piattaforme
-    - per più console
-
-- synonym: publisher
-  examples: |
-    - casa produttrice
-    - casa di produzione
-    - sviluppatore
-
-- synonym: console
-  examples: |
-    - piattaforma
-    - piattaforma di gioco
-    - sistema di gioco
-    - sistema
-    - device
-    - dispositivo
-
-- synonym: review_score
-  examples: |
-    - punteggio recensioni
-    - voto recensioni
-    - valutazione recensioni
-    - voto di recensioni
-
-- synonym: used_price
-  examples: |
-    - prezzo usato
-    - costo usato
-    - prezzo di un gioco usato
-    - costo di un gioco usato
-
-- synonym: max_player
-  examples: |
-    - numero massimo di giocatori
-    - massimo numero di giocatori
-    - numero di giocatori massimo
-    - massimo di giocatori
-
-- synonym: release_year
-  examples: |
-    - anno di uscita
-    - anno di rilascio
-    - anno di pubblicazione
-    - anno di lancio
-    - anno di uscita del gioco
-
-- synonym: genre
-  examples: |
-    - genere di gioco
-    - tipo di gioco
-    - categoria di gioco
-    - stile di gioco
-
-- synonym: rating
-  examples: |
-    - classificazione
-    - valutazione
+    - multi platform
+    - multi-platform
+    - for multiple platforms
+    - for multiple consoles
