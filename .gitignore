@@ -2,3 +2,4 @@ venv
 .vscode
 .credentials.yml
 .models
+.rasa
