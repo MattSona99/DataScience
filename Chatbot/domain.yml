@@ -91,7 +91,7 @@ forms:
 
 responses:
   utter_greet:
-    - text: "Hi! 👋 I'm your retro gaming assistant. Do you want me to help you find a vintage video game?"
+    - text: "Hi! 👋 I'll be your retro gaming assistant. What do you want me to help you with?"
 
   utter_goodbye:
     - text: "Great, enjoy your retro gaming session! 🎮"
