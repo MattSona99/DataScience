@@ -1,0 +1,36 @@
+{
+  "lookup": {
+    "rules": {
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"game_preferences_form\"}}]": "utter_confirm_preferences",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"game_preferences_form\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"utter_confirm_preferences\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"request_form\"}}]": "utter_start_recommendation",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"request_form\"}}, {\"prev_action\": {\"action_name\": \"utter_start_recommendation\"}, \"user\": {\"intent\": \"request_form\"}}]": "game_preferences_form",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"request_form\"}}, {\"prev_action\": {\"action_name\": \"utter_start_recommendation\"}, \"user\": {\"intent\": \"request_form\"}}, {\"active_loop\": {\"name\": \"game_preferences_form\"}, \"prev_action\": {\"action_name\": \"game_preferences_form\"}, \"user\": {\"intent\": \"request_form\"}}]": "action_listen",
+      "[{\"active_loop\": {\"name\": \"game_preferences_form\"}, \"prev_action\": {\"action_name\": \"game_preferences_form\"}}]": "action_listen",
+      "[{\"active_loop\": {\"name\": \"game_preferences_form\"}, \"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"deny\"}}]": "action_deactivate_loop",
+      "[{\"active_loop\": {\"name\": \"game_preferences_form\"}, \"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"deny\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"action_deactivate_loop\"}, \"user\": {\"intent\": \"deny\"}}]": "utter_goodbye",
+      "[{\"active_loop\": {\"name\": \"game_preferences_form\"}, \"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"deny\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"action_deactivate_loop\"}, \"user\": {\"intent\": \"deny\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"utter_goodbye\"}, \"user\": {\"intent\": \"deny\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"submit\"}}]": "utter_submit",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"submit\"}}, {\"prev_action\": {\"action_name\": \"utter_submit\"}, \"user\": {\"intent\": \"submit\"}}]": "action_listen"
+    },
+    "rule_only_slots": [],
+    "rule_only_loops": [],
+    "rules_for_loop_unhappy_path": {
+      "[{\"prev_action\": {\"action_name\": \"utter_start_recommendation\"}}, {\"active_loop\": {\"name\": \"game_preferences_form\"}, \"prev_action\": {\"action_name\": \"game_preferences_form\"}, \"user\": {\"intent\": \"request_form\"}}]": "do_not_predict_loop_action",
+      "[{\"active_loop\": {\"name\": \"game_preferences_form\"}, \"prev_action\": {\"action_name\": \"game_preferences_form\"}}]": "do_not_predict_loop_action"
+    },
+    "rules_not_in_stories": [
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"game_preferences_form\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"utter_confirm_preferences\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"submit\"}}, {\"prev_action\": {\"action_name\": \"utter_submit\"}, \"user\": {\"intent\": \"submit\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"submit\"}}]",
+      "handling active loops and forms - game_preferences_form",
+      "predicting default action with intent session_start",
+      "[{\"active_loop\": {\"name\": \"game_preferences_form\"}, \"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"deny\"}}]",
+      "predicting default action with intent restart",
+      "predicting default action with intent back",
+      "[{\"active_loop\": {\"name\": \"game_preferences_form\"}, \"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"deny\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"action_deactivate_loop\"}, \"user\": {\"intent\": \"deny\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"utter_goodbye\"}, \"user\": {\"intent\": \"deny\"}}]",
+      "[{\"active_loop\": {\"name\": \"game_preferences_form\"}, \"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"deny\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"action_deactivate_loop\"}, \"user\": {\"intent\": \"deny\"}}]",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"game_preferences_form\"}}]"
+    ]
+  }
+}

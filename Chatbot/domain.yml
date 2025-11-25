@@ -35,37 +35,37 @@ slots:
         entity: genre
     influence_conversation: true
   release_year:
-    type: text
+    type: float
     mappings:
       - type: from_entity
         entity: release_year
     influence_conversation: false
   used_price:
-    type: text
+    type: float
     mappings:
       - type: from_entity
         entity: used_price
     influence_conversation: false
   review_score:
-    type: text
+    type: float
     mappings:
       - type: from_entity
         entity: review_score
     influence_conversation: false
   max_player:
-    type: text
+    type: float
     mappings:
       - type: from_entity
         entity: max_player
     influence_conversation: false
   online:
-    type: text
+    type: bool
     mappings:
       - type: from_entity
         entity: online
     influence_conversation: false
   multiplatform:
-    type: text
+    type: bool
     mappings:
       - type: from_entity
         entity: multiplatform
