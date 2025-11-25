@@ -121,7 +121,7 @@ responses:
     - text: "Do you want only platform exclusives, or are multiplatform games also fine? (type 'exclusive' or 'multiplatform')"
 
   utter_start_recommendation:
-    - text: "Great! I'll ask you a few questions so I can recommend something that fits you. 🙂"
+    - text: "Great! I'll ask you a few questions so I can recommend something that fits you. Tell me 🙂"
 
   utter_confirm_preferences:
     - text: |

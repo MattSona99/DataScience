@@ -24,4 +24,17 @@
 #
 #         dispatcher.utter_message(text="Hello World!")
 #
+# #         return []
+# class ActionSearchGame(Action):
+
+#     def name(self) -> Text:
+#         return "action_search_game"
+
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+#         # Implement your custom action logic here
+#         dispatcher.utter_message(text="Searching for the game...")
+
 #         return []
