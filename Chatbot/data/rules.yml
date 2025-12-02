@@ -36,6 +36,8 @@ rules:
     - action: utter_goodbye
 
 - rule: User confirms search after preferences
+  condition:
+    - active_loop: null
   steps:
     - intent: submit
     - action: utter_submit
