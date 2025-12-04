@@ -108,6 +108,16 @@ nlu:
     - I want an exclusive, so not [multiplatform](multiplatform)
     - I like the publisher [Nintendo](publisher)
     - I'm looking for something from [Ubisoft](publisher)
+    - I'm searching for something on [Nintendo Wii](console)
+    - Do you have games for [PlayStation 3](console)?
+    - I'm into [Horror](genre) games lately
+    - I want something from before [2010](release_year)
+    - show me titles released after [2005](release_year)
+    - my budget is around [30](used_price)
+    - don't go over [25](used_price) please
+    - I want a score higher than [50](review_score)
+    - I need a game for at least [3](max_player) players
+    - I prefer titles from [EA Games](publisher)
 
 
 # --- Synonyms for entity VALUES ---
@@ -120,17 +130,106 @@ nlu:
     - title
     - product
     - item
+    - game title
+    - digital game
+    - gaming product
+    - software game
+    - playable title
+    - gaming item
+    - interactive game
+    - entertainment title
+    - game software
+
 
 - synonym: Nintendo DS
   examples: |
-    - NDS
     - nintendo ds
-    - ds
+    - nds
+    - ds console
+    - nintendo dual screen
+    - dual screen console
+    - ds handheld
+    - nintendo ds system
+    - ds portable
+    - ds device
+    - nintendo ds handheld
+    - ds gaming system
+    - nintendo-ds
+    - classic ds
+    - ds machine
+    - ds platform
 
 - synonym: Sony PSP
   examples: |
     - psp
     - sony psp
+    - playstation portable
+    - psp handheld
+    - sony portable console
+    - psp device
+    - psp system
+    - psp console
+    - sony-psp
+    - psp gaming device
+    - portable playstation
+    - psp machine
+    - psp platform
+    - psp unit
+    - psp videogame system
+
+- synonym: X360
+  examples: |
+    - x360
+    - xbox 360
+    - 360 console
+    - microsoft 360
+    - 360 system
+    - xbox-360
+    - 360 gaming system
+    - 360 platform
+    - microsoft x360
+    - 360 device
+    - 360 videogame console
+    - classic xbox 360
+    - 360 unit
+    - x360 machine
+    - 360 box
+
+- synonym: Nintendo Wii
+  examples: |
+    - nintendo wii
+    - wii
+    - wii console
+    - wii system
+    - nintendo wii device
+    - wii machine
+    - wii platform
+    - nintendo-wii
+    - wii gaming console
+    - wii unit
+    - wii videogame system
+    - classic wii
+    - motion wii
+    - wii hardware
+    - wii setup
+
+- synonym: PlayStation 3
+  examples: |
+    - playstation 3
+    - ps3
+    - sony ps3
+    - ps3 console
+    - ps3 system
+    - playstation-3
+    - ps3 device
+    - ps3 machine
+    - sony playstation 3
+    - ps3 gaming console
+    - ps3 unit
+    - ps3 platform
+    - ps3 hardware
+    - ps3 setup
+    - ps3 videogame system
 
 - synonym: Action
   examples: |
@@ -434,7 +533,7 @@ nlu:
     - traditional combat game
     - martial duel title
     - arts-of-combat game
- synonym: MedievalFantasy
+- synonym: MedievalFantasy
   examples: |
     - medieval fantasy game
     - medieval magical title
