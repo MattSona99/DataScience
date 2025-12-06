@@ -85,29 +85,84 @@ nlu:
 
 - intent: inform
   examples: |
+    # CONSOLE
     - I'm looking for a game for [Nintendo DS](console)
+    - [Nintendo DS](console)
     - I want something on [Sony PSP](console)
     - I'm interested in a game for [PS2](console)
+    - I want to play on [Xbox](console)
+    - I need a game for [Wii](console)
+
+    # GENRE
     - I prefer [Action](genre) games
     - I like [Sports](genre) games
     - I like [RPG](genre) games
-    - I want a game released after [2004](release_year)
-    - find something released in [2004](release_year)
-    - any game released before [2008](release_year) is fine
+    - I'm into [Simulation](genre) games
+    - I want a [Racing / Driving](genre) game
+    - I enjoy [Puzzle](genre) games
+
+    # RELEASE YEAR
+    - I want a game released in [2004](release_year)
+    - find something released in [2008](release_year)
+    - any game released in [2008](release_year) is fine
+    - [2005](release_year)
+    - released in [2005](release_year)
+    - released in [2006](release_year)
+    - show me something from [2007](release_year)
+    - I want something from [2010](release_year)
+    - i want a game from [2009](release_year)
+
+    # USED PRICE (MOLTI ESEMPI VARI)
+    - I want a used game under [20](used_price)
     - I want to spend at most [20](used_price)
     - maximum budget [15](used_price)
     - I don't want to spend more than [10](used_price)
+    - I don't want to spend more than [30](used_price)
+    - my budget is [25](used_price)
+    - my maximum budget is [35](used_price)
+    - I can spend up to [40](used_price)
+    - I don't want to pay more than [12](used_price)
+    - no more than [18](used_price)
+    - please stay under [22](used_price)
+    - stay below [30](used_price) euros
+    - keep the price below [25](used_price)
+    - the used price should be less than [20](used_price)
+    - I'd like something cheaper than [15](used_price)
+    - around [10](used_price) is fine
+    - about [8](used_price) would be perfect
+    - I can spend around [12](used_price)
+    - my budget for a used game is [30](used_price)
+    - I don't want to go over [35](used_price)
+    - something around [5](used_price) would be nice
+    - I prefer a game that costs under [25](used_price)
+    - I have only [7](used_price) to spend
+
+    # REVIEW SCORE
     - choose only games with a score of at least [80](review_score)
+    - [80](review_score)
     - I want a game with a score of at least [85](review_score)
+    - the review score must be at least [70](review_score)
+    - pick only games rated at least [75](review_score)
+    - I want something with review score over [60](review_score)
+    - I want a game rated above [90](review_score)
+
+    # MAX PLAYERS
     - I only need [1](max_player) player
     - I need a game for [2](max_player) players
     - I want multiplayer for up to [4](max_player) players
+    - [3](max_player)
+    - a [2](max_player) player game is fine
+
+    # ONLINE / MULTIPLATFORM / PUBLISHER
     - I want it to be [online](online)
     - I don't care if it's [online](online)
+    - [online](online)
+    - [offline](online)
     - I prefer [multiplatform](multiplatform) games
     - I want an exclusive, so not [multiplatform](multiplatform)
     - I like the publisher [Nintendo](publisher)
     - I'm looking for something from [Ubisoft](publisher)
+    - I like games from [Sony](publisher)
 
 
 # --- Synonyms for entity VALUES ---

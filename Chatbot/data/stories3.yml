@@ -1,0 +1,23 @@
+
+version: "3.1"
+stories:
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: inform
+    entities:
+    - console: Nintendo DS
+  - slot_was_set:
+    - console: Nintendo DS
+  - action: utter_confirm_preferences
+  - intent: submit
+  - action: utter_submit
+  - action: action_search_game
+  - slot_was_set:
+    - last_result:
+      - Super Mario 64 DS
+      - WarioWare Touched!
+      - Spider-Man 2
+      - 'The Urbz: Sims in the City'
+      - Madden NFL 2005

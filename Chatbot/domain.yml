@@ -3,8 +3,8 @@ version: "3.1"
 intents:
   - greet
   - goodbye
-  - submit      # user confirms: "yes, show me the results"
-  - deny        # user says no / wants to change something
+  - submit        # user confirms: "yes, show me the results"
+  - deny          # user says no / wants to change something
   - request_form  # user asks for a video game recommendation
   - inform        # user specifies preferences (console, genre, budget, ...)
 
@@ -76,14 +76,19 @@ slots:
       - type: from_entity
         entity: publisher
     influence_conversation: false
+  last_result:
+    type: list
+    influence_conversation: false
+    mappings:
+      - type: custom
 
 forms:
   game_preferences_form:
     required_slots:
       - console
       - genre
-      - used_price
       - release_year
+      - used_price
       - review_score
       - max_player
       - online
@@ -106,7 +111,7 @@ responses:
     - text: "Do you have a maximum budget for a used game? Tell me an amount (e.g. 20), or type 'no limit'."
 
   utter_ask_release_year:
-    - text: "Do you prefer games from a specific period? For example: before 2005, after 2004, or a specific year."
+    - text: "Do you prefer games from a specific period? For example: specify a release year (e.g. 2004)."
 
   utter_ask_review_score:
     - text: "How good should the reviews be? (e.g. at least 80 out of 100)"
@@ -128,8 +133,8 @@ responses:
         Perfect, here is a summary of your preferences:
         • Console: {console}
         • Genre: {genre}
-        • Used game budget: {used_price}
         • Release year: {release_year}
+        • Used game budget: {used_price}
         • Minimum review score: {review_score}
         • Max players: {max_player}
         • Online: {online}
@@ -143,6 +148,9 @@ responses:
   utter_no_results:
     - text: "I couldn't find any games matching all your filters. Do you want to relax the criteria a bit (e.g. higher budget or lower minimum review score)?"
 
+actions:
+  - action_search_game
+  
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
