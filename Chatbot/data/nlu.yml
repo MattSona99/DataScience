@@ -189,20 +189,1276 @@ nlu:
 
 - synonym: Action
   examples: |
-    - action
     - action game
+    - action titles
+    - high-action
+    - fast action
+    - adrenaline action
+    - intense action
+    - dynamic action
+    - pure action
+    - action-packed
+    - combat action
 
 - synonym: Sports
   examples: |
-    - sports
     - sports game
-    - sport game
+    - athletics game
+    - sport-based title
+    - sports activity game
+    - competitive sports game
+    - team sports game
+    - multisport game
+    - sports-themed game
+    - sports gameplay
+    - athletic competition game
 
+- synonym: Strategy
+  examples: |
+    - strategy game
+    - strategic title
+    - tactical strategy
+    - planning strategy
+    - war strategy
+    - board strategy
+    - turn strategy
+    - strategic simulation
+    - deep strategy
+    - strategy-focused game
+- synonym: Adult
+  examples: |
+    - adult-only game
+    - mature game
+    - 18plus game
+    - forbidden content game
+    - mature-themed title
+    - adults-exclusive game
+    - restricted content game
+    - adult-themed experience
+    - mature entertainment game
+    - explicit-content game
+- synonym: Anime
+  examples: |
+    - anime-style game
+    - anime-themed game
+    - manga-inspired game
+    - japanese-style game
+    - animated-japan game
+    - anime aesthetic game
+    - toon-japan game
+    - anime fantasy game
+    - anime adventure game
+    - anime universe game
+- synonym: Arcade
+  examples: |
+    - arcade game
+    - arcade-style title
+    - classic arcade
+    - retro arcade
+    - coin-op style
+    - fast arcade
+    - old-school arcade
+    - arcade action
+    - arcade cabinet game
+    - arcade challenge
+- synonym: Battlemech
+  examples: |
+    - mech combat game
+    - mech warfare
+    - giant robot battle
+    - mechanized combat
+    - mech fighting game
+    - armored mech battles
+    - robotic war game
+    - heavy mech action
+    - mech unit combat
+    - mech assault style
+- synonym: Boardgame
+  examples: |
+    - board game
+    - tabletop game
+    - table strategy game
+    - board-style play
+    - tile-based board game
+    - traditional board game
+    - tabletop-style title
+    - turn board game
+    - classic board setup
+    - board-based challenge
+- synonym: Cards
+  examples: |
+    - card game
+    - deck-based game
+    - deck strategy
+    - card battle title
+    - card challenge
+    - draw card game
+    - collectible cards title
+    - card dueling
+    - deck tactics
+    - card puzzle
+- synonym: Casino
+  examples: |
+    - casino game
+    - gambling title
+    - betting game
+    - slot machine game
+    - casino table game
+    - roulette-style game
+    - blackjack-style game
+    - casino simulation
+    - gambler challenge
+    - betting simulator
+- synonym: Chess
+  examples: |
+    - chess game
+    - classic chess
+    - board chess
+    - strategic chess
+    - king-and-queen game
+    - chess match simulator
+    - chess tactics game
+    - chessboard challenge
+    - piece movement game
+    - turn chess game
+- synonym: Comics
+  examples: |
+    - comic-style game
+    - comic adventure
+    - graphic story game
+    - cartoon panel game
+    - comic action game
+    - illustrated comic game
+    - cartoon narrative title
+    - comic fantasy game
+    - comic hero game
+    - panel-style game
+- synonym: Cyberpunk
+  examples: |
+    - cyberpunk game
+    - neon dystopia game
+    - tech-noir game
+    - futuristic underworld game
+    - neon city adventure
+    - cyber dystopian game
+    - cybernetic future game
+    - urban sci-fi noir
+    - high-tech dystopia
+    - cyber rebellion game
+- synonym: Detective
+  examples: |
+    - detective game
+    - crime-solving title
+    - investigation game
+    - mystery case game
+    - clue solver
+    - private investigator game
+    - case-solving adventure
+    - crime mystery game
+    - investigative puzzle
+    - detective challenge
+- synonym: Fighting
+  examples: |
+    - fighting game
+    - combat fighter title
+    - brawler game
+    - martial combat game
+    - duel fighting
+    - hand-to-hand game
+    - arena fighting
+    - fighter battle
+    - melee combat title
+    - strike combat game
+- synonym: Flight
+  examples: |
+    - flight game
+    - aerial simulation
+    - air combat title
+    - flight mission game
+    - aviation challenge
+    - pilot simulator
+    - aerial adventure
+    - airborne game
+    - sky mission game
+    - aircraft control game
+- synonym: Gameshow
+  examples: |
+    - game show
+    - quiz show game
+    - tv show quiz
+    - trivia challenge game
+    - televised game show
+    - studio competition game
+    - question showdown
+    - audience quiz title
+    - panel quiz game
+    - tv contest style
+- synonym: Helicoptor
+  examples: |
+    - helicopter game
+    - rotorcraft simulation
+    - chopper mission game
+    - air rescue helicopter
+    - tactical helicopter game
+    - rotor flight title
+    - airborne chopper sim
+    - heli combat mission
+    - helicopter pilot sim
+    - rotor mission game
+- synonym: HistoricalBattle
+  examples: |
+    - historical battle game
+    - history warfare title
+    - ancient war game
+    - classic battlefield game
+    - historical combat sim
+    - old era war scenario
+    - historic conflict game
+    - past war simulation
+    - heritage battle game
+    - ancient army clash
+- synonym: Horror
+  examples: |
+    - horror game
+    - scary adventure
+    - fright experience
+    - terror-themed game
+    - dark horror title
+    - nightmare scenario
+    - eerie survival game
+    - haunting game
+    - chilling adventure
+    - spooky gameplay
+- synonym: InteractiveFiction
+  examples: |
+    - interactive fiction game
+    - text adventure
+    - story interaction game
+    - narrative text game
+    - type-and-play story
+    - interactive novel
+    - text decision game
+    - narrative input game
+    - story-driven text
+    - branching fiction
+- synonym: InteractiveFictionGraphics
+  examples: |
+    - graphic interactive fiction
+    - illustrated text adventure
+    - visual story interaction
+    - image-supported fiction
+    - graphic narrative puzzle
+    - illustrated decision game
+    - pictured story game
+    - narrative art adventure
+    - graphic-enhanced fiction
+    - visualized interactive tale
+- synonym: InteractiveMovie
+  examples: |
+    - interactive movie game
+    - film-like adventure
+    - cinematic interaction
+    - movie story control
+    - live-action choice game
+    - film narrative game
+    - cinematic branching story
+    - movie decision game
+    - interactive film tale
+    - playable movie
+- synonym: Managerial
+  examples: |
+    - managerial game
+    - management sim
+    - resource management game
+    - organizational strategy
+    - administration challenge
+    - business simulation
+    - economic management game
+    - micro-management title
+    - management planning game
+    - operations control game
+- synonym: MartialArts
+  examples: |
+    - martial arts game
+    - dojo fighting game
+    - martial combat title
+    - technique fighting game
+    - disciplined combat game
+    - martial skills challenge
+    - dojo battle game
+    - traditional combat game
+    - martial duel title
+    - arts-of-combat game
+ synonym: MedievalFantasy
+  examples: |
+    - medieval fantasy game
+    - medieval magical title
+    - sword and sorcery world
+    - fantasy middle ages
+    - medieval quest game
+    - enchanted medieval realm
+    - knight fantasy game
+    - mythic medieval adventure
+    - medieval story fantasy
+    - arcane medieval title
+
+- synonym: Meditative
+  examples: |
+    - meditative game
+    - relaxation experience
+    - calm atmosphere game
+    - peaceful interaction title
+    - zen-like gameplay
+    - soothing game
+    - mindful play
+    - tranquil experience
+    - serene game environment
+    - slow-paced relaxing title
+
+- synonym: MentalTraining
+  examples: |
+    - mental training game
+    - brain challenge game
+    - cognitive practice game
+    - mind workout
+    - intellectual exercise game
+    - cognitive puzzle training
+    - brain improvement title
+    - logic training play
+    - mental skills game
+    - reasoning practice title
+
+- synonym: Naval
+  examples: |
+    - naval game
+    - sea battle title
+    - naval combat experience
+    - ocean warfare game
+    - maritime strategy game
+    - warship action game
+    - naval operations title
+    - ship command game
+    - naval conflict scenario
+    - naval mission game
+
+- synonym: Paddle
+  examples: |
+    - paddle game
+    - bat-and-ball title
+    - bouncing ball arcade
+    - paddle challenge
+    - retro paddle game
+    - classic bouncing game
+    - ricochet paddle title
+    - vertical paddle game
+    - block-breaking style game
+    - reflex paddle challenge
+
+- synonym: PersistentUniverse
+  examples: |
+    - persistent universe game
+    - continuous world title
+    - online world simulation
+    - evolving universe game
+    - shared universe experience
+    - persistent world multiplayer
+    - dynamic universe title
+    - living world game
+    - ongoing universe setting
+    - open persistent realm
+
+- synonym: Pinball
+  examples: |
+    - pinball game
+    - flipper machine game
+    - arcade pinball title
+    - table pinball experience
+    - classic pinball gameplay
+    - steel ball arcade
+    - pinball table simulation
+    - retro pinball machine
+    - bumper arcade game
+    - flipper action title
+
+- synonym: PostApocalyptic
+  examples: |
+    - post-apocalyptic game
+    - wasteland survival title
+    - ruined world adventure
+    - apocalypse aftermath game
+    - devastated world game
+    - survival-after-catastrophe
+    - wasteland exploration game
+    - destroyed civilization title
+    - apocalyptic setting game
+    - end-of-world scenario
+
+- synonym: Puzzle
+  examples: |
+    - puzzle game
+    - logic puzzle title
+    - brain teaser play
+    - puzzle-solving challenge
+    - thinking game
+    - logic challenge gameplay
+    - puzzle-focused experience
+    - mind puzzler game
+    - pattern-solving game
+    - puzzle-based mechanics
+
+- synonym: RealTime
+  examples: |
+    - real-time game
+    - immediate action title
+    - continuous gameplay
+    - real-time challenge
+    - fast update gameplay
+    - on-the-fly action
+    - non-turn-based game
+    - live reaction title
+    - real-time mechanics
+    - flow-based interaction
+
+- synonym: RhythmAction
+  examples: |
+    - rhythm action game
+    - beat-matching title
+    - music timing challenge
+    - rhythm coordination game
+    - tempo-based gameplay
+    - rhythm challenge title
+    - beat reaction game
+    - musical action experience
+    - timing rhythm adventure
+    - rhythm-focused mechanics
+
+- synonym: SciFi
+  examples: |
+    - sci-fi game
+    - futuristic technology game
+    - science fiction title
+    - space-age adventure
+    - future world game
+    - interstellar sci-fi experience
+    - advanced tech game
+    - sci-fi themed story
+    - scientific fantasy title
+    - futuristic scenario game
+
+- synonym: Shooter
+  examples: |
+    - shooter game
+    - shooting title
+    - weapon-based action
+    - firing game
+    - projectile combat game
+    - shooting challenge
+    - shooter-style gameplay
+    - gunplay experience
+    - marksmanship game
+    - fire-action title
+
+- synonym: Spy
+  examples: |
+    - spy game
+    - espionage title
+    - undercover mission
+    - stealth agent game
+    - covert operations title
+    - secret agent gameplay
+    - hidden infiltration game
+    - covert action experience
+    - spy-themed adventure
+    - intelligence mission game
+
+- synonym: Stealth
+  examples: |
+    - stealth game
+    - sneaking title
+    - infiltration gameplay
+    - silent movement game
+    - stealth tactics experience
+    - covert stealth challenge
+    - hidden movement game
+    - stealth operations title
+    - silent approach play
+    - stealth strategy game
+
+- synonym: SurvivalHorror
+  examples: |
+    - survival horror game
+    - fear survival title
+    - horror escape experience
+    - survival dread game
+    - terror scenario gameplay
+    - frightening survival challenge
+    - dark horror survival
+    - panic survival adventure
+    - horror endurance game
+    - fear-based survival
+
+- synonym: Tank
+  examples: |
+    - tank game
+    - armored vehicle battle
+    - tank combat title
+    - tracked war machine game
+    - armored warfare game
+    - heavy vehicle battle
+    - tank operations title
+    - armored combat challenge
+    - battle tank simulation
+    - tank-focused action
+- synonym: TurnBased
+  examples: |
+    - turn-based game
+    - sequential action title
+    - step-by-step gameplay
+    - turn sequence game
+    - round-based match
+    - tactical turn play
+    - ordered move scenario
+    - strategic turn battle
+    - discrete turn game
+    - phased decision title
+
+- synonym: VideoBackdrop
+  examples: |
+    - video backdrop game
+    - filmed background title
+    - live video scenery game
+    - motion backdrop gameplay
+    - pre-rendered video world
+    - cinematic background game
+    - video-scene adventure
+    - looping video setting
+    - video-environment title
+    - background film interface
+
+- synonym: VisualNovel
+  examples: |
+    - visual novel game
+    - illustrated story title
+    - narrative novel experience
+    - graphic storytelling game
+    - story-focused visual tale
+    - dialogue-driven novel
+    - illustrated narrative play
+    - character-based visual story
+    - interactive storybook title
+    - visual tale experience
+
+- synonym: Ecology
+  examples: |
+    - ecology game
+    - environmental simulation
+    - ecosystem challenge game
+    - nature balance title
+    - ecological strategy play
+    - habitat management game
+    - natural system simulation
+    - eco-focused interaction
+    - biodiversity game
+    - environmental stewardship game
+
+- synonym: Language
+  examples: |
+    - language game
+    - vocabulary training game
+    - linguistic learning title
+    - word practice experience
+    - language skills challenge
+    - grammar-focused game
+    - language puzzle title
+    - linguistic practice simulation
+    - word improvement game
+    - language enhancement play
+
+- synonym: Geography
+  examples: |
+    - geography game
+    - world map challenge
+    - global location title
+    - geo-knowledge quiz
+    - country identification game
+    - map-based learning challenge
+    - world regions activity
+    - geographic exploration game
+    - earth knowledge title
+    - location mastery game
+
+- synonym: Graphics
+  examples: |
+    - graphics game
+    - visual effects experience
+    - advanced rendering title
+    - graphical showcase game
+    - high-visual-quality game
+    - graphic technology demo
+    - visual performance title
+    - art-driven experience
+    - high-fidelity visual game
+    - graphical innovation title
+
+- synonym: Health
+  examples: |
+    - health game
+    - wellness training title
+    - healthy habits game
+    - physical wellbeing play
+    - health education game
+    - wellness activity experience
+    - fitness learning game
+    - body awareness challenge
+    - health-focused simulation
+    - wellbeing improvement game
+
+- synonym: History
+  examples: |
+    - history game
+    - historical learning title
+    - past events simulation
+    - history-based challenge
+    - historical exploration game
+    - time-period learning game
+    - historic knowledge title
+    - past-era story game
+    - history-focused activity
+    - chronological learning play
+
+- synonym: Maths
+  examples: |
+    - maths game
+    - arithmetic challenge
+    - math training title
+    - numerical reasoning game
+    - numbers practice experience
+    - calculation skill game
+    - mathematics puzzle title
+    - math improvement activity
+    - numeric logic challenge
+    - problem-solving math game
+
+- synonym: Music
+  examples: |
+    - music game
+    - musical interaction title
+    - melody-focused game
+    - tune creation play
+    - rhythm melody challenge
+    - music skill game
+    - composition activity game
+    - melodic experience title
+    - audio creativity game
+    - sound-based gameplay
+
+- synonym: PreSchool
+  examples: |
+    - preschool game
+    - early learning activity
+    - toddler education title
+    - preschool skills challenge
+    - kids basic learning game
+    - early childhood play
+    - foundational skills game
+    - preschool discovery title
+    - small children learning game
+    - early education experience
+
+- synonym: Reading
+  examples: |
+    - reading game
+    - reading practice title
+    - reading comprehension activity
+    - word reading challenge
+    - reading improvement play
+    - read-along title
+    - literacy learning game
+    - reading-focused interaction
+    - text reading challenge
+    - reading development game
+
+- synonym: Religion
+  examples: |
+    - religion game
+    - spiritual learning title
+    - religious tradition game
+    - belief system exploration
+    - faith-themed activity
+    - religious knowledge challenge
+    - spiritual story game
+    - tradition-focused play
+    - belief-themed title
+    - religious culture experience
+
+- synonym: Science
+  examples: |
+    - science game
+    - scientific experiment title
+    - science learning challenge
+    - discovery-based science play
+    - scientific method activity
+    - science exploration game
+    - educational science title
+    - research-focused challenge
+    - science principles game
+    - experimental learning play
+
+- synonym: Sociology
+  examples: |
+    - sociology game
+    - society learning title
+    - cultural behavior challenge
+    - social structure game
+    - community study experience
+    - social dynamics activity
+    - human interaction learning game
+    - social concept title
+    - cultural systems challenge
+    - sociology-focused play
+
+- synonym: Typing
+  examples: |
+    - typing game
+    - keyboard practice title
+    - typing speed challenge
+    - typing accuracy play
+    - key-press training game
+    - keyboard skill exercise
+    - rapid typing activity
+    - typing improvement session
+    - keyboard mastery game
+    - type training title
+
+- synonym: AmericanFootball
+  examples: |
+    - american football game
+    - gridiron simulation
+    - football tactics challenge
+    - touchdown strategy game
+    - american football experience
+    - gridiron sports title
+    - football field play
+    - touchdown-focused game
+    - football match simulation
+    - american football activity
+
+- synonym: Basketball
+  examples: |
+    - basketball game
+    - hoops challenge title
+    - basketball simulation
+    - slam dunk activity
+    - court-based basketball play
+    - basketball skills game
+    - hoops accuracy challenge
+    - basketball tactics game
+    - basketball scoring play
+    - basketball training title
+
+- synonym: Baseball
+  examples: |
+    - baseball game
+    - batting challenge title
+    - baseball field simulation
+    - pitching practice game
+    - home run activity
+    - baseball strategy play
+    - baseball match experience
+    - batting skills game
+    - baseball play session
+    - fielding practice title
+
+- synonym: Boxing
+  examples: |
+    - boxing game
+    - ring combat title
+    - boxing match simulation
+    - glove fighting experience
+    - boxing challenge play
+    - sparring training game
+    - boxing skills activity
+    - ring battle title
+    - boxing practice game
+    - boxing-focused combat
+
+- synonym: Bowling
+  examples: |
+    - bowling game
+    - pin strike challenge
+    - alley bowling simulation
+    - ten-pin activity
+    - bowling accuracy play
+    - strike-focused title
+    - lane bowling game
+    - roll-and-strike challenge
+    - bowling session game
+    - precision bowling activity
+
+- synonym: Cricket
+  examples: |
+    - cricket game
+    - bat-and-ball cricket title
+    - cricket match simulation
+    - bowling cricket challenge
+    - cricket batting skills game
+    - cricket field activity
+    - wicket-based play
+    - cricket tactics session
+    - cricket sports title
+    - run-scoring cricket game
+
+- synonym: Fishing
+  examples: |
+    - fishing game
+    - angling experience
+    - fishing simulation
+    - catch-and-reel game
+    - rod casting challenge
+    - fishing sport activity
+    - fish catching gameplay
+    - fishing expedition title
+    - lake fishing session
+    - angling challenge game
+
+- synonym: Cycling
+  examples: |
+    - cycling game
+    - bike racing title
+    - cycling challenge play
+    - pedal racing activity
+    - cycle sport simulation
+    - biking competition title
+    - cycling speed session
+    - road bike challenge
+    - cycling performance game
+    - bike endurance activity
+
+- synonym: Golf
+  examples: |
+    - golf game
+    - golf course simulation
+    - golfing challenge title
+    - precision golf play
+    - golf swing activity
+    - hole-in-one challenge
+    - golf tournament game
+    - golf technique practice
+    - golfing accuracy session
+    - golf strategy play
+
+- synonym: Hockey
+  examples: |
+    - hockey game
+    - rink hockey simulation
+    - stick-and-puck challenge
+    - ice hockey play
+    - hockey match activity
+    - skating hockey title
+    - hockey tactics game
+    - puck control challenge
+    - hockey simulation activity
+    - ice sports hockey play
+
+- synonym: Horse
+  examples: |
+    - horse game
+    - equestrian activity title
+    - horseback riding simulation
+    - horse racing challenge
+    - equine sports game
+    - horse care experience
+    - riding skills play
+    - equestrian challenge game
+    - horse competition title
+    - mounted activity game
+
+- synonym: Hunting
+  examples: |
+    - hunting game
+    - wildlife hunting title
+    - hunting expedition game
+    - animal tracking activity
+    - hunting challenge simulation
+    - outdoor hunter game
+    - hunting adventure play
+    - precision hunt activity
+    - tracking and hunting game
+    - hunter mission title
+
+- synonym: Motorcycle
+  examples: |
+    - motorcycle game
+    - motorbike racing title
+    - moto challenge game
+    - bike riding simulation
+    - motorcycle speed activity
+    - racing motorcycle play
+    - motorbike competition game
+    - moto sports challenge
+    - fast bike session
+    - motorcycle performance title
+
+- synonym: OffRoad
+  examples: |
+    - off-road game
+    - rugged terrain challenge
+    - offroad driving title
+    - dirt track experience
+    - off-road racing play
+    - wilderness driving game
+    - rocky path challenge
+    - mud trail racing
+    - offroad vehicle session
+    - rough terrain adventure
+
+- synonym: Olympiad
+  examples: |
+    - olympiad game
+    - olympic sports challenge
+    - multi-sport olympic title
+    - athletic event game
+    - olympic competition play
+    - medal challenge game
+    - sporting event simulation
+    - olympic discipline activity
+    - multi-event sports game
+    - olympic-style challenge
+
+- synonym: Paintball
+  examples: |
+    - paintball game
+    - paint match challenge
+    - paint-shooting activity
+    - competitive paintball play
+    - arena paintball session
+    - paint combat game
+    - paint sport title
+    - paint-tag activity
+    - paint projectile challenge
+    - paintball battle play
+
+- synonym: PingPong
+  examples: |
+    - ping pong game
+    - table tennis simulation
+    - paddle sport challenge
+    - ping-pong match title
+    - quick reflex paddle game
+    - table tennis rally
+    - ping pong practice activity
+    - paddle ball challenge
+    - table sport experience
+    - ping pong skill game
+
+- synonym: Pool
+  examples: |
+    - pool game
+    - billiard play title
+    - cue ball challenge
+    - pool table simulation
+    - precision billiards game
+    - cue-based activity
+    - pool match session
+    - billiard tactics title
+    - pocketing challenge
+    - pool skills experience
+
+- synonym: Rugby
+  examples: |
+    - rugby game
+    - scrum challenge title
+    - rugby match simulation
+    - rugby tactics play
+    - try-scoring rugby game
+    - rugby field activity
+    - rugby skills session
+    - rugby team challenge
+    - rugby sports simulation
+    - dynamic rugby play
+
+- synonym: Sailing
+  examples: |
+    - sailing game
+    - boat navigation challenge
+    - sailing simulation
+    - wind-controlled boat game
+    - sea sailing title
+    - nautical sailing activity
+    - sail racing play
+    - oceanic sailing challenge
+    - boat maneuvering game
+    - sailing performance session
+
+- synonym: Skateboarding
+  examples: |
+    - skateboarding game
+    - skate tricks challenge
+    - skateboard riding simulation
+    - skatepark activity
+    - trick-based skating play
+    - ramp skating title
+    - skateboarding freestyle game
+    - board tricks challenge
+    - skateboarding performance game
+    - skating action title
+
+- synonym: Snowboarding
+  examples: |
+    - snowboarding game
+    - snowboard challenge
+    - downhill snowboarding play
+    - snow slope riding game
+    - snowboarding tricks title
+    - mountain snowboard simulation
+    - snow sport activity
+    - snowboarding freestyle game
+    - board-on-snow challenge
+    - alpine snowboarding title
+
+- synonym: Soccer
+  examples: |
+    - soccer game
+    - football match simulation
+    - soccer tactics challenge
+    - goal-scoring soccer title
+    - football strategy play
+    - soccer field activity
+    - soccer team challenge
+    - pitch-based soccer game
+    - football skills session
+    - soccer sports experience
+
+- synonym: Surfing
+  examples: |
+    - surfing game
+    - surf wave challenge
+    - surfing simulation
+    - wave riding activity
+    - surfboard performance play
+    - surfing freestyle title
+    - ocean surf challenge
+    - surf skills session
+    - wave-sport adventure
+    - surf riding experience
+
+- synonym: Tennis
+  examples: |
+    - tennis game
+    - racket sports challenge
+    - tennis simulation
+    - court tennis play
+    - tennis rally title
+    - serve-and-return activity
+    - tennis match challenge
+    - precision tennis game
+    - tennis skills session
+    - competitive tennis play
+
+- synonym: Tricks
+  examples: |
+    - tricks game
+    - stunt challenge title
+    - trick performance play
+    - acrobatic action activity
+    - stunt-focused gameplay
+    - trick-based mechanics
+    - freestyle stunt game
+    - movement tricks challenge
+    - acrobatic skill game
+    - stunt skills title
+
+- synonym: Volleyball
+  examples: |
+    - volleyball game
+    - beach volleyball challenge
+    - volley match simulation
+    - set-and-spike title
+    - volleyball sports play
+    - indoor volleyball activity
+    - team volley game
+    - net-based volleyball play
+    - spiking challenge game
+    - volleyball skills session
+
+- synonym: Wakeboarding
+  examples: |
+    - wakeboarding game
+    - waterboard challenge
+    - tow-sport simulation
+    - wake riding activity
+    - wake trick performance
+    - waterboard freestyle title
+    - wake-sport challenge
+    - wakeboarding skills play
+    - board-on-water session
+    - wake maneuver game
+
+- synonym: Wrestling
+  examples: |
+    - wrestling game
+    - ring wrestling simulation
+    - grapple challenge title
+    - wrestling match play
+    - wrestling techniques game
+    - ring combat activity
+    - grappling session play
+    - wrestling performance game
+    - combat wrestling title
+    - wrestling fight activity
+
+- synonym: FirstPerson
+  examples: |
+    - first-person game
+    - viewpoint-first title
+    - fp gameplay perspective
+    - immersive first view
+    - first-person oriented play
+    - avatar-eyes perspective
+    - direct-view gameplay
+    - first perspective challenge
+    - first-person mode game
+    - fp action experience
+
+- synonym: Platform
+  examples: |
+    - platform game
+    - jump-and-run title
+    - platformer challenge
+    - obstacle platform play
+    - side platform action
+    - jumping adventure game
+    - platform pathway play
+    - leap-and-dodge gameplay
+    - step-based platformer
+    - classic platform challenge
+
+- synonym: Isometric
+  examples: |
+    - isometric game
+    - angled-view title
+    - isometric angle experience
+    - three-quarter view game
+    - tilted perspective play
+    - isometric layout title
+    - diagonal view gameplay
+    - angled world presentation
+    - isometric-style rendering
+    - skewed perspective game
+
+- synonym: SideScrolling
+  examples: |
+    - side scrolling game
+    - side-view adventure
+    - scrolling action title
+    - 2d side movement game
+    - side-travel gameplay
+    - side-run challenge
+    - lateral progression game
+    - side path adventure
+    - scrolling movement experience
+    - side-direction play
+
+- synonym: TopDown
+  examples: |
+    - top-down game
+    - overhead view title
+    - bird's-eye gameplay
+    - god-view game
+    - top perspective play
+    - downward view scenario
+    - overhead action title
+    - top-angle adventure
+    - vertical perspective game
+    - top-down mechanics
+
+- synonym: ThirdPerson
+  examples: |
+    - third-person game
+    - third-view title
+    - behind-character play
+    - external perspective game
+    - over-the-shoulder gameplay
+    - third-person camera game
+    - distant-view action
+    - external avatar play
+    - third perspective experience
+    - tp gameplay mode
+
+- synonym: Train
+  examples: |
+    - train game
+    - railway simulation
+    - locomotive driving title
+    - rail transport game
+    - train operations simulator
+    - locomotive experience
+    - railway control game
+    - train route management
+    - rail-driving gameplay
+    - locomotive handling game
 - synonym: RPG
   examples: |
-    - rpg
     - role playing game
-    - role-playing game
+    - roleplay game
+    - fantasy rpg
+    - character-based rpg
+    - classic rpg
+    - narrative rpg
+    - turn-based rpg
+    - quest rpg
+    - epic rpg
+    - story rpg
+
+- synonym: Simulation
+  examples: |
+    - simulation game
+    - realistic simulation
+    - sim-style game
+    - system simulator
+    - life simulation
+    - management simulation
+    - virtual simulation
+    - detailed simulator
+    - sim environment
+    - full simulation game
+
+- synonym: Adventure
+  examples: |
+    - adventure game
+    - story adventure
+    - quest adventure
+    - explorative adventure
+    - classic adventure
+    - fantasy adventure
+    - narrative adventure
+    - adventurous title
+    - adventure journey
+    - epic adventure
+- synonym: Educational
+  examples: |
+    - educational game
+    - learning game
+    - didactic game
+    - training game
+    - study game
+    - knowledge-based game
+    - classroom-style game
+    - teaching game
+    - learning-oriented game
+    - instructional game
+- synonym: Racing
+  examples: |
+    - racing game
+    - speed racing
+    - race track game
+    - competitive racing
+    - motorsport racing
+    - time trial racing
+    - street racing game
+    - circuit racing
+    - high-speed racing
+    - driving race game
 
 - synonym: online
   examples: |

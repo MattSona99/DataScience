@@ -38,4 +38,3 @@ rules:
     - action: action_deactivate_loop
     - active_loop: null
     - action: utter_goodbye
-
