@@ -1,0 +1,148 @@
+
+version: "3.1"
+stories:
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: request_form
+  - action: utter_start_recommendation
+  - action: game_preferences_form
+  - active_loop: game_preferences_form
+  - slot_was_set:
+    - requested_slot: console
+  - intent: inform
+    entities:
+    - console: Nintendo DS
+  - slot_was_set:
+    - console: Nintendo DS
+
+  - action: game_preferences_form
+  - slot_was_set:
+    - console: Nintendo DS
+  - slot_was_set:
+    - requested_slot: genre
+  - intent: inform
+    entities:
+    - genre: adventure
+  - slot_was_set:
+    - genre: adventure
+
+  - action: game_preferences_form
+  - slot_was_set:
+    - console: Nintendo DS
+  - slot_was_set:
+    - genre: adventure
+  - slot_was_set:
+    - requested_slot: release_year
+  - intent: inform
+    entities:
+    - release_year: '2005'
+  - slot_was_set:
+    - release_year: '2005'
+
+  - action: game_preferences_form
+  - slot_was_set:
+    - console: Nintendo DS
+  - slot_was_set:
+    - genre: adventure
+  - slot_was_set:
+    - release_year: '2005'
+  - slot_was_set:
+    - requested_slot: used_price
+  - intent: inform
+    entities:
+    - used_price: '10'
+  - slot_was_set:
+    - used_price: '10'
+
+  - action: game_preferences_form
+  - slot_was_set:
+    - console: Nintendo DS
+  - slot_was_set:
+    - genre: adventure
+  - slot_was_set:
+    - release_year: '2005'
+  - slot_was_set:
+    - used_price: '10'
+  - slot_was_set:
+    - requested_slot: review_score
+  - intent: inform
+    entities:
+    - review_score: '80'
+  - slot_was_set:
+    - review_score: '80'
+  
+  - action: game_preferences_form
+  - slot_was_set:
+    - console: Nintendo DS
+  - slot_was_set:
+    - genre: adventure
+  - slot_was_set:
+    - release_year: '2005'
+  - slot_was_set:
+    - used_price: '10'
+  - slot_was_set:
+    - review_score: '80'
+  - slot_was_set:
+    - requested_slot: max_player
+  - intent: inform
+    entities:
+    - max_player: '1'
+  - slot_was_set:
+    - max_player: '1'
+
+  - action: game_preferences_form
+  - slot_was_set:
+    - console: Nintendo DS
+  - slot_was_set:
+    - genre: adventure
+  - slot_was_set:
+    - release_year: '2005'
+  - slot_was_set:
+    - used_price: '10'
+  - slot_was_set:
+    - review_score: '80'
+  - slot_was_set:
+    - max_player: '1'
+  - slot_was_set:
+    - requested_slot: online
+  - intent: inform
+    entities:
+    - online: false
+  - slot_was_set:
+    - online: false 
+
+  - action: game_preferences_form
+  - slot_was_set:
+    - console: Nintendo DS
+  - slot_was_set:
+    - genre: adventure
+  - slot_was_set:
+    - release_year: '2005'
+  - slot_was_set:
+    - used_price: '10'
+  - slot_was_set:
+    - review_score: '80'
+  - slot_was_set:
+    - max_player: '1'
+  - slot_was_set:
+    - online: false
+  - slot_was_set:
+    - requested_slot: multiplatform
+  - intent: inform
+    entities:
+    - multiplatform: false
+  - slot_was_set:
+    - multiplatform: false
+
+  - action: utter_confirm_preferences
+  - intent: submit
+  - action: action_deactivate_loop
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_submit
+  - action: action_search_game
+  - intent: goodbye
+  - action: utter_goodbye

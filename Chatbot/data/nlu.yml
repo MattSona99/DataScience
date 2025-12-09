@@ -85,39 +85,84 @@ nlu:
 
 - intent: inform
   examples: |
+    # CONSOLE
     - I'm looking for a game for [Nintendo DS](console)
+    - [Nintendo DS](console)
     - I want something on [Sony PSP](console)
     - I'm interested in a game for [PS2](console)
+    - I want to play on [Xbox](console)
+    - I need a game for [Wii](console)
+
+    # GENRE
     - I prefer [Action](genre) games
     - I like [Sports](genre) games
     - I like [RPG](genre) games
-    - I want a game released after [2004](release_year)
-    - find something released in [2004](release_year)
-    - any game released before [2008](release_year) is fine
+    - I'm into [Simulation](genre) games
+    - I want a [Racing / Driving](genre) game
+    - I enjoy [Puzzle](genre) games
+
+    # RELEASE YEAR
+    - I want a game released in [2004](release_year)
+    - find something released in [2008](release_year)
+    - any game released in [2008](release_year) is fine
+    - [2005](release_year)
+    - released in [2005](release_year)
+    - released in [2006](release_year)
+    - show me something from [2007](release_year)
+    - I want something from [2010](release_year)
+    - i want a game from [2009](release_year)
+
+    # USED PRICE (MOLTI ESEMPI VARI)
+    - I want a used game under [20](used_price)
     - I want to spend at most [20](used_price)
     - maximum budget [15](used_price)
     - I don't want to spend more than [10](used_price)
+    - I don't want to spend more than [30](used_price)
+    - my budget is [25](used_price)
+    - my maximum budget is [35](used_price)
+    - I can spend up to [40](used_price)
+    - I don't want to pay more than [12](used_price)
+    - no more than [18](used_price)
+    - please stay under [22](used_price)
+    - stay below [30](used_price) euros
+    - keep the price below [25](used_price)
+    - the used price should be less than [20](used_price)
+    - I'd like something cheaper than [15](used_price)
+    - around [10](used_price) is fine
+    - about [8](used_price) would be perfect
+    - I can spend around [12](used_price)
+    - my budget for a used game is [30](used_price)
+    - I don't want to go over [35](used_price)
+    - something around [5](used_price) would be nice
+    - I prefer a game that costs under [25](used_price)
+    - I have only [7](used_price) to spend
+
+    # REVIEW SCORE
     - choose only games with a score of at least [80](review_score)
+    - [80](review_score)
     - I want a game with a score of at least [85](review_score)
+    - the review score must be at least [70](review_score)
+    - pick only games rated at least [75](review_score)
+    - I want something with review score over [60](review_score)
+    - I want a game rated above [90](review_score)
+
+    # MAX PLAYERS
     - I only need [1](max_player) player
     - I need a game for [2](max_player) players
     - I want multiplayer for up to [4](max_player) players
+    - [3](max_player)
+    - a [2](max_player) player game is fine
+
+    # ONLINE / MULTIPLATFORM / PUBLISHER
     - I want it to be [online](online)
     - I don't care if it's [online](online)
+    - [online](online)
+    - [offline](online)
     - I prefer [multiplatform](multiplatform) games
     - I want an exclusive, so not [multiplatform](multiplatform)
     - I like the publisher [Nintendo](publisher)
     - I'm looking for something from [Ubisoft](publisher)
-    - I'm searching for something on [Nintendo Wii](console)
-    - Do you have games for [PlayStation 3](console)?
-    - I'm into [Horror](genre) games lately
-    - I want something from before [2010](release_year)
-    - show me titles released after [2005](release_year)
-    - my budget is around [30](used_price)
-    - don't go over [25](used_price) please
-    - I want a score higher than [50](review_score)
-    - I need a game for at least [3](max_player) players
-    - I prefer titles from [EA Games](publisher)
+    - I like games from [Sony](publisher)
 
 
 # --- Synonyms for entity VALUES ---
@@ -130,106 +175,17 @@ nlu:
     - title
     - product
     - item
-    - game title
-    - digital game
-    - gaming product
-    - software game
-    - playable title
-    - gaming item
-    - interactive game
-    - entertainment title
-    - game software
-
 
 - synonym: Nintendo DS
   examples: |
+    - NDS
     - nintendo ds
-    - nds
-    - ds console
-    - nintendo dual screen
-    - dual screen console
-    - ds handheld
-    - nintendo ds system
-    - ds portable
-    - ds device
-    - nintendo ds handheld
-    - ds gaming system
-    - nintendo-ds
-    - classic ds
-    - ds machine
-    - ds platform
+    - ds
 
 - synonym: Sony PSP
   examples: |
     - psp
     - sony psp
-    - playstation portable
-    - psp handheld
-    - sony portable console
-    - psp device
-    - psp system
-    - psp console
-    - sony-psp
-    - psp gaming device
-    - portable playstation
-    - psp machine
-    - psp platform
-    - psp unit
-    - psp videogame system
-
-- synonym: X360
-  examples: |
-    - x360
-    - xbox 360
-    - 360 console
-    - microsoft 360
-    - 360 system
-    - xbox-360
-    - 360 gaming system
-    - 360 platform
-    - microsoft x360
-    - 360 device
-    - 360 videogame console
-    - classic xbox 360
-    - 360 unit
-    - x360 machine
-    - 360 box
-
-- synonym: Nintendo Wii
-  examples: |
-    - nintendo wii
-    - wii
-    - wii console
-    - wii system
-    - nintendo wii device
-    - wii machine
-    - wii platform
-    - nintendo-wii
-    - wii gaming console
-    - wii unit
-    - wii videogame system
-    - classic wii
-    - motion wii
-    - wii hardware
-    - wii setup
-
-- synonym: PlayStation 3
-  examples: |
-    - playstation 3
-    - ps3
-    - sony ps3
-    - ps3 console
-    - ps3 system
-    - playstation-3
-    - ps3 device
-    - ps3 machine
-    - sony playstation 3
-    - ps3 gaming console
-    - ps3 unit
-    - ps3 platform
-    - ps3 hardware
-    - ps3 setup
-    - ps3 videogame system
 
 - synonym: Action
   examples: |
@@ -984,6 +940,7 @@ nlu:
     - gridiron sports title
     - football field play
     - touchdown-focused game
+    - football match simulation
     - american football activity
 
 - synonym: Basketball
