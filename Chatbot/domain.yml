@@ -23,22 +23,27 @@ entities:
 slots:
   console:
     type: text
-    influence_conversation: true
+    influence_conversation: false
     mappings:
       - type: from_entity
         entity: console
-
+        intent: inform
+        
   genre:
     type: text
-    influence_conversation: true
+    influence_conversation: false
     mappings:
       - type: from_entity
         entity: genre
+        intent: inform
 
   release_year:
     type: float
-    influence_conversation: false
+    influence_conversation: false    
     mappings:
+      - type: from_entity
+        entity: release_year
+        pattern: '\b(19|20)\d{2}\b'
       - type: from_text
         conditions:
           - active_loop: game_preferences_form
@@ -48,6 +53,9 @@ slots:
     type: float
     influence_conversation: false
     mappings:
+      - type: from_entity
+        entity: used_price
+        pattern: '\b\d+(\.\d{1,2})?\b'
       - type: from_text
         conditions:
           - active_loop: game_preferences_form
@@ -57,6 +65,9 @@ slots:
     type: float
     influence_conversation: false
     mappings:
+      - type: from_entity
+        entity: review_score
+        pattern: '\b\d{1,2}\b'
       - type: from_text
         conditions:
           - active_loop: game_preferences_form
@@ -68,17 +79,18 @@ slots:
     mappings:
       - type: from_entity
         entity: max_player
+        pattern: '\b[1-9]\b'
       - type: from_text
         conditions:
           - active_loop: game_preferences_form
             requested_slot: max_player
-
   online:
     type: bool
     influence_conversation: false
     mappings:
       - type: from_entity
         entity: online
+        intent: inform
 
   multiplatform:
     type: bool
@@ -86,6 +98,7 @@ slots:
     mappings:
       - type: from_entity
         entity: multiplatform
+        intent: inform
 
   publisher:
     type: text
@@ -93,6 +106,7 @@ slots:
     mappings:
       - type: from_entity
         entity: publisher
+        intent: inform
 
   subgenres:
     type: text
@@ -100,7 +114,8 @@ slots:
     mappings:
       - type: from_entity
         entity: subgenres
-
+        intent: inform
+        
   last_result:
     type: list
     influence_conversation: false

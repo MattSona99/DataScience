@@ -85,9 +85,9 @@ nlu:
     - can you help me find a game to buy?
     - I'd like a recommendation for a video game
 
+# ------------------ CONSOLE ------------------
 - intent: inform
   examples: |
-    # CONSOLE
     - I'm looking for a game for [Nintendo DS](console)
     - [Nintendo DS](console)
     - I want something on [Sony PSP](console)
@@ -96,11 +96,21 @@ nlu:
     - I need a game for [Wii](console)
     - i have a [nintendo ds]{"entity": "console", "value": "Nintendo DS"}
     - i want to play on [nintendo ds]{"entity": "console", "value": "Nintendo DS"}
+    - Can you suggest a game for [PlayStation 3](console)?
+    - Looking for games on [X360](console)
+    - Games for [Nintendo Wii](console), please
+    - I want to play something on [PSP](console)
+    - Can you suggest a game for [PlayStation 3](console)?
+    - Looking for games on [X360](console)
+    - Games for [Nintendo Wii](console), please
+    - I want to play something on [PSP](console)
 
-    # GENRE
+# ------------------ GENRE ------------------
+- intent: inform
+  examples: |
     - I prefer [Action](genre) games
     - I like [Sports](genre) games
-    - I like [RPG](genre) games
+    - I enjoy [RPG](genre) games
     - I'm into [Simulation](genre) games
     - I want a [Racing](genre) game
     - I enjoy [Puzzle](genre) games
@@ -109,9 +119,20 @@ nlu:
     - I like [Shooter](genre) games
     - I want a [Fighting](genre) game
     - i like [action]{"entity": "genre", "value": "Action"} games
-    - i like [RPG](genre) games
+    - i like [RPG](genre) games    
 
-    # RELEASE YEAR (versione migliorata)
+# ------------------ RELEASE YEAR ------------------
+- intent: inform
+  examples: |
+    - I want a game released in [2004](release_year)
+    - Find something released in [2008](release_year)
+    - Any game from [2008](release_year) is fine
+    - [2005](release_year)
+    - Released in [2005](release_year)
+    - Show me something from [2007](release_year)
+    - I want a game from [2009](release_year)
+    - Games from [2010](release_year) please
+    - Looking for something from [2011](release_year)
     - I want a game released in [2004]{"entity": "release_year", "value": "2004"}
     - find something released in [2008]{"entity": "release_year", "value": "2008"}
     - any game released in [2008]{"entity": "release_year", "value": "2008"} is fine
@@ -125,7 +146,20 @@ nlu:
     - find something released in [2007](release_year)
     - all games from [2005](release_year)
 
-    # USED PRICE (versione migliorata)
+# ------------------ USED PRICE ------------------
+- intent: inform
+  examples: |
+    - I want a used game under [20](used_price)
+    - I want to spend at most [20](used_price)
+    - Maximum budget [15](used_price)
+    - I don't want to spend more than [10](used_price)
+    - My budget is [25](used_price)
+    - I can spend up to [40](used_price)
+    - I prefer something cheaper than [15](used_price)
+    - Around [10](used_price) is fine
+    - [23](used_price)
+    - Something around [5](used_price) would be nice
+    - Keep the price below [25](used_price)
     - I want a used game under [20]{"entity": "used_price", "value": "20"} euros
     - I want to spend at most [20]{"entity": "used_price", "value": "20"} euros
     - my maximum budget is [15]{"entity": "used_price", "value": "15"}
@@ -147,7 +181,16 @@ nlu:
     - please stay under [22]{"entity": "used_price", "value": "22"}
     - my max budget is [20](used_price) dollars
 
-    # REVIEW SCORE
+# ------------------ REVIEW SCORE ------------------
+- intent: inform
+  examples: |
+    - Choose only games with a score of at least [80](review_score)
+    - [80](review_score)
+    - I want a game with a score of at least [85](review_score)
+    - The review score must be at least [70](review_score)
+    - Pick only games rated at least [75](review_score)
+    - I want a game rated above [90](review_score)
+    - Looking for games with [95](review_score) or higher
     - choose only games with a score of at least [80]{"entity": "review_score", "value": "80"}
     - I want a game with a score of at least [85]{"entity": "review_score", "value": "85"}
     - the review score must be at least [70]{"entity": "review_score", "value": "70"}
@@ -158,18 +201,39 @@ nlu:
     - choose only games with a score of at least [70](review_score)
     - I want a game with a score of at least [80](review_score)
 
+# ------------------ MAX PLAYERS ------------------
+- intent: inform
+  examples: |
+    - I only need [1](max_player) player
+    - I need a game for [2](max_player) players
+    - I want multiplayer for up to [4](max_player) players
+    - [3](max_player)
+    - A [2](max_player) player game is fine
+    - Games for [5](max_player) players
+    - I prefer single-player games [1](max_player)
     # MAX PLAYERS
     - I only need [1]{"entity": "max_player", "value": "1"} player
     - I need a game for [2]{"entity": "max_player", "value": "2"} players
     - I want multiplayer for up to [4]{"entity": "max_player", "value": "4"} players
     - a [2]{"entity": "max_player", "value": "2"} player game is fine
     - up to [3]{"entity": "max_player", "value": "3"} players
+    - I want a [Racing / Driving](genre) game
+    - [Puzzle](genre) games are my favorite
+    - I like [Adventure](genre) games
+    - Show me [Fighting](genre) games
+    - I want something in [Strategy](genre)
 
-    # ONLINE / MULTIPLATFORM / PUBLISHER
+# ------------------ ONLINE ------------------
+- intent: inform
+  examples: |
     - I want it to be [online](online)
     - I want it to be [offline](online)
     - [online](online)
     - [offline](online)
+
+# ------------------ MULTIPLATFORM ------------------
+- intent: inform
+  examples: |
     - I prefer [multiplatform](multiplatform) games
     - I want an [exclusive](multiplatform) game
     - [multiplatform](multiplatform)
@@ -178,8 +242,12 @@ nlu:
     - I'm looking for something from [Ubisoft](publisher)
     - I like games from [Sony](publisher)
     - games by [Capcom](publisher)
+    - I want an exclusive, so not [multiplatform](multiplatform)
 
-    # SUBGENRES
+
+# ------------------ SUBGENRES ------------------
+- intent: inform
+  examples: |
     - I also like [Adventure and RPG](subgenres) games
     - Maybe something in the [Action and Adventure](subgenres) subgenres
     - I enjoy [Action, Adventure, RPG and Platform](subgenres) games
@@ -197,17 +265,71 @@ nlu:
     - title
     - product
     - item
-
 - synonym: Nintendo DS
   examples: |
     - NDS
     - nintendo ds
     - ds
+    - nintendo dual screen
+    - nds lite
+    - nintendo ds lite
+    - nintendo dsi
+    - dsi
+    - nintendo ds console
+    - dual screen nintendo
 
 - synonym: Sony PSP
   examples: |
     - psp
     - sony psp
+    - playstation portable
+    - psp console
+    - psp slim
+    - psp 1000
+    - psp 2000
+    - psp 3000
+    - psp handheld
+    - sony portable
+
+- synonym: X360
+  examples: |
+    - xbox 360
+    - x 360
+    - 360
+    - microsoft xbox 360
+    - xbox360
+    - x360 console
+    - xbox 360 slim
+    - xbox 360 elite
+    - xbox 360 arcade
+    - 360 microsoft
+
+- synonym: Nintendo Wii
+  examples: |
+    - wii
+    - nintendo wii
+    - wii console
+    - nintendo wii bianca
+    - wii nintendo
+    - wii family edition
+    - wii nera
+    - wii basic
+    - console wii
+    - wii system
+
+- synonym: PlayStation 3
+  examples: |
+    - ps3
+    - playstation3
+    - sony ps3
+    - play station 3
+    - ps 3
+    - ps3 slim
+    - ps3 super slim
+    - console ps3
+    - sony playstation 3
+    - ps3 system
+
 
 - synonym: Action
   examples: |
@@ -962,7 +1084,6 @@ nlu:
     - gridiron sports title
     - football field play
     - touchdown-focused game
-    - football match simulation
     - american football activity
 
 - synonym: Basketball
