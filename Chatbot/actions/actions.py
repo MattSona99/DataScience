@@ -73,6 +73,14 @@ class ActionSearchGame(Action):
                 .str.contains(str(genre).lower(), na=False)
             ]
 
+        # Anno di uscita (colonna 'YearReleased')
+        if release_year is not None:
+            try:
+                year = int(release_year)
+                df = df[df["YearReleased"] == year]
+            except (ValueError, TypeError):
+                pass
+
         # Prezzo usato (colonna 'Usedprice')
         if used_price is not None:
             try:
@@ -80,14 +88,6 @@ class ActionSearchGame(Action):
                 df = df[df["Usedprice"] <= max_price]
             except (ValueError, TypeError):
                 # Se non si riesce a convertire, ignora il filtro
-                pass
-
-        # Anno di uscita (colonna 'YearReleased')
-        if release_year is not None:
-            try:
-                year = int(release_year)
-                df = df[df["YearReleased"] == year]
-            except (ValueError, TypeError):
                 pass
 
         # Review score minimo (colonna 'Review Score')

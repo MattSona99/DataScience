@@ -83,86 +83,97 @@ nlu:
     - can you help me find a game to buy?
     - I'd like a recommendation for a video game
 
+# ------------------ CONSOLE ------------------
 - intent: inform
   examples: |
-    # CONSOLE
     - I'm looking for a game for [Nintendo DS](console)
     - [Nintendo DS](console)
     - I want something on [Sony PSP](console)
     - I'm interested in a game for [PS2](console)
     - I want to play on [Xbox](console)
     - I need a game for [Wii](console)
+    - Can you suggest a game for [PlayStation 3](console)?
+    - Looking for games on [X360](console)
+    - Games for [Nintendo Wii](console), please
+    - I want to play something on [PSP](console)
 
-    # GENRE
+# ------------------ GENRE ------------------
+- intent: inform
+  examples: |
     - I prefer [Action](genre) games
     - I like [Sports](genre) games
-    - I like [RPG](genre) games
+    - I enjoy [RPG](genre) games
     - I'm into [Simulation](genre) games
     - I want a [Racing / Driving](genre) game
-    - I enjoy [Puzzle](genre) games
+    - [Puzzle](genre) games are my favorite
+    - I like [Adventure](genre) games
+    - Show me [Fighting](genre) games
+    - I want something in [Strategy](genre)
 
-    # RELEASE YEAR
+# ------------------ RELEASE YEAR ------------------
+- intent: inform
+  examples: |
     - I want a game released in [2004](release_year)
-    - find something released in [2008](release_year)
-    - any game released in [2008](release_year) is fine
+    - Find something released in [2008](release_year)
+    - Any game from [2008](release_year) is fine
     - [2005](release_year)
-    - released in [2005](release_year)
-    - released in [2006](release_year)
-    - show me something from [2007](release_year)
-    - I want something from [2010](release_year)
-    - i want a game from [2009](release_year)
+    - Released in [2005](release_year)
+    - Show me something from [2007](release_year)
+    - I want a game from [2009](release_year)
+    - Games from [2010](release_year) please
+    - Looking for something from [2011](release_year)
 
-    # USED PRICE (MOLTI ESEMPI VARI)
+# ------------------ USED PRICE ------------------
+- intent: inform
+  examples: |
     - I want a used game under [20](used_price)
     - I want to spend at most [20](used_price)
-    - maximum budget [15](used_price)
+    - Maximum budget [15](used_price)
     - I don't want to spend more than [10](used_price)
-    - I don't want to spend more than [30](used_price)
-    - my budget is [25](used_price)
-    - my maximum budget is [35](used_price)
+    - My budget is [25](used_price)
     - I can spend up to [40](used_price)
-    - I don't want to pay more than [12](used_price)
-    - no more than [18](used_price)
-    - please stay under [22](used_price)
-    - stay below [30](used_price) euros
-    - keep the price below [25](used_price)
-    - the used price should be less than [20](used_price)
-    - I'd like something cheaper than [15](used_price)
-    - around [10](used_price) is fine
-    - about [8](used_price) would be perfect
-    - I can spend around [12](used_price)
-    - my budget for a used game is [30](used_price)
-    - I don't want to go over [35](used_price)
-    - something around [5](used_price) would be nice
-    - I prefer a game that costs under [25](used_price)
-    - I have only [7](used_price) to spend
+    - I prefer something cheaper than [15](used_price)
+    - Around [10](used_price) is fine
+    - [23](used_price)
+    - Something around [5](used_price) would be nice
+    - Keep the price below [25](used_price)
 
-    # REVIEW SCORE
-    - choose only games with a score of at least [80](review_score)
+# ------------------ REVIEW SCORE ------------------
+- intent: inform
+  examples: |
+    - Choose only games with a score of at least [80](review_score)
     - [80](review_score)
     - I want a game with a score of at least [85](review_score)
-    - the review score must be at least [70](review_score)
-    - pick only games rated at least [75](review_score)
-    - I want something with review score over [60](review_score)
+    - The review score must be at least [70](review_score)
+    - Pick only games rated at least [75](review_score)
     - I want a game rated above [90](review_score)
+    - Looking for games with [95](review_score) or higher
 
-    # MAX PLAYERS
+# ------------------ MAX PLAYERS ------------------
+- intent: inform
+  examples: |
     - I only need [1](max_player) player
     - I need a game for [2](max_player) players
     - I want multiplayer for up to [4](max_player) players
     - [3](max_player)
-    - a [2](max_player) player game is fine
+    - A [2](max_player) player game is fine
+    - Games for [5](max_player) players
+    - I prefer single-player games [1](max_player)
 
-    # ONLINE / MULTIPLATFORM / PUBLISHER
+# ------------------ ONLINE ------------------
+- intent: inform
+  examples: |
     - I want it to be [online](online)
     - I don't care if it's [online](online)
     - [online](online)
     - [offline](online)
+
+# ------------------ MULTIPLATFORM ------------------
+- intent: inform
+  examples: |
     - I prefer [multiplatform](multiplatform) games
     - I want an exclusive, so not [multiplatform](multiplatform)
-    - I like the publisher [Nintendo](publisher)
-    - I'm looking for something from [Ubisoft](publisher)
-    - I like games from [Sony](publisher)
+
 
 
 # --- Synonyms for entity VALUES ---
@@ -175,17 +186,71 @@ nlu:
     - title
     - product
     - item
-
 - synonym: Nintendo DS
   examples: |
     - NDS
     - nintendo ds
     - ds
+    - nintendo dual screen
+    - nds lite
+    - nintendo ds lite
+    - nintendo dsi
+    - dsi
+    - nintendo ds console
+    - dual screen nintendo
 
 - synonym: Sony PSP
   examples: |
     - psp
     - sony psp
+    - playstation portable
+    - psp console
+    - psp slim
+    - psp 1000
+    - psp 2000
+    - psp 3000
+    - psp handheld
+    - sony portable
+
+- synonym: X360
+  examples: |
+    - xbox 360
+    - x 360
+    - 360
+    - microsoft xbox 360
+    - xbox360
+    - x360 console
+    - xbox 360 slim
+    - xbox 360 elite
+    - xbox 360 arcade
+    - 360 microsoft
+
+- synonym: Nintendo Wii
+  examples: |
+    - wii
+    - nintendo wii
+    - wii console
+    - nintendo wii bianca
+    - wii nintendo
+    - wii family edition
+    - wii nera
+    - wii basic
+    - console wii
+    - wii system
+
+- synonym: PlayStation 3
+  examples: |
+    - ps3
+    - playstation3
+    - sony ps3
+    - play station 3
+    - ps 3
+    - ps3 slim
+    - ps3 super slim
+    - console ps3
+    - sony playstation 3
+    - ps3 system
+
 
 - synonym: Action
   examples: |
@@ -940,7 +1005,6 @@ nlu:
     - gridiron sports title
     - football field play
     - touchdown-focused game
-    - football match simulation
     - american football activity
 
 - synonym: Basketball

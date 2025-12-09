@@ -27,55 +27,58 @@ slots:
     mappings:
       - type: from_entity
         entity: console
+        intent: inform
     influence_conversation: false
   genre:
     type: text
     mappings:
       - type: from_entity
         entity: genre
+        intent: inform
     influence_conversation: false
   release_year:
     type: float
     mappings:
       - type: from_entity
         entity: release_year
+        pattern: '\b(19|20)\d{2}\b'
     influence_conversation: false
   used_price:
     type: float
     mappings:
       - type: from_entity
         entity: used_price
+        pattern: '\b\d+(\.\d{1,2})?\b'
     influence_conversation: false
   review_score:
     type: float
     mappings:
       - type: from_entity
         entity: review_score
+        pattern: '\b\d{1,2}\b'
     influence_conversation: false
   max_player:
     type: float
     mappings:
       - type: from_entity
         entity: max_player
+        pattern: '\b[1-9]\b'
     influence_conversation: false
   online:
     type: bool
     mappings:
       - type: from_entity
         entity: online
+        intent: inform
     influence_conversation: false
   multiplatform:
     type: bool
     mappings:
       - type: from_entity
         entity: multiplatform
+        intent: inform
     influence_conversation: false
-  publisher:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: publisher
-    influence_conversation: false
+
   last_result:
     type: list
     influence_conversation: false
