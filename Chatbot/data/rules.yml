@@ -27,6 +27,7 @@ rules:
     - intent: submit
     - action: action_deactivate_loop
     - active_loop: null
+    - action: utter_confirm_preferences
     - action: utter_submit
     - action: action_search_game
 
@@ -38,3 +39,8 @@ rules:
     - action: action_deactivate_loop
     - active_loop: null
     - action: utter_goodbye
+
+- rule: Respond with a default base response if user sends a message with low NLU confidence
+  steps:
+  - intent: nlu_fallback
+  - action: utter_no_understanding

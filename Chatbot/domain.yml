@@ -10,77 +10,103 @@ intents:
 
 entities:
   - console
-  - publisher
   - genre
   - release_year
-  - rating
   - used_price
   - review_score
   - max_player
-  - platform
   - online
   - multiplatform
+  - publisher
+  - subgenres
 
 slots:
   console:
     type: text
+    influence_conversation: true
     mappings:
       - type: from_entity
         entity: console
-    influence_conversation: true
+
   genre:
     type: text
+    influence_conversation: true
     mappings:
       - type: from_entity
         entity: genre
-    influence_conversation: true
+
   release_year:
     type: float
-    mappings:
-      - type: from_entity
-        entity: release_year
     influence_conversation: false
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: game_preferences_form
+            requested_slot: release_year
+
   used_price:
     type: float
-    mappings:
-      - type: from_entity
-        entity: used_price
     influence_conversation: false
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: game_preferences_form
+            requested_slot: used_price
+
   review_score:
     type: float
-    mappings:
-      - type: from_entity
-        entity: review_score
     influence_conversation: false
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: game_preferences_form
+            requested_slot: review_score  
+
   max_player:
     type: float
+    influence_conversation: false
     mappings:
       - type: from_entity
         entity: max_player
-    influence_conversation: false
+      - type: from_text
+        conditions:
+          - active_loop: game_preferences_form
+            requested_slot: max_player
+
   online:
     type: bool
+    influence_conversation: false
     mappings:
       - type: from_entity
         entity: online
-    influence_conversation: false
+
   multiplatform:
     type: bool
+    influence_conversation: false
     mappings:
       - type: from_entity
         entity: multiplatform
-    influence_conversation: false
+
   publisher:
     type: text
+    influence_conversation: false
     mappings:
       - type: from_entity
         entity: publisher
+
+  subgenres:
+    type: text
     influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: subgenres
+
   last_result:
     type: list
     influence_conversation: false
     mappings:
       - type: custom
+
 
 forms:
   game_preferences_form:
@@ -93,10 +119,12 @@ forms:
       - max_player
       - online
       - multiplatform
+      - publisher
+      - subgenres
 
 responses:
   utter_greet:
-    - text: "Hi! 👋 I'll be your retro gaming assistant. What do you want me to help you with?"
+    - text: "Hi! 👋 I'll be your Retro Gaming Assistant. What do you want me to help you with?"
 
   utter_goodbye:
     - text: "Great, enjoy your retro gaming session! 🎮"
@@ -105,25 +133,31 @@ responses:
     - text: "On which console or device do you want to play? (e.g. Nintendo DS, PSP, PS2...)"
 
   utter_ask_genre:
-    - text: "Which genre do you like the most? For example Action, RPG, Sports, Puzzle..."
+    - text: "Which genre do you like the most? For example Action, RPG, Sports, Strategy..."
 
   utter_ask_used_price:
     - text: "Do you have a maximum budget for a used game? Tell me an amount (e.g. 20), or type 'no limit'."
 
   utter_ask_release_year:
-    - text: "Do you prefer games from a specific period? For example: specify a release year (e.g. 2004)."
+    - text: "Do you prefer games from a specific period? Specify a release year between 2004 and 2010."
 
   utter_ask_review_score:
-    - text: "How good should the reviews be? (e.g. at least 80 out of 100)"
+    - text: "How good should the reviews be? Provide a minimum review score from 0 to 100."
 
   utter_ask_max_player:
     - text: "Are you looking for a single-player game or multiplayer? Tell me the maximum number of players."
 
   utter_ask_online:
-    - text: "Is it important that the game has online features? (yes/no)"
+    - text: "Is it important that the game has online features? (online/offline)"
 
   utter_ask_multiplatform:
     - text: "Do you want only platform exclusives, or are multiplatform games also fine? (type 'exclusive' or 'multiplatform')"
+
+  utter_ask_publisher:
+    - text: "Do you have a favorite game publisher? (e.g. Nintendo, Ubisoft...)"
+
+  utter_ask_subgenres:
+    - text: "Do you want to choose some specific subgenres? (e.g. Action, Action-Adventure, ...)"
 
   utter_start_recommendation:
     - text: "Great! I'll ask you a few questions so I can recommend something that fits you. Tell me 🙂"
@@ -139,8 +173,8 @@ responses:
         • Max players: {max_player}
         • Online: {online}
         • Multiplatform: {multiplatform}
-
-        Do you want me to search for the best games with these filters?
+        • Publisher: {publisher}
+        • Subgenres: {subgenres}
 
   utter_submit:
     - text: "Okay, I'll search my archive of vintage games and show you some interesting titles... 🎮"
@@ -148,8 +182,42 @@ responses:
   utter_no_results:
     - text: "I couldn't find any games matching all your filters. Do you want to relax the criteria a bit (e.g. higher budget or lower minimum review score)?"
 
+  utter_console_invalid:
+    - text: "Please provide a valid console or device name (e.g. Nintendo DS, PSP, PS2...)."
+
+  utter_genre_invalid:
+    - text: "Please provide a valid genre (e.g. Action, RPG, Sports...)."
+
+  utter_release_year_invalid:
+    - text: "Please provide a valid release year (from 2004 to 2010)."
+
+  utter_used_price_invalid:
+    - text: "Please provide a valid amount for your budget, or type 'no limit' if you don't have one."
+
+  utter_review_score_invalid:
+    - text: "Please provide a valid review score between 0 and 100."
+
+  utter_max_player_invalid:
+    - text: "Please provide a valid number of maximum players (from 1 to 8)."
+
+  utter_online_invalid:
+    - text: "Please answer with 'online' or 'offline' regarding online features."
+
+  utter_multiplatform_invalid:
+    - text: "Please answer with 'exclusive' for platform exclusives or 'multiplatform' for games available on multiple platforms."
+
+  utter_publisher_invalid:
+    - text: "Please provide a valid publisher name (e.g. Nintendo, Ubisoft...)."
+
+  utter_subgenres_invalid:
+    - text: "Please provide a valid subgenres (e.g. Action, Adventure, RPG...)."
+
+  utter_no_understanding:
+    - text: "I'm sorry, I didn't understand that. Could you please rephrase?"
+
 actions:
   - action_search_game
+  - validate_game_preferences_form
   
 session_config:
   session_expiration_time: 60

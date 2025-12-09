@@ -15,3 +15,316 @@ stories:
   steps:
     - intent: goodbye
     - action: utter_goodbye
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: request_form
+  - action: utter_start_recommendation
+  - action: game_preferences_form
+  - active_loop: game_preferences_form
+  - slot_was_set:
+    - requested_slot: console
+  - intent: inform
+    entities:
+    - console: Nintendo DS
+  - slot_was_set:
+    - console: Nintendo DS
+  - action: game_preferences_form
+  - slot_was_set:
+    - requested_slot: genre
+  - intent: inform
+    entities:
+    - genre: Adventure
+  - slot_was_set:
+    - genre: Adventure
+  - action: game_preferences_form
+  - slot_was_set:
+    - requested_slot: release_year
+  - intent: inform
+    entities:
+    - release_year: '2005'
+  - slot_was_set:
+    - release_year: '2005'
+  - action: game_preferences_form
+  - slot_was_set:
+    - requested_slot: used_price
+  - intent: inform
+    entities:
+    - used_price: '10'
+  - slot_was_set:
+    - used_price: '10'
+  - action: game_preferences_form
+  - slot_was_set:
+    - requested_slot: review_score
+  - intent: inform
+    entities:
+    - review_score: '80'
+  - slot_was_set:
+    - review_score: '80'
+  - action: game_preferences_form
+  - slot_was_set:
+    - requested_slot: max_player
+  - intent: inform
+    entities:
+    - max_player: '1'
+  - slot_was_set:
+    - max_player: '1'
+  - action: game_preferences_form
+  - slot_was_set:
+    - requested_slot: online
+  - intent: inform
+    entities:
+    - online: false
+  - slot_was_set:
+    - online: false 
+  - action: game_preferences_form
+  - slot_was_set:
+    - requested_slot: multiplatform
+  - intent: inform
+    entities:
+    - multiplatform: false
+  - slot_was_set:
+    - multiplatform: false
+  - intent: submit
+  - action: action_deactivate_loop
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_confirm_preferences
+  - action: utter_submit
+  - action: action_search_game
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: interactive_story_2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: inform
+    entities:
+    - console: Nintendo DS
+  - slot_was_set:
+    - console: Nintendo DS
+  - intent: submit
+  - action: utter_confirm_preferences
+  - action: utter_submit
+  - action: action_search_game
+  - slot_was_set:
+    - last_result:
+      - Super Mario 64 DS
+      - WarioWare Touched!
+      - Spider-Man 2
+      - 'The Urbz: Sims in the City'
+      - Madden NFL 2005
+
+- story: interactive_story_3
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: request_form
+  - action: utter_start_recommendation
+  - action: game_preferences_form
+  - active_loop: game_preferences_form
+  - slot_was_set:
+    - requested_slot: console
+  - intent: inform
+    entities:
+    - console: Nintendo DS
+  - slot_was_set:
+    - console: Nintendo DS
+  - action: game_preferences_form
+  - slot_was_set:
+    - requested_slot: genre
+  - intent: inform
+    entities:
+    - genre: Simulation
+  - slot_was_set:
+    - genre: Simulation
+  - action: game_preferences_form
+  - slot_was_set:
+    - requested_slot: release_year
+  - intent: inform
+    entities:
+    - release_year: '2005'
+  - slot_was_set:
+    - release_year: '2005'
+  - intent: submit
+  - action: action_deactivate_loop
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_confirm_preferences
+  - action: utter_submit
+  - action: action_search_game
+  - slot_was_set:
+    - last_result:
+      - 'The Urbz: Sims in the City'
+      - 'Asphalt: Urban GT'
+      - Nintendogs
+      - 'Animal Crossing: Wild World'
+      - Zoo Tycoon DS
+
+- story: interactive_story_4
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: request_form
+  - action: utter_start_recommendation
+  - action: game_preferences_form
+  - active_loop: game_preferences_form
+  - slot_was_set:
+    - requested_slot: console
+  - intent: inform
+    entities:
+    - console: Nintendo DS
+  - slot_was_set:
+    - console: Nintendo DS
+  - action: game_preferences_form
+  - slot_was_set:
+    - console: Nintendo DS
+  - slot_was_set:
+    - requested_slot: genre
+  - intent: inform
+    entities:
+    - genre: Action
+  - slot_was_set:
+    - genre: Action
+  - action: game_preferences_form
+  - slot_was_set:
+    - genre: Action
+  - slot_was_set:
+    - requested_slot: release_year
+  - intent: inform
+    entities:
+    - release_year: '2005'
+  - slot_was_set:
+    - release_year: '2005'
+  - action: game_preferences_form
+  - slot_was_set:
+    - release_year: 2005
+  - slot_was_set:
+    - requested_slot: used_price
+  - intent: inform
+    entities:
+    - used_price: '20'
+  - slot_was_set:
+    - used_price: '20'
+  - action: game_preferences_form
+  - slot_was_set:
+    - used_price: 20.0
+  - slot_was_set:
+    - requested_slot: review_score
+  - intent: inform
+    entities:
+    - review_score: '60'
+  - slot_was_set:
+    - review_score: '60'
+  - action: game_preferences_form
+  - slot_was_set:
+    - review_score: 60.0
+  - slot_was_set:
+    - requested_slot: max_player
+  - intent: inform
+    entities:
+    - max_player: '2'
+  - slot_was_set:
+    - max_player: '2'
+  - action: game_preferences_form
+  - slot_was_set:
+    - max_player: 2
+  - slot_was_set:
+    - requested_slot: online
+  - intent: inform
+    entities:
+    - online: true
+  - slot_was_set:
+    - online: true
+  - action: game_preferences_form
+  - slot_was_set:
+    - online: True
+
+- story: interactive_story_5
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: request_form
+  - action: utter_start_recommendation
+  - action: game_preferences_form
+  - active_loop: game_preferences_form
+  - slot_was_set:
+    - requested_slot: console
+  - intent: inform
+    entities:
+    - console: Nintendo DS
+  - slot_was_set:
+    - console: Nintendo DS
+  - action: game_preferences_form
+  - active_loop: game_preferences_form
+  - slot_was_set:
+    - console: Nintendo DS
+  - slot_was_set:
+    - requested_slot: genre
+  - intent: inform
+    entities:
+    - genre: Action
+  - slot_was_set:
+    - genre: Action
+  - action: game_preferences_form
+  - slot_was_set:
+    - genre: Action
+  - slot_was_set:
+    - requested_slot: release_year
+  - intent: inform
+    entities:
+    - release_year: '2005'
+  - slot_was_set:
+    - release_year: '2005'
+  - action: game_preferences_form
+  - slot_was_set:
+    - release_year: 2005
+  - slot_was_set:
+    - requested_slot: used_price
+  - intent: inform
+    entities:
+    - used_price: '20'
+  - slot_was_set:
+    - used_price: '20'
+  - action: game_preferences_form
+  - slot_was_set:
+    - used_price: 20.0
+  - slot_was_set:
+    - requested_slot: review_score
+  - intent: inform
+    entities:
+    - review_score: '60'
+  - slot_was_set:
+    - review_score: '60'
+  - action: game_preferences_form
+  - slot_was_set:
+    - review_score: 60.0
+  - slot_was_set:
+    - requested_slot: max_player
+  - intent: submit
+  - action: action_deactivate_loop
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_confirm_preferences
+  - action: utter_submit
+  - action: action_search_game
+  - slot_was_set:
+    - last_result:
+      - 'Brain Age: Train Your Brain in Minutes a Day!'
+      - 'Brain Age2: More Training in Minutes a Day!'
+      - Big Brain Academy
+      - Sonic Rush
+      - 'Mario & Luigi: Partners in Time'
+      - 'Super Monkey Ball: Touch & Roll'
+      - Super Princess Peach
+      - 'Kirby: Canvas Curse'
+      - Yoshi Touch & Go
+      - 'Castlevania: Dawn of Sorrow'
+  - intent: goodbye
+  - action: utter_goodbye

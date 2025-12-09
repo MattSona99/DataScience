@@ -45,6 +45,8 @@ nlu:
     - confirm search
     - ok, run it
     - perfect, let me see
+    - ok, now search for the game
+    - ok, give me some result
 
 - intent: deny
   examples: |
@@ -92,78 +94,98 @@ nlu:
     - I'm interested in a game for [PS2](console)
     - I want to play on [Xbox](console)
     - I need a game for [Wii](console)
+    - i have a [nintendo ds]{"entity": "console", "value": "Nintendo DS"}
+    - i want to play on [nintendo ds]{"entity": "console", "value": "Nintendo DS"}
 
     # GENRE
     - I prefer [Action](genre) games
     - I like [Sports](genre) games
     - I like [RPG](genre) games
     - I'm into [Simulation](genre) games
-    - I want a [Racing / Driving](genre) game
+    - I want a [Racing](genre) game
     - I enjoy [Puzzle](genre) games
+    - I love [Strategy](genre) games
+    - I want to play a [Adventure](genre) game
+    - I like [Shooter](genre) games
+    - I want a [Fighting](genre) game
+    - i like [action]{"entity": "genre", "value": "Action"} games
+    - i like [RPG](genre) games
 
-    # RELEASE YEAR
-    - I want a game released in [2004](release_year)
-    - find something released in [2008](release_year)
-    - any game released in [2008](release_year) is fine
-    - [2005](release_year)
-    - released in [2005](release_year)
-    - released in [2006](release_year)
-    - show me something from [2007](release_year)
-    - I want something from [2010](release_year)
-    - i want a game from [2009](release_year)
+    # RELEASE YEAR (versione migliorata)
+    - I want a game released in [2004]{"entity": "release_year", "value": "2004"}
+    - find something released in [2008]{"entity": "release_year", "value": "2008"}
+    - any game released in [2008]{"entity": "release_year", "value": "2008"} is fine
+    - a game from the year [2005]{"entity": "release_year", "value": "2005"}
+    - released in [2006]{"entity": "release_year", "value": "2006"}
+    - the game should be from [2005]{"entity": "release_year", "value": "2005"}
+    - show me something from year [2007]{"entity": "release_year", "value": "2007"}
+    - I want something from year [2010]{"entity": "release_year", "value": "2010"}
+    - I'd like a title that came out in [2009]{"entity": "release_year", "value": "2009"}
+    - a game from the year [2005](release_year)
+    - find something released in [2007](release_year)
+    - all games from [2005](release_year)
 
-    # USED PRICE (MOLTI ESEMPI VARI)
-    - I want a used game under [20](used_price)
-    - I want to spend at most [20](used_price)
-    - maximum budget [15](used_price)
-    - I don't want to spend more than [10](used_price)
-    - I don't want to spend more than [30](used_price)
-    - my budget is [25](used_price)
-    - my maximum budget is [35](used_price)
-    - I can spend up to [40](used_price)
-    - I don't want to pay more than [12](used_price)
-    - no more than [18](used_price)
-    - please stay under [22](used_price)
-    - stay below [30](used_price) euros
-    - keep the price below [25](used_price)
-    - the used price should be less than [20](used_price)
-    - I'd like something cheaper than [15](used_price)
-    - around [10](used_price) is fine
-    - about [8](used_price) would be perfect
-    - I can spend around [12](used_price)
-    - my budget for a used game is [30](used_price)
-    - I don't want to go over [35](used_price)
-    - something around [5](used_price) would be nice
-    - I prefer a game that costs under [25](used_price)
-    - I have only [7](used_price) to spend
+    # USED PRICE (versione migliorata)
+    - I want a used game under [20]{"entity": "used_price", "value": "20"} euros
+    - I want to spend at most [20]{"entity": "used_price", "value": "20"} euros
+    - my maximum budget is [15]{"entity": "used_price", "value": "15"}
+    - I don't want to spend more than [10]{"entity": "used_price", "value": "10"} euros
+    - my budget is [25]{"entity": "used_price", "value": "25"} for a used game
+    - I can spend up to [40]{"entity": "used_price", "value": "40"} on it
+    - please stay under [22]{"entity": "used_price", "value": "22"}
+    - keep the price below [30]{"entity": "used_price", "value": "30"}
+    - no limit{"entity": "used_price", "value": "no limit"}
+    - my budget is [25]{"entity": "used_price", "value": "25"}
+    - my budget is [30]{"entity": "used_price", "value": "30"}
+    - my maximum budget is [15]{"entity": "used_price", "value": "15"}
+    - my budget is around [20]{"entity": "used_price", "value": "20"}
+    - I want a used game under [20]{"entity": "used_price", "value": "20"} euros
+    - I want to spend at most [20]{"entity": "used_price", "value": "20"} euros
+    - I don't want to spend more than [10]{"entity": "used_price", "value": "10"} euros
+    - I can spend up to [40]{"entity": "used_price", "value": "40"} on it
+    - keep the price below [30]{"entity": "used_price", "value": "30"}
+    - please stay under [22]{"entity": "used_price", "value": "22"}
+    - my max budget is [20](used_price) dollars
 
     # REVIEW SCORE
-    - choose only games with a score of at least [80](review_score)
-    - [80](review_score)
-    - I want a game with a score of at least [85](review_score)
-    - the review score must be at least [70](review_score)
-    - pick only games rated at least [75](review_score)
-    - I want something with review score over [60](review_score)
-    - I want a game rated above [90](review_score)
+    - choose only games with a score of at least [80]{"entity": "review_score", "value": "80"}
+    - I want a game with a score of at least [85]{"entity": "review_score", "value": "85"}
+    - the review score must be at least [70]{"entity": "review_score", "value": "70"}
+    - pick only games rated at least [75]{"entity": "review_score", "value": "75"}
+    - I want something with review score over [60]{"entity": "review_score", "value": "60"}
+    - I want a game rated above [90]{"entity": "review_score", "value": "90"}
+    - the review score must be at least [60](review_score)
+    - choose only games with a score of at least [70](review_score)
+    - I want a game with a score of at least [80](review_score)
 
     # MAX PLAYERS
-    - I only need [1](max_player) player
-    - I need a game for [2](max_player) players
-    - I want multiplayer for up to [4](max_player) players
-    - [3](max_player)
-    - a [2](max_player) player game is fine
+    - I only need [1]{"entity": "max_player", "value": "1"} player
+    - I need a game for [2]{"entity": "max_player", "value": "2"} players
+    - I want multiplayer for up to [4]{"entity": "max_player", "value": "4"} players
+    - a [2]{"entity": "max_player", "value": "2"} player game is fine
+    - up to [3]{"entity": "max_player", "value": "3"} players
 
     # ONLINE / MULTIPLATFORM / PUBLISHER
     - I want it to be [online](online)
-    - I don't care if it's [online](online)
+    - I want it to be [offline](online)
     - [online](online)
     - [offline](online)
     - I prefer [multiplatform](multiplatform) games
-    - I want an exclusive, so not [multiplatform](multiplatform)
+    - I want an [exclusive](multiplatform) game
+    - [multiplatform](multiplatform)
+    - [exclusive](multiplatform)
     - I like the publisher [Nintendo](publisher)
     - I'm looking for something from [Ubisoft](publisher)
     - I like games from [Sony](publisher)
+    - games by [Capcom](publisher)
 
+    # SUBGENRES
+    - I also like [Adventure and RPG](subgenres) games
+    - Maybe something in the [Action and Adventure](subgenres) subgenres
+    - I enjoy [Action, Adventure, RPG and Platform](subgenres) games
+    - I'm interested in [Stealth and SurvivalHorror](subgenres) titles
+    - Something in the [Puzzle and Strategy](subgenres) subgenres
+    - I want a game from the [Shooter and SciFi](subgenres) subgenres
 
 # --- Synonyms for entity VALUES ---
 
