@@ -27,13 +27,13 @@ slots:
     mappings:
       - type: from_entity
         entity: console
-    influence_conversation: true
+    influence_conversation: false
   genre:
     type: text
     mappings:
       - type: from_entity
         entity: genre
-    influence_conversation: true
+    influence_conversation: false
   release_year:
     type: float
     mappings:
