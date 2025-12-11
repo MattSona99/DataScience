@@ -24,45 +24,52 @@ nlu:
 - intent: submit
   examples: |
     - yes
+    - of course
     - ok
     - okay
     - sure
-    - perfect
-    - confirm
-    - that's right
     - exactly
-    - sounds good
+
+- intent: search
+  examples: |
     - show me the results
     - show me the games
     - let me see the games
     - show me the video game
     - let me see the video game
     - confirm and show the results
-    - ok, go ahead
     - great, search the games
     - search now
+    - start searching
+    - search for games
     - start the search
     - confirm search
-    - ok, run it
     - perfect, let me see
-    - ok, now search for the game
-    - ok, give me some result
 
 - intent: deny
   examples: |
     - no
-    - not now
-    - maybe another time
-    - maybe later
-    - not at the moment
-    - I don't want to
-    - I don't feel like it
-    - I'm not interested
-    - absolutely not
-    - never
-    - I don't think so
-    - that's impossible
-    - not really
+    - no, thanks
+    - no thank you
+    - nah
+    - nope
+    - nope, thanks
+    - no, I don't want to
+    - skip 
+    - I want to skip
+
+- intent: stop searching
+  examples: |
+    - stop
+    - cancel
+    - never mind
+    - forget it
+    - I changed my mind
+    - don't search
+    - halt the search
+    - abort the search
+    - discontinue search
+    - end the search
 
 - intent: request_form
   examples: |
@@ -211,7 +218,6 @@ nlu:
     - A [2](max_player) player game is fine
     - Games for [5](max_player) players
     - I prefer single-player games [1](max_player)
-    # MAX PLAYERS
     - I only need [1]{"entity": "max_player", "value": "1"} player
     - I need a game for [2]{"entity": "max_player", "value": "2"} players
     - I want multiplayer for up to [4]{"entity": "max_player", "value": "4"} players
@@ -238,22 +244,31 @@ nlu:
     - I want an [exclusive](multiplatform) game
     - [multiplatform](multiplatform)
     - [exclusive](multiplatform)
+
+# ------------------ PUBLISHER ------------------
+- intent: inform
+  examples: |
     - I like the publisher [Nintendo](publisher)
     - I'm looking for something from [Ubisoft](publisher)
     - I like games from [Sony](publisher)
     - games by [Capcom](publisher)
-    - I want an exclusive, so not [multiplatform](multiplatform)
+    - I want a game published by [Konami](publisher)
+    - [Nintendo](publisher)
+    - [Ubisoft](publisher)
+    - [Sony](publisher)
+    - [Capcom](publisher)
+    - [EA](publisher)
+    - [2K](publisher)
+    - [Activision](publisher)
+    - [Konami](publisher)
+    - [Sega](publisher)
+    - [Rockstar](publisher)
+    - I love games from [2K]{"entity": "publisher", "value": "2K"}
+    - I'm looking for something from [EA]{"entity": "publisher", "value": "EA"}
+    - I like games from [Activision]{"entity": "publisher", "value": "Activision"}
+    - games by [Konami]{"entity": "publisher", "value": "Konami"}
+    - I want a game published by [Sega]{"entity": "publisher", "value": "Sega"}
 
-
-# ------------------ SUBGENRES ------------------
-- intent: inform
-  examples: |
-    - I also like [Adventure and RPG](subgenres) games
-    - Maybe something in the [Action and Adventure](subgenres) subgenres
-    - I enjoy [Action, Adventure, RPG and Platform](subgenres) games
-    - I'm interested in [Stealth and SurvivalHorror](subgenres) titles
-    - Something in the [Puzzle and Strategy](subgenres) subgenres
-    - I want a game from the [Shooter and SciFi](subgenres) subgenres
 
 # --- Synonyms for entity VALUES ---
 

@@ -24,6 +24,8 @@ SLOT_TO_COLUMN = {
     # se vuoi, puoi aggiungere anche altri
 }
 
+SKIP_VALUE = "SKIP"
+
 def _build_value_map(column_name: str) -> Dict[str, str]:
     """Crea una mappa lowercase -> valore originale per una colonna del dataset."""
     if df_games.empty or column_name not in df_games.columns:
@@ -99,7 +101,9 @@ class ValidateGamePreferencesForm(FormValidationAction):
         """
         print(f"[DEBUG] validating {slot_name}, slot_value={slot_value}, text='{tracker.latest_message.get('text','')}'")
         value: Optional[float] = None
-
+        text = tracker.latest_message.get("text", "").strip().lower()
+        
+        pattern = r"\b(skip|no|nope|nah)\b"
         # Caso 1: lo slot arriva già con qualcosa (es. entity "25")
         if slot_value is not None:
             try:
@@ -109,12 +113,18 @@ class ValidateGamePreferencesForm(FormValidationAction):
 
         # Caso 2: provo a estrarlo dal testo dell'ultima user message
         if value is None:
-            text = tracker.latest_message.get("text", "")
             # special case "no limit" per used_price
-            if slot_name == "used_price" and "no limit" in text.lower():
-                return {"used_price": None}
+            if slot_name == "used_price" and "no limit" in text:
+                return {"used_price": 1000}
 
             value = _extract_first_number(text)
+            
+        # Caso 3: check per skip
+        if re.search(pattern, text):
+            dispatcher.utter_message(
+                text=f"Ok, I will not use the filter '{slot_name}'."
+            )
+            return {slot_name: SKIP_VALUE}
 
         if value is None:
             dispatcher.utter_message(response=invalid_utter)
@@ -221,12 +231,23 @@ class ValidateGamePreferencesForm(FormValidationAction):
         slot_name: str,
         slot_value: Any,
         dispatcher: CollectingDispatcher,
+        tracker: Tracker,
         invalid_utter: Text,
     ) -> Dict[Text, Any]:
         print(f"[DEBUG] validating {slot_name}, slot_value={slot_value}")
+        text = tracker.latest_message.get("text", "").strip().lower()
+        
+        pattern = r"\b(skip|no|nope|nah)\b"
+        
         if not slot_value:
             dispatcher.utter_message(response=invalid_utter)
             return {slot_name: None}
+        
+        if re.search(pattern, text):
+            dispatcher.utter_message(
+                text=f"Ok, I will not use the filter '{slot_name}'."
+            )
+            return {slot_name: SKIP_VALUE}
 
         user_value = str(slot_value).strip()
         suggestion = _closest_dataset_value(slot_name, user_value)
@@ -251,7 +272,7 @@ class ValidateGamePreferencesForm(FormValidationAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         return self._validate_categorical_from_dataset(
-            "console", slot_value, dispatcher, "utter_console_invalid"
+            "console", slot_value, dispatcher, tracker, "utter_console_invalid"
         )
 
     def validate_genre(
@@ -262,7 +283,7 @@ class ValidateGamePreferencesForm(FormValidationAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         return self._validate_categorical_from_dataset(
-            "genre", slot_value, dispatcher, "utter_genre_invalid"
+            "genre", slot_value, dispatcher, tracker, "utter_genre_invalid"
         )
 
     def validate_publisher(
@@ -273,7 +294,7 @@ class ValidateGamePreferencesForm(FormValidationAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         return self._validate_categorical_from_dataset(
-            "publisher", slot_value, dispatcher, "utter_publisher_invalid"
+            "publisher", slot_value, dispatcher, tracker, "utter_publisher_invalid"
         )
 
     def validate_subgenres(
@@ -288,7 +309,7 @@ class ValidateGamePreferencesForm(FormValidationAction):
         Se vuoi, puoi splittare per virgole e gestire più subgeneri.
         """
         return self._validate_categorical_from_dataset(
-            "subgenres", slot_value, dispatcher, "utter_subgenres_invalid"
+            "subgenres", slot_value, dispatcher, tracker, "utter_subgenres_invalid"
         )
 
     # ---------- ONLINE / MULTIPLATFORM (normalizzazione) ----------
@@ -300,11 +321,26 @@ class ValidateGamePreferencesForm(FormValidationAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        text = tracker.latest_message.get("text", "").lower()
-        if "offline" in text:
+        text = tracker.latest_message.get("text", "").strip().lower()
+        
+        pattern_skip = r"\b(skip)\b"
+        
+        pattern_online = r"\b(online|yes|on|of course)\b"
+        pattern_offline = r"\b(offline|no|nope|nah)\b"
+        
+        
+        if re.search(pattern_skip, text):
+            dispatcher.utter_message(
+                text=f"Ok, I will not use the filter 'online'."
+            )
+            return {"online": SKIP_VALUE}
+        
+        if re.search(pattern_offline, text):
             return {"online": "offline"}
-        if "online" in text:
+        
+        if re.search(pattern_online, text):
             return {"online": "online"}
+        
         # se proprio non si capisce
         dispatcher.utter_message(response="utter_online_invalid")
         return {"online": None}
@@ -316,11 +352,25 @@ class ValidateGamePreferencesForm(FormValidationAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        text = tracker.latest_message.get("text", "").lower()
-        if "exclusive" in text:
+        text = tracker.latest_message.get("text", "").strip().lower()
+        
+        pattern_skip = r"\b(skip)\b"
+        
+        pattern_exclusive = r"\b(exclusive|single|only on)\b"
+        pattern_multiplatform = r"\b(multi|multiplatform|available on multiple|also on)\b"
+        
+        if re.search(pattern_skip, text):
+            dispatcher.utter_message(
+                text=f"Ok, I will not use the filter 'multiplatform'."
+            )
+            return {"multiplatform": SKIP_VALUE}
+        
+        if re.search(pattern_exclusive, text):
             return {"multiplatform": "exclusive"}
-        if "multi" in text or "multiplatform" in text:
+        
+        if re.search(pattern_multiplatform, text):
             return {"multiplatform": "multiplatform"}
+        
         dispatcher.utter_message(response="utter_multiplatform_invalid")
         return {"multiplatform": None}
 
@@ -371,7 +421,7 @@ class ActionSearchGame(Action):
 
 
         # Console
-        if console:
+        if console not in (None, SKIP_VALUE):
             df = df[
                 df["Console"]
                 .astype(str)
@@ -380,7 +430,7 @@ class ActionSearchGame(Action):
             ]
 
         # Genere principale 
-        if genre:
+        if genre not in (None, SKIP_VALUE):
             df = df[
                 df["Genre"]
                 .astype(str)
@@ -389,7 +439,7 @@ class ActionSearchGame(Action):
             ]
 
         # Prezzo usato 
-        if used_price is not None:
+        if used_price not in (None, SKIP_VALUE):
             try:
                 max_price = float(used_price)
                 df = df[df["Usedprice"] <= max_price]
@@ -398,7 +448,7 @@ class ActionSearchGame(Action):
                 pass
 
         # Anno di uscita
-        if release_year is not None:
+        if release_year not in (None, SKIP_VALUE):
             try:
                 year = int(release_year)
                 df = df[df["YearReleased"] == year]
@@ -406,7 +456,7 @@ class ActionSearchGame(Action):
                 pass
 
         # Review score minimo
-        if review_score is not None:
+        if review_score not in (None, SKIP_VALUE):
             try:
                 min_score = float(review_score)
                 df = df[df["Review Score"] >= min_score]
@@ -414,7 +464,7 @@ class ActionSearchGame(Action):
                 pass
 
         # Numero massimo giocatori
-        if max_player is not None:
+        if max_player not in (None, SKIP_VALUE):
             try:
                 max_p = int(max_player)
                 df = df[df["MaxPlayers"] <= max_p]
@@ -422,7 +472,7 @@ class ActionSearchGame(Action):
                 pass
 
         # Online (colonna 'Online' 0/1)
-        if online is not None:
+        if online not in (None, SKIP_VALUE):
             v = str(online).strip().lower()
             if v in {"true", "online"}:
                 df = df[df["Online"] == 1]
@@ -430,15 +480,15 @@ class ActionSearchGame(Action):
                 df = df[df["Online"] == 0]
 
         # Multiplatform 
-        if multiplatform is not None:
+        if multiplatform not in (None, SKIP_VALUE):
             v = str(multiplatform).strip().lower()
-            if v in {"multiplatform", "multi", "true"}:
+            if v in {"multiplatform"}:
                 df = df[df["Multiplatform"] == 1]
-            elif v in {"exclusive", "single", "false"}:
+            elif v in {"exclusive"}:
                 df = df[df["Multiplatform"] == 0]
                 
         # Publisher
-        if publisher is not None:
+        if publisher not in (None, SKIP_VALUE):
             df = df[
                 df["Publisher"]
                 .astype(str)
@@ -447,7 +497,7 @@ class ActionSearchGame(Action):
             ]
         
         # Subgenres
-        if subgenres is not None:
+        if subgenres not in (None, SKIP_VALUE):
             subgenre_list = [sg.strip().lower() for sg in subgenres.split(",", "and")]
             pattern = "|".join(subgenre_list)
             df = df[

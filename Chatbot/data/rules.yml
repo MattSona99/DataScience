@@ -13,6 +13,28 @@ rules:
     - action: utter_goodbye
     - active_loop: null
 
+- rule: Ask to start game preferences form by inform 
+  condition:
+    - active_loop: null
+  steps:
+    - intent: inform
+    - action: utter_ask_more_preferences
+
+- rule: Starting game preferences form by submitting more preferences 
+  steps:
+    - action: utter_ask_more_preferences
+    - intent: submit
+    - action: utter_start_recommendation
+    - action: game_preferences_form
+    - active_loop: game_preferences_form
+
+- rule: Stop game preferences form by denying more preferences 
+  steps:
+    - action: utter_ask_more_preferences
+    - intent: deny
+    - action: utter_submit
+    - action: action_search_game
+
 - rule: Start game preferences form
   steps:
     - intent: request_form
@@ -20,11 +42,11 @@ rules:
     - action: game_preferences_form
     - active_loop: game_preferences_form
 
-- rule: Submit game preferences form
+- rule: Search game preferences form
   condition:
     - active_loop: game_preferences_form
   steps:
-    - intent: submit
+    - intent: search
     - action: action_deactivate_loop
     - active_loop: null
     - action: utter_confirm_preferences
@@ -35,12 +57,15 @@ rules:
   condition:
     - active_loop: game_preferences_form
   steps:
-    - intent: deny
+    - intent: stop searching
     - action: action_deactivate_loop
     - active_loop: null
     - action: utter_goodbye
 
 - rule: Respond with a default base response if user sends a message with low NLU confidence
+  condition:
+    - active_loop: game_preferences_form
   steps:
   - intent: nlu_fallback
   - action: utter_no_understanding
+  - action: game_preferences_form

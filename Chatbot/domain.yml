@@ -7,6 +7,8 @@ intents:
   - deny          # user says no / wants to change something
   - request_form  # user asks for a video game recommendation
   - inform        # user specifies preferences (console, genre, budget, ...)
+  - search        # user confirms: "yes, show me the results"
+  - stop searching  # user wants to stop the search / end the conversation
 
 entities:
   - console
@@ -18,7 +20,6 @@ entities:
   - online
   - multiplatform
   - publisher
-  - subgenres
 
 slots:
   console:
@@ -41,9 +42,6 @@ slots:
     type: float
     influence_conversation: false    
     mappings:
-      - type: from_entity
-        entity: release_year
-        pattern: '\b(19|20)\d{2}\b'
       - type: from_text
         conditions:
           - active_loop: game_preferences_form
@@ -53,9 +51,6 @@ slots:
     type: float
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: used_price
-        pattern: '\b\d+(\.\d{1,2})?\b'
       - type: from_text
         conditions:
           - active_loop: game_preferences_form
@@ -65,9 +60,6 @@ slots:
     type: float
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: review_score
-        pattern: '\b\d{1,2}\b'
       - type: from_text
         conditions:
           - active_loop: game_preferences_form
@@ -77,9 +69,6 @@ slots:
     type: float
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: max_player
-        pattern: '\b[1-9]\b'
       - type: from_text
         conditions:
           - active_loop: game_preferences_form
@@ -88,17 +77,19 @@ slots:
     type: bool
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: online
-        intent: inform
+      - type: from_text
+        conditions:
+          - active_loop: game_preferences_form
+            requested_slot: online
 
   multiplatform:
     type: bool
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: multiplatform
-        intent: inform
+      - type: from_text
+        conditions:
+          - active_loop: game_preferences_form
+            requested_slot: multiplatform
 
   publisher:
     type: text
@@ -108,13 +99,6 @@ slots:
         entity: publisher
         intent: inform
 
-  subgenres:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: from_entity
-        entity: subgenres
-        intent: inform
         
   last_result:
     type: list
@@ -135,7 +119,6 @@ forms:
       - online
       - multiplatform
       - publisher
-      - subgenres
 
 responses:
   utter_greet:
@@ -145,10 +128,10 @@ responses:
     - text: "Great, enjoy your retro gaming session! 🎮"
 
   utter_ask_console:
-    - text: "On which console or device do you want to play? (e.g. Nintendo DS, PSP, PS2...)"
+    - text: "Do you have a specific console or device in mind? (e.g. Nintendo DS, PSP, PS2...)"
 
   utter_ask_genre:
-    - text: "Which genre do you like the most? For example Action, RPG, Sports, Strategy..."
+    - text: "Do you have a favorite genre you like the most? For example Action, RPG, Sports, Strategy..."
 
   utter_ask_used_price:
     - text: "Do you have a maximum budget for a used game? Tell me an amount (e.g. 20), or type 'no limit'."
@@ -157,25 +140,25 @@ responses:
     - text: "Do you prefer games from a specific period? Specify a release year between 2004 and 2010."
 
   utter_ask_review_score:
-    - text: "How good should the reviews be? Provide a minimum review score from 0 to 100."
+    - text: "Do you have a minimum review score in mind? Provide a minimum review score from 0 to 100."
 
   utter_ask_max_player:
-    - text: "Are you looking for a single-player game or multiplayer? Tell me the maximum number of players."
+    - text: "Do you have a maximum number of players in mind? Tell me the maximum number of players."
 
   utter_ask_online:
-    - text: "Is it important that the game has online features? (online/offline)"
+    - text: "Is it important that the game has online features? Write skip to skip this question."
 
   utter_ask_multiplatform:
-    - text: "Do you want only platform exclusives, or are multiplatform games also fine? (type 'exclusive' or 'multiplatform')"
+    - text: "Do you want only platform exclusives, or are multiplatform games also fine? Write skip to skip this question."
 
   utter_ask_publisher:
     - text: "Do you have a favorite game publisher? (e.g. Nintendo, Ubisoft...)"
 
-  utter_ask_subgenres:
-    - text: "Do you want to choose some specific subgenres? (e.g. Action, Action-Adventure, ...)"
-
   utter_start_recommendation:
-    - text: "Great! I'll ask you a few questions so I can recommend something that fits you. Tell me 🙂"
+    - text: "Great! I'll ask you a few questions so I can recommend something that fits you. Anytime you want to stop and search, just type 'show me the results'🙂"
+
+  utter_ask_more_preferences:
+    - text: "Do you want to specify more preferences? If yes, please inform me."
 
   utter_confirm_preferences:
     - text: |
@@ -189,7 +172,6 @@ responses:
         • Online: {online}
         • Multiplatform: {multiplatform}
         • Publisher: {publisher}
-        • Subgenres: {subgenres}
 
   utter_submit:
     - text: "Okay, I'll search my archive of vintage games and show you some interesting titles... 🎮"
@@ -223,9 +205,6 @@ responses:
 
   utter_publisher_invalid:
     - text: "Please provide a valid publisher name (e.g. Nintendo, Ubisoft...)."
-
-  utter_subgenres_invalid:
-    - text: "Please provide a valid subgenres (e.g. Action, Adventure, RPG...)."
 
   utter_no_understanding:
     - text: "I'm sorry, I didn't understand that. Could you please rephrase?"
