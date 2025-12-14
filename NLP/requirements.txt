@@ -1,0 +1,9 @@
+pandas
+scikit-learn
+nltk
+spacy
+langdetect
+num2words
+demoji
+textblob
+wordcloud
