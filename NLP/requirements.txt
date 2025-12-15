@@ -1,0 +1,21 @@
+# Data Manipulation & Math
+pandas
+numpy
+scipy
+
+# Machine Learning & Deep Learning
+scikit-learn
+xgboost
+imbalanced-learn
+joblib
+
+# NLP & Text Processing
+nltk
+spacy
+sentence-transformers
+demoji
+
+# Visualization
+matplotlib
+seaborn
+wordcloud
