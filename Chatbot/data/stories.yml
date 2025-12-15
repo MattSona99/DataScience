@@ -11,6 +11,23 @@ stories:
     - action: game_preferences_form
     - active_loop: game_preferences_form
 
+- story: user asks for a specific game and provides preferences
+  steps:
+    - intent: inform
+    - action: utter_ask_more_preferences
+    - intent: submit
+    - action: utter_start_recommendation
+    - action: game_preferences_form
+    - active_loop: game_preferences_form
+
+- story: user asks for a specific game but denies more preferences
+  steps:
+    - intent: inform
+    - action: utter_ask_more_preferences
+    - intent: deny
+    - action: utter_submit
+    - action: action_search_game
+
 - story: user says goodbye and ends
   steps:
     - intent: goodbye

@@ -60,7 +60,48 @@ rules:
     - intent: stop searching
     - action: action_deactivate_loop
     - active_loop: null
+    - action: action_reset_game_preferences
     - action: utter_goodbye
+
+- rule: Search the game after form is filled
+  condition:
+    - active_loop: game_preferences_form
+  steps:
+    - action: action_deactivate_loop
+    - active_loop: null
+    - action: utter_confirm_preferences
+    - action: utter_submit
+    - action: action_search_game
+
+- rule: Reset filters after search
+  steps:
+    - action: action_search_game
+    - action: action_reset_game_preferences
+
+- rule: Ask to reset game preferences if user asks 
+  condition:
+    - active_loop: game_preferences_form
+  steps:
+    - intent: reset
+    - action: utter_ask_to_reset
+
+- rule: Reset game preferences form if user confirms
+  condition:
+    - active_loop: game_preferences_form
+  steps:
+    - action: utter_ask_to_reset
+    - intent: submit
+    - action: action_reset_game_preferences
+    - action: utter_start_recommendation
+    - action: game_preferences_form
+
+- rule: Do not reset game preferences form if user denies
+  condition:
+    - active_loop: game_preferences_form
+  steps:
+    - action: utter_ask_to_reset
+    - intent: deny
+    - action: game_preferences_form
 
 - rule: Respond with a default base response if user sends a message with low NLU confidence
   condition:

@@ -71,6 +71,28 @@ nlu:
     - discontinue search
     - end the search
 
+- intent: reset
+  examples: |
+    - reset
+    - reset preferences
+    - i want to reset
+    - i want to reset the preferences
+    - restart
+    - start over
+    - start a new search
+    - begin again
+    - reset preferences
+    - I want to restart
+    - I want to restart the search
+    - I want to restart the preferences
+    - let's start over
+    - I want to start again
+    - I want to start a new search
+    - I want to begin again
+    - I want to reset preferences
+    - I want to start over
+
+
 - intent: request_form
   examples: |
     - I would like to buy a video game

@@ -20,7 +20,6 @@ SLOT_TO_COLUMN = {
     "console":      "Console",
     "genre":        "Genre",
     "publisher":    "Publisher",
-    "subgenres":    "SubGenres",
     # se vuoi, puoi aggiungere anche altri
 }
 
@@ -297,21 +296,6 @@ class ValidateGamePreferencesForm(FormValidationAction):
             "publisher", slot_value, dispatcher, tracker, "utter_publisher_invalid"
         )
 
-    def validate_subgenres(
-        self,
-        slot_value: Any,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any],
-    ) -> Dict[Text, Any]:
-        """
-        Esempio semplice: prendo tutto il testo, faccio fuzzy sulle SubGenres.
-        Se vuoi, puoi splittare per virgole e gestire più subgeneri.
-        """
-        return self._validate_categorical_from_dataset(
-            "subgenres", slot_value, dispatcher, tracker, "utter_subgenres_invalid"
-        )
-
     # ---------- ONLINE / MULTIPLATFORM (normalizzazione) ----------
 
     def validate_online(
@@ -403,7 +387,6 @@ class ActionSearchGame(Action):
         online = tracker.get_slot("online")
         multiplatform = tracker.get_slot("multiplatform")
         publisher = tracker.get_slot("publisher")
-        subgenres = tracker.get_slot("subgenres")
 
         print("[action_search_game] Slots:")
         print("  console:", console)
@@ -415,7 +398,6 @@ class ActionSearchGame(Action):
         print("  online:", online)
         print("  multiplatform:", multiplatform)
         print("  publisher:", publisher)
-        print("  subgenres:", subgenres)
 
         df = df_games.copy()
 
@@ -495,17 +477,6 @@ class ActionSearchGame(Action):
                 .str.lower()
                 .str.contains(str(publisher).lower(), na=False)
             ]
-        
-        # Subgenres
-        if subgenres not in (None, SKIP_VALUE):
-            subgenre_list = [sg.strip().lower() for sg in subgenres.split(",", "and")]
-            pattern = "|".join(subgenre_list)
-            df = df[
-                df["SubGenres"]
-                .astype(str)
-                .str.lower()
-                .str.contains(pattern, na=False)
-            ]
 
         # Costruisco la risposta
         shown_result: List[Text] = []
@@ -546,3 +517,33 @@ class ActionSearchGame(Action):
             dispatcher.utter_message(text="\n".join(message_lines))
 
         return [SlotSet("last_result", shown_result)]
+
+class ActionResetGamePreferences(Action):
+
+    def name(self) -> Text:
+        return "action_reset_game_preferences"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        slots_to_reset = [
+            "console",
+            "genre",
+            "used_price",
+            "release_year",
+            "review_score",
+            "max_player",
+            "online",
+            "multiplatform",
+            "publisher",
+            "last_result",
+        ]
+
+        for slot in slots_to_reset:
+            dispatcher.utter_message(text=f"Resetting slot '{slot}'.")
+
+        return [SlotSet(slot, None) for slot in slots_to_reset]

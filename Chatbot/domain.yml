@@ -9,6 +9,7 @@ intents:
   - inform        # user specifies preferences (console, genre, budget, ...)
   - search        # user confirms: "yes, show me the results"
   - stop searching  # user wants to stop the search / end the conversation
+  - reset       # user wants to restart the preference selection
 
 entities:
   - console
@@ -175,6 +176,9 @@ responses:
 
   utter_submit:
     - text: "Okay, I'll search my archive of vintage games and show you some interesting titles... 🎮"
+  
+  utter_ask_to_reset:
+    - text: "Are you sure you want to reset the preference selection? All your previous answers will be lost."
 
   utter_no_results:
     - text: "I couldn't find any games matching all your filters. Do you want to relax the criteria a bit (e.g. higher budget or lower minimum review score)?"
@@ -212,6 +216,7 @@ responses:
 actions:
   - action_search_game
   - validate_game_preferences_form
+  - action_reset_game_preferences
   
 session_config:
   session_expiration_time: 60
