@@ -28,7 +28,7 @@ rules:
     - action: game_preferences_form
     - active_loop: game_preferences_form
 
-- rule: Stop game preferences form by denying more preferences 
+- rule: Search the game by denying more preferences 
   steps:
     - action: utter_ask_more_preferences
     - intent: deny
@@ -57,26 +57,23 @@ rules:
   condition:
     - active_loop: game_preferences_form
   steps:
-    - intent: stop searching
+    - intent: stop_searching
+    - action: utter_stop_searching
     - action: action_deactivate_loop
     - active_loop: null
     - action: action_reset_game_preferences
-    - action: utter_goodbye
 
 - rule: Search the game after form is filled
   condition:
     - active_loop: game_preferences_form
   steps:
-    - action: action_deactivate_loop
-    - active_loop: null
+    - action: game_preferences_form      # Il form esegue l'ultimo step
+    - active_loop: null                  # Il form si è spento da solo (finito)
+    - slot_was_set:
+      - requested_slot: null             # Conferma che non ci sono più slot richiesti
     - action: utter_confirm_preferences
     - action: utter_submit
     - action: action_search_game
-
-- rule: Reset filters after search
-  steps:
-    - action: action_search_game
-    - action: action_reset_game_preferences
 
 - rule: Ask to reset game preferences if user asks 
   condition:
@@ -102,6 +99,31 @@ rules:
     - action: utter_ask_to_reset
     - intent: deny
     - action: game_preferences_form
+
+- rule: Reset game preferences form anytime user asks
+  steps:
+    - intent: reset
+    - action: action_reset_game_preferences
+
+- rule: Ask to relax filters when no results found if user agrees
+  steps:
+    - action: utter_no_results
+    - intent: submit
+    - action: utter_which_filters_to_relax
+
+- rule: Relax filters when no results found if user specifies filters
+  steps:
+    - action: utter_which_filters_to_relax
+    - intent: inform
+    - action: action_relax_filters
+    - action: utter_submit
+    - action: action_search_game
+
+- rule: Do not relax filters when no results found if user denies
+  steps:
+    - action: utter_no_results
+    - intent: deny
+    - action: utter_goodbye
 
 - rule: Respond with a default base response if user sends a message with low NLU confidence
   condition:

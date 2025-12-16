@@ -112,10 +112,6 @@ class ValidateGamePreferencesForm(FormValidationAction):
 
         # Caso 2: provo a estrarlo dal testo dell'ultima user message
         if value is None:
-            # special case "no limit" per used_price
-            if slot_name == "used_price" and "no limit" in text:
-                return {"used_price": 1000}
-
             value = _extract_first_number(text)
             
         # Caso 3: check per skip
@@ -482,7 +478,7 @@ class ActionSearchGame(Action):
         shown_result: List[Text] = []
 
         if df.empty:
-            dispatcher.utter_message(text="Sorry, I couldn't find any game with these filters.")
+            dispatcher.utter_message(response="utter_no_results")
         else:
             # uso le colonne reali: 'Title', 'Console', 'Genre', 'Usedprice', 'YearReleased'
             cols = ["Title", "Console", "Genre", "Usedprice", "YearReleased"]
@@ -543,7 +539,49 @@ class ActionResetGamePreferences(Action):
             "last_result",
         ]
 
-        for slot in slots_to_reset:
-            dispatcher.utter_message(text=f"Resetting slot '{slot}'.")
+        
+        dispatcher.utter_message(response="utter_reset_preferences")
 
         return [SlotSet(slot, None) for slot in slots_to_reset]
+    
+class ActionRelaxFilters(Action):
+
+    def name(self) -> Text:
+        return "action_relax_filters"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        slots_to_relax = tracker.get_slot("filters_to_relax")
+        if not slots_to_relax:
+            dispatcher.utter_message(text="Please specify which filters you want to relax.")
+            return []
+
+        if isinstance(slots_to_relax, str):
+            slots_to_relax = [s.strip().lower() for s in slots_to_relax.split(",")]
+
+        valid_slots = {
+            "console",
+            "genre",
+            "used_price",
+            "release_year",
+            "review_score",
+            "max_player",
+            "online",
+            "multiplatform",
+            "publisher",
+        }
+
+        events = []
+        for slot in slots_to_relax:
+            if slot in valid_slots:
+                events.append(SlotSet(slot, SKIP_VALUE))
+                dispatcher.utter_message(text=f"Relaxed filter: {slot}")
+            else:
+                dispatcher.utter_message(text=f"Unknown filter: {slot}")
+
+        return events

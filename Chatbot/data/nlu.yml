@@ -58,7 +58,7 @@ nlu:
     - skip 
     - I want to skip
 
-- intent: stop searching
+- intent: stop_searching
   examples: |
     - stop
     - cancel
@@ -91,6 +91,25 @@ nlu:
     - I want to begin again
     - I want to reset preferences
     - I want to start over
+
+- intent: filters
+  examples: |
+    - console
+    - genre
+    - release year
+    - year released
+    - price
+    - used price
+    - review score
+    - score
+    - max players
+    - players
+    - online
+    - online features
+    - multiplatform
+    - multi platform
+    - multi
+    - publisher
 
 
 - intent: request_form

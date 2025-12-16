@@ -8,8 +8,9 @@ intents:
   - request_form  # user asks for a video game recommendation
   - inform        # user specifies preferences (console, genre, budget, ...)
   - search        # user confirms: "yes, show me the results"
-  - stop searching  # user wants to stop the search / end the conversation
+  - stop_searching  # user wants to stop the search / end the conversation
   - reset       # user wants to restart the preference selection
+  - filters     # user specifies which filters to relax
 
 entities:
   - console
@@ -44,6 +45,10 @@ slots:
     influence_conversation: false    
     mappings:
       - type: from_text
+        not_intent: 
+          - search
+          - stop_searching
+          - reset
         conditions:
           - active_loop: game_preferences_form
             requested_slot: release_year
@@ -53,6 +58,10 @@ slots:
     influence_conversation: false
     mappings:
       - type: from_text
+        not_intent: 
+          - search
+          - stop_searching
+          - reset
         conditions:
           - active_loop: game_preferences_form
             requested_slot: used_price
@@ -62,6 +71,10 @@ slots:
     influence_conversation: false
     mappings:
       - type: from_text
+        not_intent: 
+          - search
+          - stop_searching
+          - reset
         conditions:
           - active_loop: game_preferences_form
             requested_slot: review_score  
@@ -71,6 +84,10 @@ slots:
     influence_conversation: false
     mappings:
       - type: from_text
+        not_intent: 
+          - search
+          - stop_searching
+          - reset
         conditions:
           - active_loop: game_preferences_form
             requested_slot: max_player
@@ -79,6 +96,10 @@ slots:
     influence_conversation: false
     mappings:
       - type: from_text
+        not_intent: 
+          - search
+          - stop_searching  
+          - reset
         conditions:
           - active_loop: game_preferences_form
             requested_slot: online
@@ -88,6 +109,10 @@ slots:
     influence_conversation: false
     mappings:
       - type: from_text
+        not_intent: 
+          - search
+          - stop_searching  
+          - reset
         conditions:
           - active_loop: game_preferences_form
             requested_slot: multiplatform
@@ -100,12 +125,18 @@ slots:
         entity: publisher
         intent: inform
 
-        
   last_result:
     type: list
     influence_conversation: false
     mappings:
       - type: custom
+
+  filters_to_relax:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_text
+        intent: filters
 
 
 forms:
@@ -135,7 +166,7 @@ responses:
     - text: "Do you have a favorite genre you like the most? For example Action, RPG, Sports, Strategy..."
 
   utter_ask_used_price:
-    - text: "Do you have a maximum budget for a used game? Tell me an amount (e.g. 20), or type 'no limit'."
+    - text: "Do you have a maximum budget for a used game? Tell me an amount (e.g. 20)."
 
   utter_ask_release_year:
     - text: "Do you prefer games from a specific period? Specify a release year between 2004 and 2010."
@@ -147,10 +178,10 @@ responses:
     - text: "Do you have a maximum number of players in mind? Tell me the maximum number of players."
 
   utter_ask_online:
-    - text: "Is it important that the game has online features? Write skip to skip this question."
+    - text: "Is it important that the game has online features? Write 'skip' to skip this question."
 
   utter_ask_multiplatform:
-    - text: "Do you want only platform exclusives, or are multiplatform games also fine? Write skip to skip this question."
+    - text: "Do you want only platform exclusives, or are multiplatform games also fine? Write 'skip' to skip this question."
 
   utter_ask_publisher:
     - text: "Do you have a favorite game publisher? (e.g. Nintendo, Ubisoft...)"
@@ -177,11 +208,20 @@ responses:
   utter_submit:
     - text: "Okay, I'll search my archive of vintage games and show you some interesting titles... 🎮"
   
+  utter_stop_searching:
+    - text: "No problem! If you need anything else, just let me know. Goodbye! 👋"
+  
+  utter_reset_preferences:
+    - text: "All your previous preferences have been reset."
+  
   utter_ask_to_reset:
     - text: "Are you sure you want to reset the preference selection? All your previous answers will be lost."
 
   utter_no_results:
-    - text: "I couldn't find any games matching all your filters. Do you want to relax the criteria a bit (e.g. higher budget or lower minimum review score)?"
+    - text: "I couldn't find any games matching all your filters. Do you want to relax the criteria a bit?"
+
+  utter_which_filters_to_relax:
+    - text: "Which filters would you like to relax? You can specify console, genre, release year, used price, review score, max players, online features, multiplatform, or publisher."
 
   utter_console_invalid:
     - text: "Please provide a valid console or device name (e.g. Nintendo DS, PSP, PS2...)."
@@ -193,7 +233,7 @@ responses:
     - text: "Please provide a valid release year (from 2004 to 2010)."
 
   utter_used_price_invalid:
-    - text: "Please provide a valid amount for your budget, or type 'no limit' if you don't have one."
+    - text: "Please provide a valid amount for your budget."
 
   utter_review_score_invalid:
     - text: "Please provide a valid review score between 0 and 100."
@@ -217,6 +257,7 @@ actions:
   - action_search_game
   - validate_game_preferences_form
   - action_reset_game_preferences
+  - action_relax_filters
   
 session_config:
   session_expiration_time: 60
