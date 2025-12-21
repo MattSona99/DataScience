@@ -21,6 +21,17 @@ nlu:
     - thanks, bye
     - thanks, goodbye
 
+- intent: help
+  examples: |
+    - I need help
+    - can you help me?
+    - I need assistance
+    - help me
+    - I need some help
+    - could you assist me?
+    - I require assistance
+    - please help me
+
 - intent: submit
   examples: |
     - yes
@@ -94,22 +105,32 @@ nlu:
 
 - intent: filters
   examples: |
-    - console
-    - genre
-    - release year
-    - year released
-    - price
-    - used price
-    - review score
-    - score
-    - max players
-    - players
-    - online
-    - online features
-    - multiplatform
-    - multi platform
-    - multi
-    - publisher
+    - [console](filters_to_relax)
+    - relax [console](filters_to_relax) features
+    - relax the [console](filters_to_relax)
+    - i want to relax the [genre](filters_to_relax) filter
+    - can you relax the [release year](filters_to_relax) filter
+    - relax the [console](filters_to_relax) filter
+    - [genre](filters_to_relax)
+    - relax [genre](filters_to_relax) features
+    - relax the [genre](filters_to_relax) filter
+    - [release year](filters_to_relax)
+    - relax [release year](filters_to_relax) features
+    - relax the [release year](filters_to_relax) filter
+    - [used price](filters_to_relax)
+    - relax [used price](filters_to_relax) features
+    - relax the [used price](filters_to_relax) filter
+    - [review score](filters_to_relax)
+    - relax the [review score](filters_to_relax) filter
+    - [max players](filters_to_relax)
+    - relax the [max players](filters_to_relax) filter
+    - [online](filters_to_relax)
+    - relax the [online](filters_to_relax) filter
+    - relax [online](filters_to_relax) features
+    - [multiplatform](filters_to_relax)
+    - relax the [multiplatform](filters_to_relax) filter
+    - [publisher](filters_to_relax)
+    - relax the [publisher](filters_to_relax) filter
 
 
 - intent: request_form
@@ -122,6 +143,10 @@ nlu:
     - I'd love a video game suggestion
     - suggest a video game for me
     - I'm searching for a game
+    - i want a game, can you help me?
+    - I want to buy a video game
+    - I'm looking for a game to buy
+    - I'm interested in buying a game
     - I want a video game
     - give me a video game
     - show me a video game
@@ -137,21 +162,23 @@ nlu:
 - intent: inform
   examples: |
     - I'm looking for a game for [Nintendo DS](console)
+    - I want a game on [nintendo ds](console)
     - [Nintendo DS](console)
     - I want something on [Sony PSP](console)
-    - I'm interested in a game for [PS2](console)
+    - something for [psp](console)
+    - I'm interested in a game for [PS3](console)
     - I want to play on [Xbox](console)
     - I need a game for [Wii](console)
-    - i have a [nintendo ds]{"entity": "console", "value": "Nintendo DS"}
+    - i have a [nintendo wii]{"entity": "console", "value": "Nintendo Wii"}
     - i want to play on [nintendo ds]{"entity": "console", "value": "Nintendo DS"}
     - Can you suggest a game for [PlayStation 3](console)?
-    - Looking for games on [X360](console)
+    - Looking for games on [nintendo wii](console)
     - Games for [Nintendo Wii](console), please
-    - I want to play something on [PSP](console)
+    - I want to play something on [psp](console)
     - Can you suggest a game for [PlayStation 3](console)?
     - Looking for games on [X360](console)
     - Games for [Nintendo Wii](console), please
-    - I want to play something on [PSP](console)
+    - I want to play something on [xbox](console)
 
 # ------------------ GENRE ------------------
 - intent: inform
@@ -249,7 +276,7 @@ nlu:
     - choose only games with a score of at least [70](review_score)
     - I want a game with a score of at least [80](review_score)
 
-# ------------------ MAX PLAYERS ------------------
+# ------------------ MAX PLAYER ------------------
 - intent: inform
   examples: |
     - I only need [1](max_player) player
@@ -310,12 +337,77 @@ nlu:
     - games by [Konami]{"entity": "publisher", "value": "Konami"}
     - I want a game published by [Sega]{"entity": "publisher", "value": "Sega"}
 
+# ------------------ AGE RATING ------------------
+- intent: inform
+  examples: |
+    - I want a game for [everyone](age_rating)
+    - looking for [E](age_rating) rated games
+    - something for [kids](age_rating)
+    - [family friendly](age_rating)
+    - suitable for [all ages](age_rating)
+    - rated [T](age_rating)
+    - for [teenagers](age_rating)
+    - [teens](age_rating)
+    - [teen](age_rating)
+    - rated [M](age_rating)
+    - for [adults](age_rating)
+    - [mature](age_rating) only
+    - [18+](age_rating)
+    - [violent](age_rating) games
+    - [unknown](age_rating) rating
+
+- intent: ask_best_sellers
+  examples: |
+    - What are the top selling games?
+    - What are the best-selling games?
+    - Show me the best sellers
+    - List the top selling games
+    - Which games are the best sellers?
+    - what are the top selling games?
+    - what are the best-selling games?
+    - show me the best sellers
+    - list the top selling games
+    - which games are the best sellers?
+
+- intent: ask_highest_rated
+  examples: |
+    - What are the highest rated games?
+    - Show me the top rated games
+    - List the best rated games
+    - Which games have the highest ratings?
+    - what are the highest rated games?
+    - show me the top rated games
+    - list the best rated games
+    - which games have the highest ratings?
+
+- intent: save_game
+  examples: |
+    - I want to save [Super Mario 64]{"entity": "game_title", "value": "Super Mario 64"}
+    - Save [Spider-Man 2]{"entity": "game_title", "value": "Spider-Man 2"}
+    - I want to save [WarioWare Touched!]{"entity": "game_title", "value": "WarioWare Touched!"}
+    - save [Halo 3]{"entity": "game_title", "value": "Halo 3"}
+    - please save [Final Fantasy III]{"entity": "game_title", "value": "Final Fantasy III"}
+    - remember [Metal Gear Solid]{"entity": "game_title", "value": "Metal Gear Solid"}
+    - add [Resident Evil 4]{"entity": "game_title", "value": "Resident Evil 4"} to my saved games list
+    - add [Grand Theft Auto IV]{"entity": "game_title", "value": "Grand Theft Auto IV"} to my saved games
+    - I want to save [Overlord Minions](game_title)
+
+- intent: show_saved_games
+  examples: |
+    - Show me my saved games
+    - I want to see my saved games
+    - What games have I saved?
+    - show me my saved games
+    - I want to see my saved games
+    - what games have I saved?
+    - let me see my saved games
+    - now show my games
 
 # --- Synonyms for entity VALUES ---
 
-- synonym: videogame
+- synonym: video game
   examples: |
-    - video game
+    - videogame
     - game
     - video-game
     - title
@@ -385,6 +477,29 @@ nlu:
     - console ps3
     - sony playstation 3
     - ps3 system
+
+- synonym: E
+  examples: |
+    - everyone
+    - kids
+    - children
+    - family friendly
+    - all ages
+
+- synonym: T
+  examples: |
+    - teen
+    - teenagers
+    - teens
+    - 13+
+
+- synonym: M
+  examples: |
+    - mature
+    - adults
+    - adult
+    - 18+
+    - violent
 
 
 - synonym: Action
@@ -1598,6 +1713,7 @@ nlu:
     - locomotive handling game
 - synonym: RPG
   examples: |
+    - rpg 
     - role playing game
     - roleplay game
     - fantasy rpg

@@ -3,6 +3,7 @@ version: "3.1"
 intents:
   - greet
   - goodbye
+  - help
   - submit        # user confirms: "yes, show me the results"
   - deny          # user says no / wants to change something
   - request_form  # user asks for a video game recommendation
@@ -11,8 +12,13 @@ intents:
   - stop_searching  # user wants to stop the search / end the conversation
   - reset       # user wants to restart the preference selection
   - filters     # user specifies which filters to relax
+  - ask_best_sellers      # "Quali sono i giochi più venduti?"
+  - ask_highest_rated     # "Quali sono i giochi migliori?"
+  - save_game             # "Salva Super Mario nella mia lista"
+  - show_saved_games      # "Fammi vedere i miei giochi salvati"
 
 entities:
+  - game_title
   - console
   - genre
   - release_year
@@ -22,6 +28,8 @@ entities:
   - online
   - multiplatform
   - publisher
+  - age_rating
+  - filters_to_relax
 
 slots:
   console:
@@ -49,6 +57,7 @@ slots:
           - search
           - stop_searching
           - reset
+          - help
         conditions:
           - active_loop: game_preferences_form
             requested_slot: release_year
@@ -62,6 +71,7 @@ slots:
           - search
           - stop_searching
           - reset
+          - help
         conditions:
           - active_loop: game_preferences_form
             requested_slot: used_price
@@ -75,6 +85,7 @@ slots:
           - search
           - stop_searching
           - reset
+          - help
         conditions:
           - active_loop: game_preferences_form
             requested_slot: review_score  
@@ -88,6 +99,7 @@ slots:
           - search
           - stop_searching
           - reset
+          - help
         conditions:
           - active_loop: game_preferences_form
             requested_slot: max_player
@@ -100,6 +112,7 @@ slots:
           - search
           - stop_searching  
           - reset
+          - help
         conditions:
           - active_loop: game_preferences_form
             requested_slot: online
@@ -113,6 +126,7 @@ slots:
           - search
           - stop_searching  
           - reset
+          - help
         conditions:
           - active_loop: game_preferences_form
             requested_slot: multiplatform
@@ -125,6 +139,14 @@ slots:
         entity: publisher
         intent: inform
 
+  age_rating:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: age_rating
+        intent: inform
+
   last_result:
     type: list
     influence_conversation: false
@@ -132,12 +154,25 @@ slots:
       - type: custom
 
   filters_to_relax:
+    type: list
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: filters_to_relax
+        intent: filters
+
+  game_title_to_save:
     type: text
     influence_conversation: false
     mappings:
-      - type: from_text
-        intent: filters
+      - type: from_entity
+        entity: game_title
 
+  saved_games:
+    type: list
+    influence_conversation: false
+    mappings:
+      - type: custom
 
 forms:
   game_preferences_form:
@@ -151,6 +186,7 @@ forms:
       - online
       - multiplatform
       - publisher
+      - age_rating
 
 responses:
   utter_greet:
@@ -159,8 +195,19 @@ responses:
   utter_goodbye:
     - text: "Great, enjoy your retro gaming session! 🎮"
 
+  utter_help:
+    - text: |
+        I'm your Retro Gaming Assistant! 🕹️ Here is what I can do:
+        
+        🔍 **Find Games**: Ask for a recommendation or specify filters (console, genre, etc.).
+        🏆 **Top Charts**: Ask for "best sellers" or "highest rated games".
+        💾 **Collection**: Say "save [Game Name]" or "show my saved games".
+        ⚙️ **Settings**: Type "reset" to restart or "relax filters" if you get no results.
+        
+        What would you like to do?
+
   utter_ask_console:
-    - text: "Do you have a specific console or device in mind? (e.g. Nintendo DS, PSP, PS2...)"
+    - text: "Do you have a specific console or device in mind? (e.g. Nintendo DS, PSP, PS3...)"
 
   utter_ask_genre:
     - text: "Do you have a favorite genre you like the most? For example Action, RPG, Sports, Strategy..."
@@ -185,6 +232,9 @@ responses:
 
   utter_ask_publisher:
     - text: "Do you have a favorite game publisher? (e.g. Nintendo, Ubisoft...)"
+
+  utter_ask_age_rating:
+    - text: "Do you have a preferred age rating for the game? (e.g. E, T, M )"
 
   utter_start_recommendation:
     - text: "Great! I'll ask you a few questions so I can recommend something that fits you. Anytime you want to stop and search, just type 'show me the results'🙂"
@@ -221,7 +271,7 @@ responses:
     - text: "I couldn't find any games matching all your filters. Do you want to relax the criteria a bit?"
 
   utter_which_filters_to_relax:
-    - text: "Which filters would you like to relax? You can specify console, genre, release year, used price, review score, max players, online features, multiplatform, or publisher."
+    - text: "Which filters would you like to relax? You can specify 'console', 'genre', 'release year', 'used price', 'review score', 'max players', 'online features', 'multiplatform', or 'publisher'."
 
   utter_console_invalid:
     - text: "Please provide a valid console or device name (e.g. Nintendo DS, PSP, PS2...)."
@@ -250,6 +300,9 @@ responses:
   utter_publisher_invalid:
     - text: "Please provide a valid publisher name (e.g. Nintendo, Ubisoft...)."
 
+  utter_age_rating_invalid:
+    - text: "Please provide a valid age rating (e.g. E, T, M)."
+
   utter_no_understanding:
     - text: "I'm sorry, I didn't understand that. Could you please rephrase?"
 
@@ -258,6 +311,11 @@ actions:
   - validate_game_preferences_form
   - action_reset_game_preferences
   - action_relax_filters
+  - action_show_best_sellers
+  - action_show_highest_rated
+  - action_save_game
+  - action_show_saved_games
+  - action_show_best
   
 session_config:
   session_expiration_time: 60

@@ -27,6 +27,7 @@ stories:
     - intent: deny
     - action: utter_submit
     - action: action_search_game
+    - action: action_reset_game_preferences
 
 - story: user says goodbye and ends
   steps:

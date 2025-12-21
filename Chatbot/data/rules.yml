@@ -11,9 +11,15 @@ rules:
   steps:
     - intent: goodbye
     - action: utter_goodbye
-    - active_loop: null
 
-- rule: Ask to start game preferences form by inform 
+- rule: Start session with help
+  steps:
+    - intent: session_start
+    - action: action_session_start
+    - action: utter_greet
+    - action: utter_help
+
+- rule: Ask to start game preferences form by inform
   condition:
     - active_loop: null
   steps:
@@ -34,6 +40,7 @@ rules:
     - intent: deny
     - action: utter_submit
     - action: action_search_game
+    - action: action_reset_game_preferences
 
 - rule: Start game preferences form
   steps:
@@ -52,6 +59,7 @@ rules:
     - action: utter_confirm_preferences
     - action: utter_submit
     - action: action_search_game
+    - action: action_reset_game_preferences
 
 - rule: Stop game preferences form if user says no
   condition:
@@ -74,6 +82,7 @@ rules:
     - action: utter_confirm_preferences
     - action: utter_submit
     - action: action_search_game
+    - action: action_reset_game_preferences
 
 - rule: Ask to reset game preferences if user asks 
   condition:
@@ -111,19 +120,19 @@ rules:
     - intent: submit
     - action: utter_which_filters_to_relax
 
-- rule: Relax filters when no results found if user specifies filters
-  steps:
-    - action: utter_which_filters_to_relax
-    - intent: inform
-    - action: action_relax_filters
-    - action: utter_submit
-    - action: action_search_game
-
 - rule: Do not relax filters when no results found if user denies
   steps:
     - action: utter_no_results
     - intent: deny
     - action: utter_goodbye
+    
+- rule: Relax filters when no results found if user specifies filters
+  steps:
+    - action: utter_which_filters_to_relax
+    - intent: filters
+    - action: action_relax_filters
+    - action: utter_submit
+    - action: action_search_game
 
 - rule: Respond with a default base response if user sends a message with low NLU confidence
   condition:
@@ -132,3 +141,33 @@ rules:
   - intent: nlu_fallback
   - action: utter_no_understanding
   - action: game_preferences_form
+
+- rule: Respond with a default base response if user sends a message with low NLU confidence
+  steps:
+  - intent: nlu_fallback
+  - action: utter_no_understanding
+
+- rule: Show best sellers
+  steps:
+    - intent: ask_best_sellers
+    - action: action_show_best_sellers
+
+- rule: Show highest rated
+  steps:
+    - intent: ask_highest_rated
+    - action: action_show_highest_rated
+
+- rule: Save a game
+  steps:
+    - intent: save_game
+    - action: action_save_game
+
+- rule: Show saved games
+  steps:
+    - intent: show_saved_games
+    - action: action_show_saved_games
+
+- rule: Ask for help
+  steps:
+    - intent: help
+    - action: utter_help

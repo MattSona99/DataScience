@@ -1,6 +1,6 @@
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, FollowupAction
 from rasa_sdk.forms import FormValidationAction
 from typing import Any, Text, Dict, List, Optional
 import re
@@ -23,6 +23,45 @@ SLOT_TO_COLUMN = {
     # se vuoi, puoi aggiungere anche altri
 }
 
+# Mappa: Parola chiave (o leggibile) -> Nome reale dello Slot
+# Aggiungiamo varianti "umane" per aiutare il matching (es. 'budget' -> 'used_price')
+slot_keywords = {
+    "console": "console",
+        "device": "console",
+        "genre": "genre",
+        "type": "genre",
+        "release year": "release_year",
+        "year": "release_year",
+        "date": "release_year",
+        "used price": "used_price",
+        "price": "used_price",
+        "budget": "used_price",
+        "cost": "used_price",
+        "review score": "review_score",
+        "score": "review_score",
+        "max player": "max_player",
+        "players": "max_player",
+        "online": "online",
+        "internet": "online",
+        "offline": "online",
+        "on": "online",
+        "off": "online",
+        "multiplatform": "multiplatform",
+        "exclusive": "multiplatform",
+        "multi": "multiplatform",
+        "single": "multiplatform",
+        "publisher": "publisher",
+        "developer": "publisher",
+        "company": "publisher",
+        "creators": "publisher",
+        "maker": "publisher",
+        "age rating": "age_rating",
+        "rating": "age_rating",
+        "age": "age_rating",
+        "age limit": "age_rating",
+        "limit": "age_rating",
+    }
+
 SKIP_VALUE = "SKIP"
 
 def _build_value_map(column_name: str) -> Dict[str, str]:
@@ -42,6 +81,39 @@ VALUE_MAPS: Dict[str, Dict[str, str]] = {
     for slot, col in SLOT_TO_COLUMN.items()
 }
 
+VALUE_MAPS["age_rating"] = {
+    # Target: E (Everyone)
+    "e": "E",
+    "everyone": "E",
+    "kids": "E",
+    "child": "E",
+    "children": "E",
+    "family": "E",
+    "family friendly": "E",
+    "all ages": "E",
+    
+    # Target: T (Teen)
+    "t": "T",
+    "teen": "T",
+    "teens": "T",
+    "teenager": "T",
+    "13+": "T",
+    
+    # Target: M (Mature)
+    "m": "M",
+    "mature": "M",
+    "adult": "M",
+    "adults": "M",
+    "18+": "M",
+    "violent": "M",
+    "blood": "M",
+    
+    # Target: Unknown / Altro
+    "unknown": "Unknown",
+    "n/a": "Unknown",
+    "?": "Unknown"
+}
+
 def _closest_dataset_value(slot_name: str, user_value: str) -> Optional[str]:
     """
     Ritorna il valore del dataset più simile a quello inserito dall'utente
@@ -59,6 +131,28 @@ def _closest_dataset_value(slot_name: str, user_value: str) -> Optional[str]:
 
     best_key = matches[0]
     return value_map[best_key]  # valore originale con maiuscole ecc.
+
+def _get_closest_slot(user_input: str) -> Optional[str]:
+        """
+        Cerca quale slot assomiglia di più all'input dell'utente usando difflib.
+        """
+        
+        # Prendiamo tutte le chiavi (le parole che cerchiamo di matchare)
+        possible_matches = list(slot_keywords.keys())
+        
+        # Normalizziamo l'input utente
+        user_norm = user_input.strip().lower()
+
+        # Cerchiamo la corrispondenza più vicina
+        # n=1 restituisce solo il migliore, cutoff=0.6 richiede una somiglianza del 60%
+        matches = difflib.get_close_matches(user_norm, possible_matches, n=1, cutoff=0.6)
+
+        if matches:
+            best_match_key = matches[0]
+            # Ritorniamo il nome reale dello slot associato alla chiave trovata
+            return slot_keywords[best_match_key]
+        
+        return None
 
 def _extract_first_number(text: str) -> Optional[float]:
     """
@@ -291,6 +385,17 @@ class ValidateGamePreferencesForm(FormValidationAction):
         return self._validate_categorical_from_dataset(
             "publisher", slot_value, dispatcher, tracker, "utter_publisher_invalid"
         )
+        
+    def validate_age_rating(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        return self._validate_categorical_from_dataset(
+            "age_rating", slot_value, dispatcher, tracker, "utter_age_rating_invalid"
+        )
 
     # ---------- ONLINE / MULTIPLATFORM (normalizzazione) ----------
 
@@ -383,6 +488,7 @@ class ActionSearchGame(Action):
         online = tracker.get_slot("online")
         multiplatform = tracker.get_slot("multiplatform")
         publisher = tracker.get_slot("publisher")
+        age_rating = tracker.get_slot("age_rating")
 
         print("[action_search_game] Slots:")
         print("  console:", console)
@@ -394,6 +500,7 @@ class ActionSearchGame(Action):
         print("  online:", online)
         print("  multiplatform:", multiplatform)
         print("  publisher:", publisher)
+        print("  age_rating:", age_rating)
 
         df = df_games.copy()
 
@@ -473,44 +580,53 @@ class ActionSearchGame(Action):
                 .str.lower()
                 .str.contains(str(publisher).lower(), na=False)
             ]
-
-        # Costruisco la risposta
-        shown_result: List[Text] = []
+            
+        # Age Rating
+        if age_rating not in (None, SKIP_VALUE):
+            df = df[
+                df["AgeRating"]
+                .astype(str)
+                .str.strip()
+                .str.upper() == str(age_rating).strip().upper()
+            ]
 
         if df.empty:
-            dispatcher.utter_message(response="utter_no_results")
-        else:
-            # uso le colonne reali: 'Title', 'Console', 'Genre', 'Usedprice', 'YearReleased'
-            cols = ["Title", "Console", "Genre", "Usedprice", "YearReleased"]
-            missing = [c for c in cols if c not in df.columns]
-            if missing:
-                dispatcher.utter_message(
-                    text=f"Internal error: expected columns {missing} not found in dataset."
-                )
-                return []
+            return [FollowupAction("utter_no_results")]
+        
+         # Costruisco la risposta
+        shown_result: List[Text] = []
+        
+        # uso le colonne reali: 'Title', 'Console', 'Genre', 'Usedprice', 'YearReleased'
+        cols = ["Title", "Console", "Genre", "Usedprice", "YearReleased"]
+        missing = [c for c in cols if c not in df.columns]
+        if missing:
+            dispatcher.utter_message(
+            text=f"Internal error: expected columns {missing} not found in dataset."
+            )
+            return []
 
-            recommended_games = df[cols].head(10)
+        recommended_games = df[cols].head(10)
 
-            message_lines = ["Here are some game recommendations for you:"]
-            for _, row in recommended_games.iterrows():
-                title = row["Title"]
-                cons = row["Console"]
-                gen = row["Genre"]
-                price = row["Usedprice"]
-                year = int(row["YearReleased"]) if not pd.isna(row["YearReleased"]) else "N/A"
+        message_lines = ["Here are some game recommendations for you:"]
+        for _, row in recommended_games.iterrows():
+            title = row["Title"]
+            cons = row["Console"]
+            gen = row["Genre"]
+            price = row["Usedprice"]
+            year = int(row["YearReleased"]) if not pd.isna(row["YearReleased"]) else "N/A"
 
-                message_lines.append(
-                    f"------------------------------ \n \
-                    Title: {title} \n \
-                    Console: {cons} \n \
-                    Genre: {gen} \n \
-                    UsedPrice: {price} \n \
-                    YearReleased: {year} \n \
-                    ------------------------------ "
-                )
-                shown_result.append(title)
+            message_lines.append(
+                f"------------------------------ \n \
+                Title: {title} \n \
+                Console: {cons} \n \
+                Genre: {gen} \n \
+                UsedPrice: {price} \n \
+                YearReleased: {year} \n \
+                ------------------------------ "
+            )
+            shown_result.append(title)
 
-            dispatcher.utter_message(text="\n".join(message_lines))
+        dispatcher.utter_message(text="\n".join(message_lines))
 
         return [SlotSet("last_result", shown_result)]
 
@@ -536,6 +652,7 @@ class ActionResetGamePreferences(Action):
             "online",
             "multiplatform",
             "publisher",
+            "age_rating",
             "last_result",
         ]
 
@@ -556,32 +673,174 @@ class ActionRelaxFilters(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
 
-        slots_to_relax = tracker.get_slot("filters_to_relax")
-        if not slots_to_relax:
-            dispatcher.utter_message(text="Please specify which filters you want to relax.")
-            return []
-
-        if isinstance(slots_to_relax, str):
-            slots_to_relax = [s.strip().lower() for s in slots_to_relax.split(",")]
-
-        valid_slots = {
-            "console",
-            "genre",
-            "used_price",
-            "release_year",
-            "review_score",
-            "max_player",
-            "online",
-            "multiplatform",
-            "publisher",
-        }
+        slots_to_relax_input = tracker.get_slot("filters_to_relax")
+        
+        # Gestione input sia come lista che come stringa singola
+        if isinstance(slots_to_relax_input, str):
+            # Se è una stringa con virgole (es. "price, genre"), la dividiamo
+            input_list = [s.strip() for s in slots_to_relax_input.split(",")]
+        else:
+            input_list = slots_to_relax_input
 
         events = []
-        for slot in slots_to_relax:
-            if slot in valid_slots:
-                events.append(SlotSet(slot, SKIP_VALUE))
-                dispatcher.utter_message(text=f"Relaxed filter: {slot}")
+        relaxed_filters_display = []
+
+        for raw_filter in input_list:
+            # Usiamo la funzione fuzzy per trovare lo slot
+            target_slot = _get_closest_slot(raw_filter)
+
+            if target_slot:
+                # Impostiamo lo slot a None
+                events.append(SlotSet(target_slot, None))
+                relaxed_filters_display.append(target_slot.replace("_", " ")) # Solo per bellezza nel messaggio
             else:
-                dispatcher.utter_message(text=f"Unknown filter: {slot}")
+                dispatcher.utter_message(text=f"Sorry, I couldn't identify the filter: {raw_filter}")
+                pass
+
+        if relaxed_filters_display:
+            msg = f"Ok, I've removed the filters for: {', '.join(relaxed_filters_display)}."
+            dispatcher.utter_message(text=msg)
+            # Resettiamo lo slot che contiene la richiesta, per pulizia
+            events.append(SlotSet("filters_to_relax", None))
+        else:
+            dispatcher.utter_message(text="I couldn't identify any valid filters to relax from your request.")
 
         return events
+
+class ActionShowBest(Action):
+    def name(self) -> Text:
+        return "action_show_best"
+
+    def run(self, dispatcher, tracker, domain):
+        
+        slots_to_sort = tracker.get_slot("filters_to_relax") # Utilizziamo lo slot "filters_to_relax" per prendere i valori degli slot
+        
+        # Gestione input sia come lista che come stringa singola
+        if isinstance(slots_to_sort, str):
+            # Se è una stringa con virgole (es. "price, genre"), la dividiamo
+            input_list = [s.strip() for s in slots_to_sort.split(",")]
+        else:
+            input_list = slots_to_sort
+            
+        list_of_valid_slots = []
+
+        for raw_filter in input_list:
+            # Usiamo la funzione fuzzy per trovare lo slot
+            target_slot_column = _get_closest_slot(raw_filter)
+            
+            if target_slot_column not in df_games.columns:
+                dispatcher.utter_message(text=f"Sorry, I couldn't identify the filter: {raw_filter}")
+                return []
+            
+            if target_slot_column:
+                list_of_valid_slots.append(target_slot_column)
+
+        if list_of_valid_slots:
+            top_column = df_games.sort_values(by=list_of_valid_slots, ascending=False).head(5)
+            message = f"Here are the top 5 games sorted by {list_of_valid_slots}: \n"
+            for _, row in top_column.iterrows():
+                message += f"- {row['Title']} ({row['Console']}) - {list_of_valid_slots}: {row[target_slot_column]}\n"
+            dispatcher.utter_message(text=message)
+            
+        return []
+        
+        
+class ActionShowBestSellers(Action):
+    def name(self) -> Text:
+        return "action_show_best_sellers"
+
+    def run(self, dispatcher, tracker, domain):
+        sales_col = "US Sales (millions)" 
+        
+        if sales_col not in df_games.columns:
+            dispatcher.utter_message(text="Sorry, I don't have sales data available.")
+            return []
+
+        # Ordina per vendite decrescenti e prendi i primi 5
+        top_sellers = df_games.sort_values(by=sales_col, ascending=False).head(5)
+        
+        message = "Here are the best-selling games of all time in my archive: 🏆\n"
+        for _, row in top_sellers.iterrows():
+            message += f"- {row['Title']} ({row['Console']}) - Sold: {row[sales_col]}m\n"
+            
+        dispatcher.utter_message(text=message)
+        return []
+
+
+class ActionShowHighestRated(Action):
+    def name(self) -> Text:
+        return "action_show_highest_rated"
+
+    def run(self, dispatcher, tracker, domain):
+        score_col = "Review Score" # Assumo questo sia il nome della tua colonna
+        
+        if score_col not in df_games.columns:
+            dispatcher.utter_message(text="Sorry, review data is missing.")
+            return []
+
+        # Ordina per punteggio decrescente
+        top_rated = df_games.sort_values(by=score_col, ascending=False).head(5)
+        
+        message = "Here are the critically acclaimed masterpieces: ⭐\n"
+        for _, row in top_rated.iterrows():
+            message += f"- {row['Title']} ({row['Console']}) - Score: {row[score_col]}/100\n"
+            
+        dispatcher.utter_message(text=message)
+        return []
+
+
+class ActionSaveGame(Action):
+    def name(self) -> Text:
+        return "action_save_game"
+
+    def run(self, dispatcher, tracker, domain):
+        # 1. Recupera il titolo detto dall'utente
+        game_input = tracker.get_slot("game_title_to_save")
+        
+        # Se l'utente non ha specificato il titolo (ha attivato l'intent senza entità)
+        if not game_input:
+            dispatcher.utter_message(text="Which game would you like to save?")
+            return []
+
+        # 2. Cerca il gioco nel database usando difflib (Fuzzy Search)
+        all_titles = df_games['Title'].astype(str).unique().tolist()
+        matches = difflib.get_close_matches(game_input, all_titles, n=1, cutoff=0.6)
+
+        if not matches:
+            dispatcher.utter_message(text=f"I couldn't find a game named '{game_input}' in my database.")
+            return [SlotSet("game_title_to_save", None)]
+
+        found_game = matches[0]
+
+        # 3. Gestisci la lista dei salvati
+        current_saved = tracker.get_slot("saved_games")
+        if not current_saved:
+            current_saved = []
+
+        if found_game in current_saved:
+            dispatcher.utter_message(text=f"'{found_game}' is already in your list! ✅")
+        else:
+            current_saved.append(found_game)
+            dispatcher.utter_message(text=f"Saved '{found_game}' to your favorites! 💾")
+
+        # Aggiorna lo slot della lista e pulisci lo slot temporaneo di input
+        return [
+            SlotSet("saved_games", current_saved),
+            SlotSet("game_title_to_save", None)
+        ]
+
+
+class ActionShowSavedGames(Action):
+    def name(self) -> Text:
+        return "action_show_saved_games"
+
+    def run(self, dispatcher, tracker, domain):
+        saved_list = tracker.get_slot("saved_games")
+
+        if not saved_list:
+            dispatcher.utter_message(text="Your list is empty. Ask me to save a game first!")
+        else:
+            msg = "Here are your saved games: 📝\n" + "\n".join([f"- {g}" for g in saved_list])
+            dispatcher.utter_message(text=msg)
+            
+        return []
