@@ -131,6 +131,9 @@ nlu:
     - relax the [multiplatform](filters_to_relax) filter
     - [publisher](filters_to_relax)
     - relax the [publisher](filters_to_relax) filter
+    - [age rating](filters_to_relax)
+    - relax the [age rating](filters_to_relax) filter
+    - relax [age rating](filters_to_relax) features
 
 
 - intent: request_form
@@ -179,6 +182,13 @@ nlu:
     - Looking for games on [X360](console)
     - Games for [Nintendo Wii](console), please
     - I want to play something on [xbox](console)
+    - Can you suggest a game for [playStation 3](console)?
+    - i have a [Nintendo DS](console)
+    - i want to play on [playstation portable]{"entity": "console", "value": "Sony PSP"}
+    - i have a [psp]{"entity": "console", "value": "Sony PSP"}
+    - Looking for games on [X360](console)
+    - i have a [xbox]{"entity": "console", "value": "X360"}
+    - Games for [Nintendo Wii](console), please
 
 # ------------------ GENRE ------------------
 - intent: inform
@@ -385,12 +395,54 @@ nlu:
     - I want to save [Super Mario 64]{"entity": "game_title", "value": "Super Mario 64"}
     - Save [Spider-Man 2]{"entity": "game_title", "value": "Spider-Man 2"}
     - I want to save [WarioWare Touched!]{"entity": "game_title", "value": "WarioWare Touched!"}
+    - let's save [Lumines: Puzzle Fusion]{"entity": "game_title", "value": "Lumines: Puzzle Fusion"}
     - save [Halo 3]{"entity": "game_title", "value": "Halo 3"}
     - please save [Final Fantasy III]{"entity": "game_title", "value": "Final Fantasy III"}
     - remember [Metal Gear Solid]{"entity": "game_title", "value": "Metal Gear Solid"}
     - add [Resident Evil 4]{"entity": "game_title", "value": "Resident Evil 4"} to my saved games list
     - add [Grand Theft Auto IV]{"entity": "game_title", "value": "Grand Theft Auto IV"} to my saved games
     - I want to save [Overlord Minions](game_title)
+    - save [God of War](game_title)
+    - remember [Call of Duty](game_title)
+    - please save [Armored Core: Formula Front - Extreme Battle](game_title)
+    - add [Pokemon Dash](game_title) to my saved games list
+    - add [Mario Kart DS](game_title) to my saved games
+    - let's save [Super Mario Bros.](game_title)
+    - save [Zoo Tycoon DS](game_title)
+    - remember [The Sims 2](game_title)
+    - add [Need for Speed Underground: Rivals](game_title) to my saved games list
+    - i want to save [Final Fantasy Tactics: The War of the Lions](game_title)
+    - please save [Sonic Rush](game_title)
+    - add [Animal Crossing: Wild World](game_title) to my saved games list
+    - save [Pokemon Mystery Dungeon: Blue Rescue Team](game_title)
+    - remember [Daxter](game_title)
+    - add [NBA Street Homecourt](game_title) to my saved games list
+    - i want to save [Final Fantasy: Crystal Chronicles - Echoes of Time](game_title)
+    - let's save [The BIGS](game_title)
+    - add [Metal Gear Solid: Peace Walker](game_title) to my saved games list
+    - save [Lego Star Wars: The Video Game](game_title)
+    - add [Harry Potter and the Order of the Phoenix](game_title) to my saved games list
+
+- intent: delete_saved_game
+  examples: |
+    - I want to delete [Super Mario 64]{"entity": "game_title", "value": "Super Mario 64"} from my saved games
+    - Delete [Spider-Man 2]{"entity": "game_title", "value": "Spider-Man 2"} from my saved games
+    - I want to remove [WarioWare Touched!]{"entity": "game_title", "value": "WarioWare Touched!"}
+    - let's delete [Lumines: Puzzle Fusion]{"entity": "game_title", "value": "Lumines: Puzzle Fusion"}
+    - delete [Halo 3]{"entity": "game_title", "value": "Halo 3"}
+    - please delete [Final Fantasy III]{"entity": "game_title", "value": "Final Fantasy III"}
+    - remove [Metal Gear Solid]{"entity": "game_title", "value": "Metal Gear Solid"} from my saved games
+    - remove [Resident Evil 2]{"entity": "game_title", "value": "Resident Evil 4"} from my saved games
+    - let's remove [Aliens Vs Predator: Requiem]{"entity": "game_title", "value": "Aliens Vs Predator: Requiem"} from my games
+    - Delete [NBA 08](game_title) from my list of saved games
+    - I want to delete [God of War](game_title) from my saved games
+    - remove [Arkanoid DS](game_title) from my saved games
+    - please delete [Drake & Josh: Talent Showdown](game_title) from my saved games
+    - let's remove [Virtua Tennis 3](game_title) from my games
+    - delete [Tiger Woods PGA Tour 09](game_title) from my list of saved games
+    - remove [Need for Speed Underground: Rivals](game_title) from my saved games
+    - delete [Apollo Justice: Ace Attorney](game_title) from my saved games
+    - let's remove [Fire Emblem: Shadow Dragon](game_title) from my games
 
 - intent: show_saved_games
   examples: |
@@ -403,6 +455,19 @@ nlu:
     - let me see my saved games
     - now show my games
 
+- intent: next_page
+  examples: |
+    - show me more results
+    - I want to see more games
+    - show me the next page
+    - more results please
+    - next page
+    - show more
+    - I want to see more
+    - please show me more results
+    - can I see more games?
+    - display the next page of results
+    
 # --- Synonyms for entity VALUES ---
 
 - synonym: video game

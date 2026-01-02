@@ -162,10 +162,20 @@ rules:
     - intent: save_game
     - action: action_save_game
 
+- rule: Delete a saved game
+  steps:
+    - intent: delete_saved_game
+    - action: action_delete_saved_game
+
 - rule: Show saved games
   steps:
     - intent: show_saved_games
     - action: action_show_saved_games
+
+- rule: More results
+  steps:
+    - intent: next_page
+    - action: action_next_page
 
 - rule: Ask for help
   steps:

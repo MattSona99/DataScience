@@ -2,6 +2,7 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet, FollowupAction
 from rasa_sdk.forms import FormValidationAction
+import math
 from typing import Any, Text, Dict, List, Optional
 import re
 import difflib
@@ -20,6 +21,7 @@ SLOT_TO_COLUMN = {
     "console":      "Console",
     "genre":        "Genre",
     "publisher":    "Publisher",
+    "subgenre":     "SubGenres",
     # se vuoi, puoi aggiungere anche altri
 }
 
@@ -66,10 +68,21 @@ SKIP_VALUE = "SKIP"
 
 def _build_value_map(column_name: str) -> Dict[str, str]:
     """Crea una mappa lowercase -> valore originale per una colonna del dataset."""
-    if df_games.empty or column_name not in df_games.columns:
+    df = df_games.copy()
+    
+    if df.empty or column_name not in df.columns:
         return {}
+    
+    if column_name == "SubGenres":
+        # Per SubGenres, splittiamo i valori separati da virgola
+        uniques = set()
+        for entry in df[column_name].dropna().astype(str):
+            for sub in entry.split("|"):
+                uniques.add(sub.strip())
+        return {u.lower(): u for u in uniques}
+    
     uniques = (
-        df_games[column_name]
+        df[column_name]
         .dropna()
         .astype(str)
         .unique()
@@ -126,6 +139,10 @@ def _closest_dataset_value(slot_name: str, user_value: str) -> Optional[str]:
     user_norm = user_value.strip().lower()
     keys = list(value_map.keys())
     matches = difflib.get_close_matches(user_norm, keys, n=1, cutoff=0.6)
+    if slot_name == "genre" and not matches:
+        value_map = VALUE_MAPS.get("subgenre", {})
+        keys_extended = list(value_map.keys())
+        matches = difflib.get_close_matches(user_norm, keys_extended, n=1, cutoff=0.6)
     if not matches:
         return None
 
@@ -473,8 +490,9 @@ class ActionSearchGame(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
+        df = df_games.copy()
 
-        if df_games.empty:
+        if df.empty:
             dispatcher.utter_message(text="Sorry, the game database is not available.")
             return []
 
@@ -489,6 +507,7 @@ class ActionSearchGame(Action):
         multiplatform = tracker.get_slot("multiplatform")
         publisher = tracker.get_slot("publisher")
         age_rating = tracker.get_slot("age_rating")
+        current_page = 1
 
         print("[action_search_game] Slots:")
         print("  console:", console)
@@ -501,9 +520,7 @@ class ActionSearchGame(Action):
         print("  multiplatform:", multiplatform)
         print("  publisher:", publisher)
         print("  age_rating:", age_rating)
-
-        df = df_games.copy()
-
+        print("  page:", current_page)
 
         # Console
         if console not in (None, SKIP_VALUE):
@@ -516,8 +533,16 @@ class ActionSearchGame(Action):
 
         # Genere principale 
         if genre not in (None, SKIP_VALUE):
-            df = df[
+            if df["Genre"].astype(str).str.lower().str.contains(str(genre).lower(), na=False).any():
+                df = df[
                 df["Genre"]
+                .astype(str)
+                .str.lower()
+                .str.contains(str(genre).lower(), na=False)
+            ]
+            if df["SubGenres"].astype(str).str.lower().str.contains(str(genre).lower(), na=False).any():
+                df = df[
+                df["SubGenres"]
                 .astype(str)
                 .str.lower()
                 .str.contains(str(genre).lower(), na=False)
@@ -593,11 +618,9 @@ class ActionSearchGame(Action):
         if df.empty:
             return [FollowupAction("utter_no_results")]
         
-         # Costruisco la risposta
-        shown_result: List[Text] = []
-        
+         # Costruisco la risposta        
         # uso le colonne reali: 'Title', 'Console', 'Genre', 'Usedprice', 'YearReleased'
-        cols = ["Title", "Console", "Genre", "Usedprice", "YearReleased"]
+        cols = ["Title", "Console", "Genre", "US Sales (millions)", "Review Score", "Usedprice", "YearReleased"]
         missing = [c for c in cols if c not in df.columns]
         if missing:
             dispatcher.utter_message(
@@ -605,30 +628,51 @@ class ActionSearchGame(Action):
             )
             return []
 
-        recommended_games = df[cols].head(10)
-
-        message_lines = ["Here are some game recommendations for you:"]
+        all_recommended_games = df[cols].head(100)
+        
+        page_size = 5
+        
+        # Calcolo indici e totali
+        total_items = len(all_recommended_games)
+        total_pages = math.ceil(total_items / page_size)
+        
+        recommended_games = all_recommended_games.head(page_size)
+        
+        if recommended_games.empty:
+            return [FollowupAction("utter_no_more_results")]
+        
+        message_lines = [
+            f"Page 1 of {total_pages}",
+            "Here are some game recommendations for you:",
+        ]
         for _, row in recommended_games.iterrows():
             title = row["Title"]
             cons = row["Console"]
             gen = row["Genre"]
+            sales = row["US Sales (millions)"]
+            score = row["Review Score"]
             price = row["Usedprice"]
             year = int(row["YearReleased"]) if not pd.isna(row["YearReleased"]) else "N/A"
 
             message_lines.append(
-                f"------------------------------ \n \
-                Title: {title} \n \
-                Console: {cons} \n \
-                Genre: {gen} \n \
-                UsedPrice: {price} \n \
-                YearReleased: {year} \n \
-                ------------------------------ "
-            )
-            shown_result.append(title)
-
+                    f"------------------------------\n"
+                    f"🎮 **{title}**\n"
+                    f"🕹️ Console: {cons}\n"
+                    f"📅 Year: {year} | ⭐ Score: {score}\n"
+                    f"🎭 Genre: {gen}\n"
+                    f"🏆 Sales: {sales} million\n"
+                    f"💰 Used Price: {price}"
+                )
+            
+        if total_pages > 1:
+            message_lines.append("\nType **'next'** to see more results ➡️")
+            
         dispatcher.utter_message(text="\n".join(message_lines))
 
-        return [SlotSet("last_result", shown_result)]
+        return [
+            SlotSet("last_result", all_recommended_games[["Title", "Console", "US Sales (millions)", "Review Score", "Genre", "Usedprice", "YearReleased"]].to_dict(orient='records')),
+            SlotSet("page", current_page)
+            ]
 
 class ActionResetGamePreferences(Action):
 
@@ -653,7 +697,7 @@ class ActionResetGamePreferences(Action):
             "multiplatform",
             "publisher",
             "age_rating",
-            "last_result",
+            "page"
         ]
 
         
@@ -707,88 +751,114 @@ class ActionRelaxFilters(Action):
 
         return events
 
-class ActionShowBest(Action):
-    def name(self) -> Text:
-        return "action_show_best"
-
-    def run(self, dispatcher, tracker, domain):
-        
-        slots_to_sort = tracker.get_slot("filters_to_relax") # Utilizziamo lo slot "filters_to_relax" per prendere i valori degli slot
-        
-        # Gestione input sia come lista che come stringa singola
-        if isinstance(slots_to_sort, str):
-            # Se è una stringa con virgole (es. "price, genre"), la dividiamo
-            input_list = [s.strip() for s in slots_to_sort.split(",")]
-        else:
-            input_list = slots_to_sort
-            
-        list_of_valid_slots = []
-
-        for raw_filter in input_list:
-            # Usiamo la funzione fuzzy per trovare lo slot
-            target_slot_column = _get_closest_slot(raw_filter)
-            
-            if target_slot_column not in df_games.columns:
-                dispatcher.utter_message(text=f"Sorry, I couldn't identify the filter: {raw_filter}")
-                return []
-            
-            if target_slot_column:
-                list_of_valid_slots.append(target_slot_column)
-
-        if list_of_valid_slots:
-            top_column = df_games.sort_values(by=list_of_valid_slots, ascending=False).head(5)
-            message = f"Here are the top 5 games sorted by {list_of_valid_slots}: \n"
-            for _, row in top_column.iterrows():
-                message += f"- {row['Title']} ({row['Console']}) - {list_of_valid_slots}: {row[target_slot_column]}\n"
-            dispatcher.utter_message(text=message)
-            
-        return []
-        
-        
 class ActionShowBestSellers(Action):
     def name(self) -> Text:
         return "action_show_best_sellers"
 
     def run(self, dispatcher, tracker, domain):
         sales_col = "US Sales (millions)" 
+        df = df_games.copy()
+        page_size = 5
         
-        if sales_col not in df_games.columns:
+        if sales_col not in df.columns:
             dispatcher.utter_message(text="Sorry, I don't have sales data available.")
             return []
-
-        # Ordina per vendite decrescenti e prendi i primi 5
-        top_sellers = df_games.sort_values(by=sales_col, ascending=False).head(5)
         
-        message = "Here are the best-selling games of all time in my archive: 🏆\n"
+        # Ordina per vendite decrescenti e prendi i primi 5
+        all_top_sellers = df.sort_values(by=sales_col, ascending=False).head(100)
+        
+        total_items = len(all_top_sellers)
+        total_pages = math.ceil(total_items / page_size)
+        
+        top_sellers = all_top_sellers.head(page_size)
+        
+        message_blocks = [
+            f"Page 1 of {total_pages}",
+            "Here are the best-selling games of all time in my archive: 🏆"
+        ]
         for _, row in top_sellers.iterrows():
-            message += f"- {row['Title']} ({row['Console']}) - Sold: {row[sales_col]}m\n"
-            
-        dispatcher.utter_message(text=message)
-        return []
+            title = row["Title"]
+            cons = row["Console"]
+            sold = row[sales_col]
+            score = row["Review Score"]
+            genre = row["Genre"]
+            price = row["Usedprice"]
+            year = int(row["YearReleased"]) if not pd.isna(row["YearReleased"]) else "N/A"
 
+            message_blocks.append(
+                    f"------------------------------\n"
+                    f"🎮 **{title}**\n"
+                    f"🕹️ Console: {cons}\n"
+                    f"📅 Year: {year} | ⭐ Score: {score}\n"
+                    f"🎭 Genre: {genre}\n"
+                    f"🏆 Sales: {sold} million\n"
+                    f"💰 Used Price: {price}"
+                )
+        
+        if total_pages > 1:
+            message_blocks.append("\nType **'next'** to see more results ➡️")
+
+        dispatcher.utter_message(text="\n".join(message_blocks))
+            
+        return [
+            SlotSet("last_result", all_top_sellers[["Title", "Console", "Genre", sales_col, "Review Score", "Usedprice", "YearReleased"]].to_dict(orient='records')),
+            SlotSet("page", 1)            
+            ]
 
 class ActionShowHighestRated(Action):
     def name(self) -> Text:
         return "action_show_highest_rated"
 
     def run(self, dispatcher, tracker, domain):
-        score_col = "Review Score" # Assumo questo sia il nome della tua colonna
+        score_col = "Review Score"
+        page_size = 5
+        df = df_games.copy()
         
-        if score_col not in df_games.columns:
+        if score_col not in df.columns:
             dispatcher.utter_message(text="Sorry, review data is missing.")
             return []
-
+                
         # Ordina per punteggio decrescente
-        top_rated = df_games.sort_values(by=score_col, ascending=False).head(5)
+        all_top_rated = df.sort_values(by=score_col, ascending=False).head(100)
         
-        message = "Here are the critically acclaimed masterpieces: ⭐\n"
+        total_items = len(all_top_rated)
+        total_pages = math.ceil(total_items / page_size)
+        
+        top_rated = all_top_rated.head(page_size)
+
+        message_blocks = [
+            f"Page 1 of {total_pages}",
+            "Here are the critically acclaimed masterpieces: ⭐"
+        ]
         for _, row in top_rated.iterrows():
-            message += f"- {row['Title']} ({row['Console']}) - Score: {row[score_col]}/100\n"
-            
-        dispatcher.utter_message(text=message)
-        return []
+            title = row["Title"]
+            cons = row["Console"]
+            genre = row["Genre"]
+            sold = row["US Sales (millions)"]
+            score = row[score_col]
+            price = row["Usedprice"]
+            year = int(row["YearReleased"]) if not pd.isna(row["YearReleased"]) else "N/A"
 
+            message_blocks.append(
+                    f"------------------------------\n"
+                    f"🎮 **{title}**\n"
+                    f"🕹️ Console: {cons}\n"
+                    f"📅 Year: {year} | ⭐ Score: {score}\n"
+                    f"🎭 Genre: {genre}\n"
+                    f"🏆 Sales: {sold} million\n"
+                    f"💰 Used Price: {price}"
+                )
+        
+        if total_pages > 1:
+            message_blocks.append("\nType **'next'** to see more results ➡️")
 
+        dispatcher.utter_message(text="\n".join(message_blocks))
+
+        return [
+            SlotSet("last_result", all_top_rated[["Title", "Console", "Genre", "US Sales (millions)", score_col, "Usedprice", "YearReleased"]].to_dict(orient='records')),
+            SlotSet("page", 1)            
+            ]
+    
 class ActionSaveGame(Action):
     def name(self) -> Text:
         return "action_save_game"
@@ -796,6 +866,7 @@ class ActionSaveGame(Action):
     def run(self, dispatcher, tracker, domain):
         # 1. Recupera il titolo detto dall'utente
         game_input = tracker.get_slot("game_title_to_save")
+        df = df_games.copy()
         
         # Se l'utente non ha specificato il titolo (ha attivato l'intent senza entità)
         if not game_input:
@@ -803,7 +874,7 @@ class ActionSaveGame(Action):
             return []
 
         # 2. Cerca il gioco nel database usando difflib (Fuzzy Search)
-        all_titles = df_games['Title'].astype(str).unique().tolist()
+        all_titles = df['Title'].astype(str).unique().tolist()
         matches = difflib.get_close_matches(game_input, all_titles, n=1, cutoff=0.6)
 
         if not matches:
@@ -823,12 +894,42 @@ class ActionSaveGame(Action):
             current_saved.append(found_game)
             dispatcher.utter_message(text=f"Saved '{found_game}' to your favorites! 💾")
 
-        # Aggiorna lo slot della lista e pulisci lo slot temporaneo di input
+        # Aggiorna lo slot della lista e pulisce lo slot temporaneo di input
         return [
             SlotSet("saved_games", current_saved),
             SlotSet("game_title_to_save", None)
         ]
 
+class ActionDeleteSavedGame(Action):
+    def name(self) -> Text:
+        return "action_delete_saved_game"
+
+    def run(self, dispatcher, tracker, domain):
+        game_input = tracker.get_slot("game_title_to_delete")
+        
+        if not game_input:
+            dispatcher.utter_message(text="Which game would you like to delete from your saved list?")
+            return []
+
+        current_saved = tracker.get_slot("saved_games")
+        if not current_saved:
+            dispatcher.utter_message(text="Your saved games list is empty.")
+            return [SlotSet("game_title_to_delete", None)]
+
+        matches = difflib.get_close_matches(game_input, current_saved, n=1, cutoff=0.6)
+
+        if not matches:
+            dispatcher.utter_message(text=f"'{game_input}' is not in your saved list.")
+            return [SlotSet("game_title_to_delete", None)]
+
+        game_to_delete = matches[0]
+        current_saved.remove(game_to_delete)
+        dispatcher.utter_message(text=f"Removed '{game_to_delete}' from your saved games. 🗑️")
+
+        return [
+            SlotSet("saved_games", current_saved),
+            SlotSet("game_title_to_delete", None)
+        ]
 
 class ActionShowSavedGames(Action):
     def name(self) -> Text:
@@ -844,3 +945,79 @@ class ActionShowSavedGames(Action):
             dispatcher.utter_message(text=msg)
             
         return []
+    
+class ActionNextPage(Action):
+    def name(self) -> Text:
+        return "action_next_page"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        last_results = tracker.get_slot("last_result")
+        current_page = tracker.get_slot("page") or 1
+        page_size = 5
+
+        if not last_results:
+            dispatcher.utter_message(text="There are no previous results to show.")
+            return []
+        
+        # Calcolo indici e totali
+        total_items = len(last_results)
+        total_pages = math.ceil(total_items / page_size)
+        
+        start_index = current_page * page_size
+        end_index = start_index + page_size
+
+        # Se siamo andati oltre la fine della lista
+        if start_index >= total_items:
+            dispatcher.utter_message(text="You've reached the end of the list! 🏁")
+            # Opzionale: Resetta la pagina a 1 se vuoi ricominciare o lascia così
+            return [SlotSet("page", 1)]
+
+        # Calcola gli indici per la pagina successiva
+        page_results = last_results[start_index:end_index]
+
+        if not page_results:
+            dispatcher.utter_message(text="No more results available.")
+            return []
+        
+        page_to_show = current_page + 1
+
+        message_blocks = [f"📄 **Page {page_to_show} of {total_pages}**"]
+        for game in page_results:
+            if isinstance(game, dict):
+                title = game.get('Title', 'Unknown')
+                console = game.get('Console', 'N/A')
+                genre = game.get('Genre', 'N/A')
+                sales = game.get('US Sales (millions)', 'N/A')
+                price = game.get('Usedprice', 'N/A')
+                score = game.get('Review Score', 'N/A')
+                year = game.get('YearReleased', 'N/A')
+                
+                # Formattazione a blocco con Emoji
+                block = (
+                    f"------------------------------\n"
+                    f"🎮 **{title}**\n"
+                    f"🕹️ Console: {console}\n"
+                    f"📅 Year: {year} | ⭐ Score: {score}\n"
+                    f"🎭 Genre: {genre}\n"
+                    f"🏆 Sales: {sales} million\n"
+                    f"💰 Used Price: {price}"
+                )
+                message_blocks.append(block)
+            else:
+                # Fallback se per caso i dati sono solo stringhe
+                message_blocks.append(f"- {game}")
+                
+        # Footer con suggerimento
+        if page_to_show < total_pages:
+            message_blocks.append("\nType **'next'** to see more results ➡️")
+        else:
+            message_blocks.append("\nThis was the last page. ✅")
+
+        dispatcher.utter_message(text="\n".join(message_blocks))
+
+        return [SlotSet("page", current_page + 1)]
