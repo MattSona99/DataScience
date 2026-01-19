@@ -1,4 +1,4 @@
-# Data Science Portfolio 📊
+# Data Science 📊
 
 Questa repository raccoglie 5 progetti accademici per il corso di Data Science 2024/2025.
 
