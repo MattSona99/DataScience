@@ -25,7 +25,7 @@ Questa repository raccoglie 5 progetti accademici per il corso di Data Science 2
     * **Preprocessing:** Cleaning avanzato, Lemmatization, POS Tagging.
     * **Feature Engineering:** VADER (Sentiment Analysis), Topic Modeling (NMF), Feature domain-specific (es. parole di gratitudine).
     * **Modelli:** Logistic Regression, Random Forest, Voting Classifier (Ensemble).
-    * **Deep Learning:** Cenni all'uso di BERT Embeddings.
+    * **Deep Learning:** Uso di BERT Embeddings.
 
 ---
 
