@@ -12,13 +12,6 @@ rules:
     - intent: goodbye
     - action: utter_goodbye
 
-- rule: Start session with help
-  steps:
-    - intent: session_start
-    - action: action_session_start
-    - action: utter_greet
-    - action: utter_help
-
 - rule: Ask to start game preferences form by inform
   condition:
     - active_loop: null
